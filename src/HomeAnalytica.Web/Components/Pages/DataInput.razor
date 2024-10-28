@@ -1,0 +1,80 @@
+@page "/data-input"
+@rendermode InteractiveServer
+@inject HttpClient Http
+
+<PageTitle>Counter</PageTitle>
+
+<PageTitle>Data Input</PageTitle>
+
+<h1>Data Input</h1>
+
+<p role="status">Please enter your data:</p>
+
+<div class="input-group mb-3">
+    <span class="input-group-text">Temperature (°C)</span>
+    <input @bind="temperature" type="number" class="form-control" step="0.1" />
+</div>
+
+<div class="input-group mb-3">
+    <span class="input-group-text">Humidity (%)</span>
+    <input @bind="humidity" type="number" class="form-control" step="1" />
+</div>
+
+<div class="input-group mb-3">
+    <span class="input-group-text">Energy Consumption (kWh)</span>
+    <input @bind="energyConsumption" type="number" class="form-control" step="0.1" />
+</div>
+
+<button class="btn btn-primary" @onclick="SubmitData">Submit Data</button>
+
+@if (isDataSubmitted)
+
+{
+    <h3>Submitted Data:</h3>
+    <ul>
+        <li>Temperature: @temperature °C</li>
+        <li>Humidity: @humidity %</li>
+        <li>Energy Consumption: @energyConsumption kWh</li>
+    </ul>
+}
+
+@code {
+    private double temperature;
+
+    private double humidity;
+
+    private double energyConsumption;
+
+    private bool isDataSubmitted = false;
+
+
+
+    private async Task SubmitData()
+    {
+        var data = new
+
+        {
+            Temperature = temperature,
+
+            Humidity = humidity,
+
+            EnergyConsumption = energyConsumption
+        };
+
+        // YARP address
+
+        var response = await Http.PostAsJsonAsync("https://localhost:5210/data/submit", data);
+
+
+
+        if (response.IsSuccessStatusCode)
+        {
+            isDataSubmitted = true;
+        }
+        else
+        {
+            // Handle error
+
+        }
+    }
+}
