@@ -1,3 +1,6 @@
+using HomeAnalytica.Services.Communication.Protos;
+using HomeAnalytica.Services.DataCollection.Grpc;
+
 namespace HomeAnalytica.Services.DataCollection.Bootstrap
 {
     /// <summary>
@@ -39,6 +42,12 @@ namespace HomeAnalytica.Services.DataCollection.Bootstrap
             // About configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddGrpc();
+
+            services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
+            {
+                o.Address = new Uri("https://localhost:5230");
+            });
         }
 
         private void RegisterServices(IServiceCollection services)
@@ -50,6 +59,7 @@ namespace HomeAnalytica.Services.DataCollection.Bootstrap
 
 
             // Transient
+            services.AddTransient<SensorDataClient>();
         }
     }
 }
