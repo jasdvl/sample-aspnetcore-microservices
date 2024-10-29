@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "HomeAnalytica.Services.Communication.Protos";
+
+package sensor;
+
+// The sensor data service definition.
+service SensorDataSender {
+  // Sends sensor data
+  rpc SubmitSensorData (SensorDataRequest) returns (SensorDataResponse);
+}
+
+// The request message containing sensor data.
+message SensorDataRequest {
+  double temperature = 1;
+  double humidity = 2;
+  double energy_consumption = 3;
+}
+
+// The response message confirming receipt of the data.
+message SensorDataResponse {
+  string message = 1;
+}
