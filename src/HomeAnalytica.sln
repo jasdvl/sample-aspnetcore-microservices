@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Services.Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Services.Analytics", "HomeAnalytica.Services.Analytics\HomeAnalytica.Services.Analytics.csproj", "{7E3DE8A8-E045-4A12-9E19-F75CF045EC04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeAnalytica.Gateway.Yarp", "HomeAnalytica.Gateway.Yarp\HomeAnalytica.Gateway.Yarp.csproj", "{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Gateway.Yarp", "HomeAnalytica.Gateway.Yarp\HomeAnalytica.Gateway.Yarp.csproj", "{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{B2A79D6F-1E6E-42BA-90C5-B324A11AC6D2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
