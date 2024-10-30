@@ -1,4 +1,4 @@
-namespace HomeAnalytica.Services.Analytics.Bootstrap
+namespace HomeAnalytica.Analytics.Bootstrap
 {
     /// <summary>
     /// The CompositionRoot class is responsible for setting up the application’s 

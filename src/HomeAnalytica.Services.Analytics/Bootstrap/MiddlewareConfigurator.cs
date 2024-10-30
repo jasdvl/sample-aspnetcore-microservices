@@ -1,6 +1,6 @@
-using HomeAnalytica.Services.Analytics.Grpc;
+using HomeAnalytica.Analytics.Grpc;
 
-namespace HomeAnalytica.Services.Analytics.Bootstrap
+namespace HomeAnalytica.Analytics.Bootstrap
 {
     /// <summary>
     /// Configures the middleware components for the application.

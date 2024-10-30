@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["HomeAnalytica.Services.DataCollection/HomeAnalytica.Services.DataCollection.csproj", "HomeAnalytica.Services.DataCollection/"]
-RUN dotnet restore "./HomeAnalytica.Services.DataCollection/HomeAnalytica.Services.DataCollection.csproj"
+COPY ["HomeAnalytica.DataCollection/HomeAnalytica.DataCollection.csproj", "HomeAnalytica.DataCollection/"]
+RUN dotnet restore "./HomeAnalytica.DataCollection/HomeAnalytica.DataCollection.csproj"
 COPY . .
-WORKDIR "/src/HomeAnalytica.Services.DataCollection"
-RUN dotnet build "./HomeAnalytica.Services.DataCollection.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/HomeAnalytica.DataCollection"
+RUN dotnet build "./HomeAnalytica.DataCollection.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Diese Stufe wird verwendet, um das Dienstprojekt zu veröffentlichen, das in die letzte Phase kopiert werden soll.
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./HomeAnalytica.Services.DataCollection.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./HomeAnalytica.DataCollection.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Diese Stufe wird in der Produktion oder bei Ausführung von VS im regulären Modus verwendet (Standard, wenn die Debugkonfiguration nicht verwendet wird).
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "HomeAnalytica.Services.DataCollection.dll"]
+ENTRYPOINT ["dotnet", "HomeAnalytica.DataCollection.dll"]

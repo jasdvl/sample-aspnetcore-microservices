@@ -1,6 +1,6 @@
-using HomeAnalytica.Services.DataCollection.DTOs;
+using HomeAnalytica.DataCollection.DTOs;
 
-namespace HomeAnalytica.Services.DataCollection.Bootstrap;
+namespace HomeAnalytica.DataCollection.Bootstrap;
 
 public static class ApiRoutesConfiguration
 {

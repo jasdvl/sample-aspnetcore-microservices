@@ -1,6 +1,6 @@
-@HomeAnalytica.Services.Analytics_HostAddress = http://localhost:5230
+@HomeAnalytica.Analytics_HostAddress = http://localhost:5230
 
-GET {{HomeAnalytica.Services.Analytics_HostAddress}}/weatherforecast/
+GET {{HomeAnalytica.Analytics_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

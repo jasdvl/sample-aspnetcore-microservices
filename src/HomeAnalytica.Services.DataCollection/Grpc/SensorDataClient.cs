@@ -1,6 +1,6 @@
-using HomeAnalytica.Services.Communication.Protos;
+using HomeAnalytica.Grpc.Contracts.Protos;
 
-namespace HomeAnalytica.Services.DataCollection.Grpc;
+namespace HomeAnalytica.DataCollection.Grpc;
 
 public class SensorDataClient
 {

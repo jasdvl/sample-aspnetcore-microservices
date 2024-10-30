@@ -1,7 +1,7 @@
-using HomeAnalytica.Services.Communication.Protos;
-using HomeAnalytica.Services.DataCollection.Grpc;
+using HomeAnalytica.DataCollection.Grpc;
+using HomeAnalytica.Grpc.Contracts.Protos;
 
-namespace HomeAnalytica.Services.DataCollection.Bootstrap
+namespace HomeAnalytica.DataCollection.Bootstrap
 {
     /// <summary>
     /// The CompositionRoot class is responsible for setting up the application’s 

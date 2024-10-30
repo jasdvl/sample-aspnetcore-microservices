@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Services.Communication", "HomeAnalytica.Services.Communication\HomeAnalytica.Services.Communication.csproj", "{1F6FD6CA-389A-4FED-837C-CE85CA9ACB2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Grpc.Contracts", "HomeAnalytica.Services.Communication\HomeAnalytica.Grpc.Contracts.csproj", "{1F6FD6CA-389A-4FED-837C-CE85CA9ACB2D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Web", "HomeAnalytica.Web\HomeAnalytica.Web.csproj", "{6EEBF1BF-FCC3-4D8F-B6B3-9451432C193D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Services.DataCollection", "HomeAnalytica.Services.DataCollection\HomeAnalytica.Services.DataCollection.csproj", "{A5B4260F-E69C-48CF-B262-3B9AEA750B57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataCollection", "HomeAnalytica.Services.DataCollection\HomeAnalytica.DataCollection.csproj", "{A5B4260F-E69C-48CF-B262-3B9AEA750B57}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Services.Analytics", "HomeAnalytica.Services.Analytics\HomeAnalytica.Services.Analytics.csproj", "{7E3DE8A8-E045-4A12-9E19-F75CF045EC04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Analytics", "HomeAnalytica.Services.Analytics\HomeAnalytica.Analytics.csproj", "{7E3DE8A8-E045-4A12-9E19-F75CF045EC04}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Gateway.Yarp", "HomeAnalytica.Gateway.Yarp\HomeAnalytica.Gateway.Yarp.csproj", "{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}"
 EndProject

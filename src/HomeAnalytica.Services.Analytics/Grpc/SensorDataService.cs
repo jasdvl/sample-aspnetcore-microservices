@@ -1,7 +1,7 @@
 using Grpc.Core;
-using HomeAnalytica.Services.Communication.Protos;
+using HomeAnalytica.Grpc.Contracts.Protos;
 
-namespace HomeAnalytica.Services.Analytics.Grpc;
+namespace HomeAnalytica.Analytics.Grpc;
 
 public class SensorDataService : SensorDataSender.SensorDataSenderBase
 {

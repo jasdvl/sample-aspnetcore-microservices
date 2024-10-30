@@ -1,4 +1,4 @@
-using HomeAnalytica.Services.Analytics.Bootstrap;
+using HomeAnalytica.Analytics.Bootstrap;
 
 WebApplicationOptions options = new WebApplicationOptions { Args = args };
 

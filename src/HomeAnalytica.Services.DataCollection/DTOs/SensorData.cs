@@ -1,4 +1,4 @@
-namespace HomeAnalytica.Services.DataCollection.DTOs
+namespace HomeAnalytica.DataCollection.DTOs
 {
     /// <summary>
     /// Represents the sensor data collected from IoT devices.

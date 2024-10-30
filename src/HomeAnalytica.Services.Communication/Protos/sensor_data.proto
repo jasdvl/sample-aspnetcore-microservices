@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "HomeAnalytica.Services.Communication.Protos";
+option csharp_namespace = "HomeAnalytica.Grpc.Contracts.Protos";
 
 package sensor;
 

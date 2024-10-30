@@ -1,4 +1,4 @@
-namespace HomeAnalytica.Services.DataCollection.Bootstrap
+namespace HomeAnalytica.DataCollection.Bootstrap
 {
     /// <summary>
     /// Configures the middleware components for the application.
