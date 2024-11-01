@@ -1,3 +1,6 @@
+using HomeAnalytica.DataCollection.Data.Context;
+using Microsoft.EntityFrameworkCore;
+
 namespace HomeAnalytica.DataCollection.Bootstrap
 {
     /// <summary>
@@ -23,6 +26,13 @@ namespace HomeAnalytica.DataCollection.Bootstrap
             app.ConfigureRoutes();
 
             app.UseHttpsRedirection();
+
+            using (var serviceScope = app.Services.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<HomeAnalyticaDbContext>();
+
+                context.Database.Migrate();
+            }
         }
     }
 }

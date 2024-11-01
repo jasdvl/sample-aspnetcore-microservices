@@ -1,5 +1,8 @@
+using HomeAnalytica.DataCollection.Data.Context;
 using HomeAnalytica.DataCollection.Grpc;
+using HomeAnalytica.DataCollection.Services;
 using HomeAnalytica.Grpc.Contracts.Protos;
+using Microsoft.EntityFrameworkCore;
 
 namespace HomeAnalytica.DataCollection.Bootstrap
 {
@@ -46,19 +49,23 @@ namespace HomeAnalytica.DataCollection.Bootstrap
 
             services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
             {
-                o.Address = new Uri("https://localhost:5230");
+                o.Address = new Uri("https://localhost:6230");
             });
+
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            //services.AddPooledDbContextFactory<HomeAnalyticaDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<HomeAnalyticaDbContext>(options =>
+            {
+                options.UseNpgsql(connectionString);
+                //options.EnableSensitiveDataLogging();
+            });
+
         }
 
         private void RegisterServices(IServiceCollection services)
         {
-            // Singleton Services
+            services.AddScoped<ISensorDataService, SensorDataService>();
 
-
-            // Scoped Services
-
-
-            // Transient
             services.AddTransient<SensorDataClient>();
         }
     }
