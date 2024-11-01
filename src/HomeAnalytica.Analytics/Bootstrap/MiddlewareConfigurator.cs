@@ -1,4 +1,4 @@
-using HomeAnalytica.Analytics.Grpc;
+using HomeAnalytica.Analytics.Services;
 
 namespace HomeAnalytica.Analytics.Bootstrap
 {

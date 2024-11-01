@@ -4,8 +4,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 5620
+EXPOSE 6620
 
 
 # Diese Stufe wird zum Erstellen des Dienstprojekts verwendet.
@@ -13,6 +13,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["HomeAnalytica.Analytics/HomeAnalytica.Analytics.csproj", "HomeAnalytica.Analytics/"]
+COPY ["HomeAnalytica.Grpc.Contracts/HomeAnalytica.Grpc.Contracts.csproj", "HomeAnalytica.Grpc.Contracts/"]
 RUN dotnet restore "./HomeAnalytica.Analytics/HomeAnalytica.Analytics.csproj"
 COPY . .
 WORKDIR "/src/HomeAnalytica.Analytics"

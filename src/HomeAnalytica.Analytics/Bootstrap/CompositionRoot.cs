@@ -44,13 +44,6 @@ namespace HomeAnalytica.Analytics.Bootstrap
 
         private void RegisterServices(IServiceCollection services)
         {
-            // Singleton Services
-
-
-            // Scoped Services
-
-
-            // Transient
         }
     }
 }
