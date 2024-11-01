@@ -1,0 +1,73 @@
+services:
+    sensor-data-db:
+        container_name: sensor-data-db
+        environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+          - POSTGRES_DB=sensor_data
+        restart: always
+        ports:
+            - "5440:5432"
+        volumes:
+          - sensor_data:/var/lib/postgresql/data/
+
+    homeanalytica.analytics:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_HTTP_PORTS=8080
+            - ASPNETCORE_HTTPS_PORTS=8081
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/HomeAnalytica.Analytics.pfx
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=8247c5bc-698a-42b7-5910-ec40578db4a5
+        ports:
+            - "5620:8080"
+            - "6620:8081"
+        volumes:
+          - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+          - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+    homeanalytica.datacollection:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_HTTP_PORTS=8080
+            - ASPNETCORE_HTTPS_PORTS=8081
+            - ConnectionStrings__DefaultConnection=Server=sensor-data-db;Port=5432;Database=sensor_data;User Id=postgres;Password=postgres;Include Error Detail=true;TrustServerCertificate=True
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/HomeAnalytica.DataCollection.pfx
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=9017c5bc-676d-49b7-8990-fe87578db4a5
+        ports:
+            - "5630:8080"
+            - "6630:8081"
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+            - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+        depends_on:
+            - sensor-data-db
+
+    homeanalytica.gateway.yarp:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_HTTP_PORTS=8080
+            - ASPNETCORE_HTTPS_PORTS=8081
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/HomeAnalytica.Gateway.Yarp.pfx
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=4113c5ac-614d-49b7-8920-ff40578eb2b1
+        ports:
+            - "5610:8080"
+            - "6610:8081"
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+            - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+    homeanalytica.web:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_HTTP_PORTS=8080
+            - ASPNETCORE_HTTPS_PORTS=8081
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/HomeAnalytica.Web.pfx
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=8517c5bc-614d-49b7-8990-ff40578db4a5
+        ports:
+            - "5600:8080"
+            - "6600:8081"
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+            - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+        depends_on:
+            - homeanalytica.datacollection
