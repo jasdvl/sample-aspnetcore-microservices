@@ -3,13 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Grpc.Contracts", "HomeAnalytica.Services.Communication\HomeAnalytica.Grpc.Contracts.csproj", "{1F6FD6CA-389A-4FED-837C-CE85CA9ACB2D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Web", "HomeAnalytica.Web\HomeAnalytica.Web.csproj", "{6EEBF1BF-FCC3-4D8F-B6B3-9451432C193D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataCollection", "HomeAnalytica.Services.DataCollection\HomeAnalytica.DataCollection.csproj", "{A5B4260F-E69C-48CF-B262-3B9AEA750B57}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Analytics", "HomeAnalytica.Services.Analytics\HomeAnalytica.Analytics.csproj", "{7E3DE8A8-E045-4A12-9E19-F75CF045EC04}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Gateway.Yarp", "HomeAnalytica.Gateway.Yarp\HomeAnalytica.Gateway.Yarp.csproj", "{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}"
 EndProject
@@ -18,32 +12,49 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Pr
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataCollection.Data", "HomeAnalytica.DataCollection.Data\HomeAnalytica.DataCollection.Data.csproj", "{78929316-9F9F-4D68-B8B8-8F2040C07BD3}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{364B4F15-28EF-475F-97D0-46F660278F21}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Analytics", "HomeAnalytica.Analytics\HomeAnalytica.Analytics.csproj", "{ABF96DA2-8DAE-49D7-A3FC-7099A6D2E3B1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataCollection", "HomeAnalytica.DataCollection\HomeAnalytica.DataCollection.csproj", "{53118147-498A-4E74-83E1-415A5C7BFEA3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Grpc.Contracts", "HomeAnalytica.Grpc.Contracts\HomeAnalytica.Grpc.Contracts.csproj", "{6FA290F8-FBBC-413B-9844-40969312C916}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1F6FD6CA-389A-4FED-837C-CE85CA9ACB2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F6FD6CA-389A-4FED-837C-CE85CA9ACB2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F6FD6CA-389A-4FED-837C-CE85CA9ACB2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F6FD6CA-389A-4FED-837C-CE85CA9ACB2D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6EEBF1BF-FCC3-4D8F-B6B3-9451432C193D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6EEBF1BF-FCC3-4D8F-B6B3-9451432C193D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EEBF1BF-FCC3-4D8F-B6B3-9451432C193D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EEBF1BF-FCC3-4D8F-B6B3-9451432C193D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5B4260F-E69C-48CF-B262-3B9AEA750B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5B4260F-E69C-48CF-B262-3B9AEA750B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5B4260F-E69C-48CF-B262-3B9AEA750B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5B4260F-E69C-48CF-B262-3B9AEA750B57}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E3DE8A8-E045-4A12-9E19-F75CF045EC04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E3DE8A8-E045-4A12-9E19-F75CF045EC04}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E3DE8A8-E045-4A12-9E19-F75CF045EC04}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E3DE8A8-E045-4A12-9E19-F75CF045EC04}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78929316-9F9F-4D68-B8B8-8F2040C07BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78929316-9F9F-4D68-B8B8-8F2040C07BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78929316-9F9F-4D68-B8B8-8F2040C07BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78929316-9F9F-4D68-B8B8-8F2040C07BD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{364B4F15-28EF-475F-97D0-46F660278F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{364B4F15-28EF-475F-97D0-46F660278F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{364B4F15-28EF-475F-97D0-46F660278F21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABF96DA2-8DAE-49D7-A3FC-7099A6D2E3B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF96DA2-8DAE-49D7-A3FC-7099A6D2E3B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF96DA2-8DAE-49D7-A3FC-7099A6D2E3B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF96DA2-8DAE-49D7-A3FC-7099A6D2E3B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53118147-498A-4E74-83E1-415A5C7BFEA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53118147-498A-4E74-83E1-415A5C7BFEA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53118147-498A-4E74-83E1-415A5C7BFEA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53118147-498A-4E74-83E1-415A5C7BFEA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FA290F8-FBBC-413B-9844-40969312C916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA290F8-FBBC-413B-9844-40969312C916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA290F8-FBBC-413B-9844-40969312C916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA290F8-FBBC-413B-9844-40969312C916}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

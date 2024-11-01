@@ -1,6 +1,7 @@
-using HomeAnalytica.Analytics.Grpc;
+using HomeAnalytica.DataCollection.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
-namespace HomeAnalytica.Analytics.Bootstrap
+namespace HomeAnalytica.DataCollection.Bootstrap
 {
     /// <summary>
     /// Configures the middleware components for the application.
@@ -22,9 +23,16 @@ namespace HomeAnalytica.Analytics.Bootstrap
                 app.UseSwaggerUI();
             }
 
+            app.ConfigureRoutes();
+
             app.UseHttpsRedirection();
 
-            app.MapGrpcService<SensorDataService>();
+            using (var serviceScope = app.Services.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<HomeAnalyticaDbContext>();
+
+                context.Database.Migrate();
+            }
         }
     }
 }

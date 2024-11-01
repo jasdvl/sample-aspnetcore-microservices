@@ -1,7 +1,4 @@
-using HomeAnalytica.DataCollection.Grpc;
-using HomeAnalytica.Grpc.Contracts.Protos;
-
-namespace HomeAnalytica.DataCollection.Bootstrap
+namespace HomeAnalytica.Analytics.Bootstrap
 {
     /// <summary>
     /// The CompositionRoot class is responsible for setting up the application’s 
@@ -43,23 +40,10 @@ namespace HomeAnalytica.DataCollection.Bootstrap
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddGrpc();
-
-            services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
-            {
-                o.Address = new Uri("https://localhost:5230");
-            });
         }
 
         private void RegisterServices(IServiceCollection services)
         {
-            // Singleton Services
-
-
-            // Scoped Services
-
-
-            // Transient
-            services.AddTransient<SensorDataClient>();
         }
     }
 }

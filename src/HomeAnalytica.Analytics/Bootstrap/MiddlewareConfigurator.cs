@@ -1,4 +1,6 @@
-namespace HomeAnalytica.DataCollection.Bootstrap
+using HomeAnalytica.Analytics.Services;
+
+namespace HomeAnalytica.Analytics.Bootstrap
 {
     /// <summary>
     /// Configures the middleware components for the application.
@@ -20,9 +22,9 @@ namespace HomeAnalytica.DataCollection.Bootstrap
                 app.UseSwaggerUI();
             }
 
-            app.ConfigureRoutes();
-
             app.UseHttpsRedirection();
+
+            app.MapGrpcService<SensorDataService>();
         }
     }
 }

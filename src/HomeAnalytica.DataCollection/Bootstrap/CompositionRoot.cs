@@ -1,4 +1,10 @@
-namespace HomeAnalytica.Analytics.Bootstrap
+using HomeAnalytica.DataCollection.Data.Context;
+using HomeAnalytica.DataCollection.Grpc;
+using HomeAnalytica.DataCollection.Services;
+using HomeAnalytica.Grpc.Contracts.Protos;
+using Microsoft.EntityFrameworkCore;
+
+namespace HomeAnalytica.DataCollection.Bootstrap
 {
     /// <summary>
     /// The CompositionRoot class is responsible for setting up the application’s 
@@ -40,17 +46,27 @@ namespace HomeAnalytica.Analytics.Bootstrap
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddGrpc();
+
+            services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
+            {
+                o.Address = new Uri("https://localhost:6230");
+            });
+
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            //services.AddPooledDbContextFactory<HomeAnalyticaDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<HomeAnalyticaDbContext>(options =>
+            {
+                options.UseNpgsql(connectionString);
+                //options.EnableSensitiveDataLogging();
+            });
+
         }
 
         private void RegisterServices(IServiceCollection services)
         {
-            // Singleton Services
+            services.AddScoped<ISensorDataService, SensorDataService>();
 
-
-            // Scoped Services
-
-
-            // Transient
+            services.AddTransient<SensorDataClient>();
         }
     }
 }
