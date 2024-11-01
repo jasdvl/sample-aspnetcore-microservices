@@ -4,27 +4,29 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 5600
-EXPOSE 6600
+EXPOSE 5630
+EXPOSE 6630
 
 
 # Diese Stufe wird zum Erstellen des Dienstprojekts verwendet.
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["HomeAnalytica.Web/HomeAnalytica.Web.csproj", "HomeAnalytica.Web/"]
-RUN dotnet restore "./HomeAnalytica.Web/HomeAnalytica.Web.csproj"
+COPY ["HomeAnalytica.DataCollection/HomeAnalytica.DataCollection.csproj", "HomeAnalytica.DataCollection/"]
+COPY ["HomeAnalytica.DataCollection.Data/HomeAnalytica.DataCollection.Data.csproj", "HomeAnalytica.DataCollection.Data/"]
+COPY ["HomeAnalytica.Grpc.Contracts/HomeAnalytica.Grpc.Contracts.csproj", "HomeAnalytica.Services.Communication/"]
+RUN dotnet restore "./HomeAnalytica.DataCollection/HomeAnalytica.DataCollection.csproj"
 COPY . .
-WORKDIR "/src/HomeAnalytica.Web"
-RUN dotnet build "./HomeAnalytica.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/HomeAnalytica.DataCollection"
+RUN dotnet build "./HomeAnalytica.DataCollection.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Diese Stufe wird verwendet, um das Dienstprojekt zu veröffentlichen, das in die letzte Phase kopiert werden soll.
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./HomeAnalytica.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./HomeAnalytica.DataCollection.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Diese Stufe wird in der Produktion oder bei Ausführung von VS im regulären Modus verwendet (Standard, wenn die Debugkonfiguration nicht verwendet wird).
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "HomeAnalytica.Web.dll"]
+ENTRYPOINT ["dotnet", "HomeAnalytica.DataCollection.dll"]
