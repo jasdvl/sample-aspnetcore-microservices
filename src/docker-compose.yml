@@ -28,4 +28,4 @@ services:
 
 volumes:
     sensor_data:
-
+    data_protection_keys:
