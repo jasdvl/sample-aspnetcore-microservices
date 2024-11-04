@@ -1,11 +1,14 @@
 
-var builder = WebApplication.CreateBuilder(args);
+using HomeAnalytica.Gateway.Yarp.Bootstrap;
 
-builder.Services.AddReverseProxy()
-    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+WebApplicationOptions options = new WebApplicationOptions { Args = args };
+
+var compRoot = new CompositionRoot();
+
+var builder = compRoot.CreateBuilder(options);
 
 var app = builder.Build();
 
-app.MapReverseProxy();
+MiddlewareConfigurator.Configure(app, app.Environment);
 
 app.Run();
