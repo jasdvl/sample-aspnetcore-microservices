@@ -22,6 +22,18 @@ namespace HomeAnalytica.Web.Bootstrap
         {
             var builder = WebApplication.CreateBuilder(options);
 
+            var environmentTarget = Environment.GetEnvironmentVariable("TARGET_ENVIRONMENT");
+
+            builder.Configuration
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+            if (!string.IsNullOrEmpty(environmentTarget))
+            {
+                builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.{environmentTarget}.json", optional: true, reloadOnChange: true);
+            }
+
             ConfigureAndRegisterServices(builder.Services, builder.Configuration, builder.Environment);
 
             return builder;
@@ -36,8 +48,13 @@ namespace HomeAnalytica.Web.Bootstrap
 
         private void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            var yarpBaseAddress = configuration["Yarp:BaseAddress"];
 
-            // Add services to the container.
+            services.AddHttpClient("YarpClient", client =>
+            {
+                client.BaseAddress = new Uri(yarpBaseAddress);
+            });
+
             services.AddRazorComponents().AddInteractiveServerComponents();
             services.AddHttpClient();
 
@@ -46,7 +63,6 @@ namespace HomeAnalytica.Web.Bootstrap
             //    {
             //        options.EnableDetailedErrors = true;
             //    });
-
         }
 
         private void RegisterServices(IServiceCollection services)
