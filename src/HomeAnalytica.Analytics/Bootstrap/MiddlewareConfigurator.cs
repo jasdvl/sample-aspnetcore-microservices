@@ -22,7 +22,9 @@ namespace HomeAnalytica.Analytics.Bootstrap
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            // HTTPS is not required for services behind the reverse proxy,
+            // as the proxy handles HTTPS termination and forwards requests via HTTP within the internal network.
+            //app.UseHttpsRedirection();
 
             app.MapGrpcService<SensorDataService>();
         }
