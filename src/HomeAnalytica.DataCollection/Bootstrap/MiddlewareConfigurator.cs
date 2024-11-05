@@ -25,7 +25,9 @@ namespace HomeAnalytica.DataCollection.Bootstrap
 
             app.ConfigureRoutes();
 
-            app.UseHttpsRedirection();
+            // HTTPS is not required for services behind the reverse proxy,
+            // as the proxy handles HTTPS termination and forwards requests via HTTP within the internal network.
+            //app.UseHttpsRedirection();
 
             using (var serviceScope = app.Services.CreateScope())
             {
