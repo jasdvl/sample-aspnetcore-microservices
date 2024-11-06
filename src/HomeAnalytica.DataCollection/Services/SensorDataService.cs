@@ -21,8 +21,14 @@ public class SensorDataService : ISensorDataService
         // Logik zur Verarbeitung der empfangenen Daten
         _logger.LogInformation($"Processing data: Temp={data.Temperature}, Humidity={data.Humidity}, Energy={data.EnergyConsumption}");
 
-        await _sensorDataSenderClient.SubmitSensorDataAsync(new SensorDataRequest() { EnergyConsumption = 9 });
+        var res = await _sensorDataSenderClient.SubmitSensorDataAsync(
+                                                    new SensorDataRequest()
+                                                    {
+                                                        EnergyConsumption = data.EnergyConsumption,
+                                                        Humidity = data.Humidity,
+                                                        Temperature = data.Temperature
+                                                    });
 
-        await Task.CompletedTask; // Simuliere asynchrone Arbeit
+        await Task.CompletedTask;
     }
 }
