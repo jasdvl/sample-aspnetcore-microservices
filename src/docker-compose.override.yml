@@ -15,13 +15,6 @@ services:
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - TARGET_ENVIRONMENT=Docker
-            - ASPNETCORE_HTTP_PORTS=8080
-            - ASPNETCORE_HTTPS_PORTS=8081
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/HomeAnalytica.Analytics.pfx
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=8247c5bc-698a-42b7-5910-ec40578db4a5
-        ports:
-            - "5620:8080"
-            - "6620:8081"
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -31,10 +24,7 @@ services:
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - TARGET_ENVIRONMENT=Docker
-            - ASPNETCORE_HTTP_PORTS=8080
             - ConnectionStrings__DefaultConnection=Server=sensor-data-db;Port=5432;Database=sensor_data;User Id=postgres;Password=postgres;Include Error Detail=true;TrustServerCertificate=True
-        ports:
-            - "5630:8080"
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -46,7 +36,6 @@ services:
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - TARGET_ENVIRONMENT=Docker
-            - ASPNETCORE_HTTP_PORTS=8080
         ports:
             - "5610:8080"
         volumes:

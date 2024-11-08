@@ -1,3 +1,4 @@
+using Grpc.Core;
 using HomeAnalytica.DataCollection.Data.Context;
 using HomeAnalytica.DataCollection.Grpc;
 using HomeAnalytica.DataCollection.Services;
@@ -64,6 +65,10 @@ namespace HomeAnalytica.DataCollection.Bootstrap
             services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
             {
                 o.Address = new Uri(analyticsUrl);
+            })
+            .ConfigureChannel(options =>
+            {
+                options.Credentials = ChannelCredentials.Insecure;
             });
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");

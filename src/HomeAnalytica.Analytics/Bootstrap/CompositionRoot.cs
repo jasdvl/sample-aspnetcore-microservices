@@ -22,6 +22,18 @@ namespace HomeAnalytica.Analytics.Bootstrap
         {
             var builder = WebApplication.CreateBuilder(options);
 
+            var environmentTarget = Environment.GetEnvironmentVariable("TARGET_ENVIRONMENT");
+
+            builder.Configuration
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+            if (!string.IsNullOrEmpty(environmentTarget))
+            {
+                builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.{environmentTarget}.json", optional: true, reloadOnChange: true);
+            }
+
             ConfigureAndRegisterServices(builder.Services, builder.Configuration, builder.Environment);
 
             return builder;

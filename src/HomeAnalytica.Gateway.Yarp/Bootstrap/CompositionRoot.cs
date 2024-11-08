@@ -34,7 +34,7 @@ namespace HomeAnalytica.Gateway.Yarp.Bootstrap
                 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.{environmentTarget}.json", optional: true, reloadOnChange: true);
             }
 
-            // Set antiforgery cookies to allow non-secure HTTP for demo purposes only.
+            // Allow non-secure HTTP for demo purposes only.
             // Not recommended for production; use HTTPS in production environments.
             builder.Services.AddAntiforgery(options => options.Cookie.SecurePolicy = CookieSecurePolicy.None);
 
