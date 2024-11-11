@@ -4,5 +4,5 @@ using global::HomeAnalytica.DataCollection.DTOs;
 
 public interface ISensorDataService
 {
-    Task ProcessSensorDataAsync(SensorData data);
+    Task ProcessSensorDataAsync(SensorDataDto data);
 }
