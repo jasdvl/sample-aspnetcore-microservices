@@ -23,6 +23,9 @@ namespace HomeAnalytica.DataCollection.Data.Context
                 entity.Property(e => e.Id)
                     .HasColumnName("id");
 
+                entity.Property(e => e.Timestamp)
+                    .HasColumnName("timestamp");
+
                 entity.Property(e => e.Humidity)
                     .HasColumnName("humidity");
 
