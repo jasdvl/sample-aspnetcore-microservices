@@ -44,7 +44,8 @@ namespace HomeAnalytica.DataCollection.Data.Migrations
                         .HasColumnName("temperature");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("timestamp");
 
                     b.HasKey("Id");
 

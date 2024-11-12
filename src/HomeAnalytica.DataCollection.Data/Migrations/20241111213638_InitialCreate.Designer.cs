@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeAnalytica.DataCollection.Data.Migrations
 {
     [DbContext(typeof(HomeAnalyticaDbContext))]
-    [Migration("20241110200059_InitialCreate")]
+    [Migration("20241111213638_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -47,7 +47,8 @@ namespace HomeAnalytica.DataCollection.Data.Migrations
                         .HasColumnName("temperature");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("timestamp");
 
                     b.HasKey("Id");
 
