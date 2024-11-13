@@ -1,6 +1,6 @@
 namespace HomeAnalytica.DataCollection.Services;
 
-using global::HomeAnalytica.DataCollection.DTOs;
+using HomeAnalytica.Common.DTOs;
 
 public interface ISensorDataService
 {
