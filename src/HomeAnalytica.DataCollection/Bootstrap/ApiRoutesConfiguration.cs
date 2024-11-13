@@ -1,4 +1,4 @@
-using HomeAnalytica.DataCollection.DTOs;
+using HomeAnalytica.Common.DTOs;
 using HomeAnalytica.DataCollection.Services;
 
 namespace HomeAnalytica.DataCollection.Bootstrap;

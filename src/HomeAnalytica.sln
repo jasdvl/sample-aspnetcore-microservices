@@ -20,7 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Analytics", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataCollection", "HomeAnalytica.DataCollection\HomeAnalytica.DataCollection.csproj", "{53118147-498A-4E74-83E1-415A5C7BFEA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeAnalytica.Grpc.Contracts", "HomeAnalytica.Grpc.Contracts\HomeAnalytica.Grpc.Contracts.csproj", "{62B77C6D-8B1D-4926-B197-61D964EFB1A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Grpc.Contracts", "HomeAnalytica.Grpc.Contracts\HomeAnalytica.Grpc.Contracts.csproj", "{62B77C6D-8B1D-4926-B197-61D964EFB1A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeAnalytica.Common", "HomeAnalytica.Common\HomeAnalytica.Common.csproj", "{47578145-7EBA-46AA-8778-A82D3505B813}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{62B77C6D-8B1D-4926-B197-61D964EFB1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62B77C6D-8B1D-4926-B197-61D964EFB1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62B77C6D-8B1D-4926-B197-61D964EFB1A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47578145-7EBA-46AA-8778-A82D3505B813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47578145-7EBA-46AA-8778-A82D3505B813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47578145-7EBA-46AA-8778-A82D3505B813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47578145-7EBA-46AA-8778-A82D3505B813}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
