@@ -3,8 +3,13 @@ namespace HomeAnalytica.DataCollection.DTOs
     /// <summary>
     /// Represents the sensor data collected from IoT devices.
     /// </summary>
-    public class SensorData
+    public class SensorDataDto
     {
+        /// <summary>
+        /// Gets or sets the time of measurement.
+        /// </summary>
+        public DateTime Timestamp { get; set; }
+
         /// <summary>
         /// Gets or sets the temperature measured by the sensor in degrees Celsius.
         /// </summary>

@@ -1,5 +1,6 @@
 using Grpc.Core;
 using HomeAnalytica.DataCollection.Data.Context;
+using HomeAnalytica.DataCollection.Data.Infrastructure;
 using HomeAnalytica.DataCollection.Grpc;
 using HomeAnalytica.DataCollection.Services;
 using HomeAnalytica.Grpc.Contracts.Protos;
@@ -84,6 +85,7 @@ namespace HomeAnalytica.DataCollection.Bootstrap
         private void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<ISensorDataService, SensorDataService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<SensorDataClient>();
         }
