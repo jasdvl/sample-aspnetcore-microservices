@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HomeAnalytica.Common\HomeAnalytica.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="appsettings.Development.Docker.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
