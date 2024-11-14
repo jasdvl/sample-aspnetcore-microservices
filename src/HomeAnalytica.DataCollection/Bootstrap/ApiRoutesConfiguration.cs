@@ -12,9 +12,18 @@ public static class ApiRoutesConfiguration
         {
             Console.WriteLine($"Received data: Temp={data.Temperature}, Humidity={data.Humidity}, Energy={data.EnergyConsumption}");
 
-            await sensorDataService.ProcessSensorDataAsync(data);
+            try
+            {
+                await sensorDataService.ProcessSensorDataAsync(data);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error processing sensor data: {ex.Message}");
 
-            return Results.Ok("Data received successfully");
+                return Results.StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Results.Ok("Sensor data successfully processed.");
         });
     }
 }
