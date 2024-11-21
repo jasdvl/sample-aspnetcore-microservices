@@ -1,25 +1,25 @@
-using HomeAnalytica.DataCollection.Data.Entities;
+using HomeAnalytica.DataRegistry.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace HomeAnalytica.DataCollection.Data.Context;
+namespace HomeAnalytica.DataRegistry.Data.Context;
 
 /// <summary>
-/// Represents the database context for the HomeAnalytica application, handling interactions with the database.
+/// Represents the database context for HomeAnalytica sensor metadata, handling interactions with the database.
 /// </summary>
-public class HomeAnalyticaDbContext : DbContext
+public class DataRegistryDbContext : DbContext
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="HomeAnalyticaDbContext"/> class.
+    /// Initializes a new instance of the <see cref="DataRegistryDbContext"/> class.
     /// </summary>
     /// <param name="options">An instance of <see cref="DbContextOptions{HomeAnalyticaDbContext}"/> used to configure the database context.</param>
-    public HomeAnalyticaDbContext(DbContextOptions<HomeAnalyticaDbContext> options) : base(options)
+    public DataRegistryDbContext(DbContextOptions<DataRegistryDbContext> options) : base(options)
     {
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="DbSet{SensorData}"/> for accessing and managing <see cref="HomeAnalytica.DataCollection.Data.Entities.SensorData"/> entities in the database.
+    /// Gets or sets the <see cref="DbSet{SensorData}"/> for accessing and managing <see cref="HomeAnalytica.DataRegistry.Data.Entities.SensorMetadata"/> entities in the database.
     /// </summary>
-    public DbSet<SensorData> SensorData { get; set; } = null!;
+    public DbSet<SensorMetadata> SensorData { get; set; } = null!;
 
     // Uncomment and configure if needed to set up the database connection explicitly.
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -41,16 +41,16 @@ public class HomeAnalyticaDbContext : DbContext
         // Applies a custom naming convention to convert database object names to snake_case.
         DatabaseSchemaFormatter.DbObjectNamesToSnakeCase(modelBuilder);
 
-        modelBuilder.Entity<SensorData>(entity =>
+        modelBuilder.Entity<SensorMetadata>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.Timestamp)
+            entity.Property(e => e.InstallationDate)
                 .IsRequired();
-            entity.Property(e => e.Humidity)
+            entity.Property(e => e.LastMaintenance)
                 .IsRequired();
-            entity.Property(e => e.EnergyConsumption)
+            entity.Property(e => e.Type)
                 .IsRequired();
-            entity.Property(e => e.Temperature)
+            entity.Property(e => e.Name)
                 .IsRequired();
         });
     }

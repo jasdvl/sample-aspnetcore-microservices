@@ -1,8 +1,8 @@
-using HomeAnalytica.DataCollection.Data.Context;
+using HomeAnalytica.DataRegistry.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace HomeAnalytica.DataCollection.Data.Repositories;
+namespace HomeAnalytica.DataRegistry.Data.Repositories;
 
 /// <summary>
 /// Generic repository class that handles CRUD operations for entities.
@@ -10,7 +10,7 @@ namespace HomeAnalytica.DataCollection.Data.Repositories;
 /// <typeparam name="TEntity">The type of entity this repository works with.</typeparam>
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
-    internal HomeAnalyticaDbContext _context;
+    internal DataRegistryDbContext _context;
 
     internal DbSet<TEntity> _dbSet;
 
@@ -18,7 +18,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     /// Initializes a new instance of the <see cref="Repository{TEntity}"/> class.
     /// </summary>
     /// <param name="context">The database context.</param>
-    public Repository(HomeAnalyticaDbContext context)
+    public Repository(DataRegistryDbContext context)
     {
         _context = context;
         _dbSet = context.Set<TEntity>();

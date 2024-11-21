@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace HomeAnalytica.DataCollection.Data.Repositories;
+namespace HomeAnalytica.DataRegistry.Data.Repositories;
 
 /// <summary>
 /// Generic repository interface for handling data operations on a specified entity type.

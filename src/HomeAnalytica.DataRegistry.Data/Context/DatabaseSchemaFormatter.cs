@@ -1,7 +1,7 @@
-using HomeAnalytica.DataCollection.Data.Entities;
+using HomeAnalytica.DataRegistry.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace HomeAnalytica.DataCollection.Data.Context
+namespace HomeAnalytica.DataRegistry.Data.Context
 {
     internal class DatabaseSchemaFormatter
     {
@@ -18,22 +18,22 @@ namespace HomeAnalytica.DataCollection.Data.Context
         /// </remarks>
         internal static void DbObjectNamesToSnakeCase(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SensorData>(entity =>
+            modelBuilder.Entity<SensorMetadata>(entity =>
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("id");
 
-                entity.Property(e => e.Timestamp)
-                    .HasColumnName("timestamp");
+                entity.Property(e => e.InstallationDate)
+                    .HasColumnName("installation_date");
 
-                entity.Property(e => e.Humidity)
-                    .HasColumnName("humidity");
+                entity.Property(e => e.Type)
+                    .HasColumnName("type");
 
-                entity.Property(e => e.EnergyConsumption)
-                    .HasColumnName("energy_consumption");
+                entity.Property(e => e.LastMaintenance)
+                    .HasColumnName("last_maintenance");
 
-                entity.Property(e => e.Temperature)
-                    .HasColumnName("temperature");
+                entity.Property(e => e.Name)
+                    .HasColumnName("name");
             });
         }
     }

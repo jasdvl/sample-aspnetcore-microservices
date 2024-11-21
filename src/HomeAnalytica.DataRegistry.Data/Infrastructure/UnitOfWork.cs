@@ -1,8 +1,8 @@
-using HomeAnalytica.DataCollection.Data.Context;
-using HomeAnalytica.DataCollection.Data.Entities;
-using HomeAnalytica.DataCollection.Data.Repositories;
+using HomeAnalytica.DataRegistry.Data.Context;
+using HomeAnalytica.DataRegistry.Data.Entities;
+using HomeAnalytica.DataRegistry.Data.Repositories;
 
-namespace HomeAnalytica.DataCollection.Data.Infrastructure;
+namespace HomeAnalytica.DataRegistry.Data.Infrastructure;
 
 /// <summary>
 /// Represents the interface for the Unit of Work pattern, providing access to repositories and saving changes.
@@ -12,7 +12,7 @@ public interface IUnitOfWork
     /// <summary>
     /// Gets the repository for SensorData entities.
     /// </summary>
-    IRepository<SensorData> SensorDataRepository { get; }
+    IRepository<SensorMetadata> SensorMetadataRepository { get; }
 
     /// <summary>
     /// Asynchronously saves all changes made in this unit of work to the database.
@@ -26,9 +26,9 @@ public interface IUnitOfWork
 /// </summary>
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly HomeAnalyticaDbContext _context;
+    private readonly DataRegistryDbContext _context;
 
-    private IRepository<SensorData> _sensorDataRepository;
+    private IRepository<SensorMetadata> _sensorMetadataRepository;
 
     private bool _disposed = false;
 
@@ -36,7 +36,7 @@ public class UnitOfWork : IUnitOfWork
     /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
     /// </summary>
     /// <param name="context">The database context.</param>
-    public UnitOfWork(HomeAnalyticaDbContext context)
+    public UnitOfWork(DataRegistryDbContext context)
     {
         _context = context;
     }
@@ -44,13 +44,13 @@ public class UnitOfWork : IUnitOfWork
     /// <summary>
     /// Gets the repository for SensorData entities. Creates a new instance if it doesn't exist.
     /// </summary>
-    public IRepository<SensorData> SensorDataRepository {
+    public IRepository<SensorMetadata> SensorMetadataRepository {
         get {
-            if (_sensorDataRepository == null)
+            if (_sensorMetadataRepository == null)
             {
-                _sensorDataRepository = new Repository<SensorData>(_context);
+                _sensorMetadataRepository = new Repository<SensorMetadata>(_context);
             }
-            return _sensorDataRepository;
+            return _sensorMetadataRepository;
         }
     }
 
