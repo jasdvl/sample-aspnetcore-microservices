@@ -1,20 +1,20 @@
 using HomeAnalytica.Common.DTOs;
-using HomeAnalytica.DataCollection.Services;
+using HomeAnalytica.DataRegistry.Services;
 
-namespace HomeAnalytica.DataCollection.Bootstrap;
+namespace HomeAnalytica.DataRegistry.Bootstrap;
 
 public static class ApiRoutesConfiguration
 {
     public static void ConfigureRoutes(this WebApplication app)
     {
         // Define the "data/submit" endpoint
-        app.MapPost("/data/submit", async (SensorDataDto data, ISensorDataService sensorDataService) =>
+        app.MapPost("/data/submit", async (SensorMetadataDto metadata, ISensorMetadataService sensorDataService) =>
         {
-            Console.WriteLine($"Received data: Temp={data.Temperature}, Humidity={data.Humidity}, Energy={data.EnergyConsumption}");
+            Console.WriteLine($"Received metadata: Sensor = {metadata.Name}");
 
             try
             {
-                await sensorDataService.ProcessSensorDataAsync(data);
+                await sensorDataService.ProcessSensorMetadataAsync(metadata);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,11 @@
-namespace HomeAnalytica.Analytics.Bootstrap
+using Grpc.Core;
+using HomeAnalytica.DataRegistry.Data.Context;
+using HomeAnalytica.DataRegistry.Data.Infrastructure;
+using HomeAnalytica.DataRegistry.Services;
+using HomeAnalytica.Grpc.Contracts.Protos;
+using Microsoft.EntityFrameworkCore;
+
+namespace HomeAnalytica.DataRegistry.Bootstrap
 {
     /// <summary>
     /// The CompositionRoot class is responsible for setting up the application’s 
@@ -52,10 +59,32 @@ namespace HomeAnalytica.Analytics.Bootstrap
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddGrpc();
+
+            var analyticsUrl = configuration["ServiceUrls:Analytics"];
+
+            services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
+            {
+                o.Address = new Uri(analyticsUrl);
+            })
+            .ConfigureChannel(options =>
+            {
+                options.Credentials = ChannelCredentials.Insecure;
+            });
+
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            //services.AddPooledDbContextFactory<HomeAnalyticaDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<DataRegistryDbContext>(options =>
+            {
+                options.UseNpgsql(connectionString);
+                //options.EnableSensitiveDataLogging();
+            });
+
         }
 
         private void RegisterServices(IServiceCollection services)
         {
+            services.AddScoped<ISensorMetadataService, SensorMetadataService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }
