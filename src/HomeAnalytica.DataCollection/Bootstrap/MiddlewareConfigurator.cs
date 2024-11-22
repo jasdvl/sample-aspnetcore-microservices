@@ -1,5 +1,4 @@
-using HomeAnalytica.DataCollection.Data.Context;
-using Microsoft.EntityFrameworkCore;
+using HomeAnalytica.DataCollection.Services;
 
 namespace HomeAnalytica.DataCollection.Bootstrap
 {
@@ -23,18 +22,11 @@ namespace HomeAnalytica.DataCollection.Bootstrap
                 app.UseSwaggerUI();
             }
 
-            app.ConfigureRoutes();
-
             // HTTPS is not required for services behind the reverse proxy,
             // as the proxy handles HTTPS termination and forwards requests via HTTP within the internal network.
             //app.UseHttpsRedirection();
 
-            using (var serviceScope = app.Services.CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<HomeAnalyticaDbContext>();
-
-                context.Database.Migrate();
-            }
+            app.MapGrpcService<SensorDataService>();
         }
     }
 }

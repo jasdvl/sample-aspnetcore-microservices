@@ -1,10 +1,6 @@
-using Grpc.Core;
+using HomeAnalytica.DataCollection.Configuration;
 using HomeAnalytica.DataCollection.Data.Context;
-using HomeAnalytica.DataCollection.Data.Infrastructure;
-using HomeAnalytica.DataCollection.Grpc;
-using HomeAnalytica.DataCollection.Services;
-using HomeAnalytica.Grpc.Contracts.Protos;
-using Microsoft.EntityFrameworkCore;
+using HomeAnalytica.DataCollection.Data.Repositories;
 
 namespace HomeAnalytica.DataCollection.Bootstrap
 {
@@ -51,7 +47,7 @@ namespace HomeAnalytica.DataCollection.Bootstrap
         {
             ConfigureServices(services, configuration);
 
-            RegisterServices(services);
+            RegisterServices(services, configuration);
         }
 
         private void ConfigureServices(IServiceCollection services, IConfiguration configuration)
@@ -60,34 +56,18 @@ namespace HomeAnalytica.DataCollection.Bootstrap
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddGrpc();
-
-            var analyticsUrl = configuration["ServiceUrls:Analytics"];
-
-            services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
-            {
-                o.Address = new Uri(analyticsUrl);
-            })
-            .ConfigureChannel(options =>
-            {
-                options.Credentials = ChannelCredentials.Insecure;
-            });
-
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            //services.AddPooledDbContextFactory<HomeAnalyticaDbContext>(options => options.UseNpgsql(connectionString));
-            services.AddDbContext<HomeAnalyticaDbContext>(options =>
-            {
-                options.UseNpgsql(connectionString);
-                //options.EnableSensitiveDataLogging();
-            });
-
         }
 
-        private void RegisterServices(IServiceCollection services)
+        private void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<ISensorDataService, SensorDataService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            var dbSettings = configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>();
 
-            services.AddTransient<SensorDataClient>();
+            var mongoDbConnectionString = configuration.GetConnectionString("MongoDb");
+
+            var mongoDbContext = new SensorDataDbContext(mongoDbConnectionString, dbSettings.DatabaseName);
+
+            services.AddSingleton(mongoDbContext);
+            services.AddScoped<ITemperatureDataRepository, TemperatureDataRepository>();
         }
     }
 }
