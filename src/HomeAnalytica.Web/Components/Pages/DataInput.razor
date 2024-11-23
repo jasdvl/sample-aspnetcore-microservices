@@ -1,7 +1,10 @@
 @page "/data-input"
+@using HomeAnalytica.Common.Const
 @using HomeAnalytica.Common.DTOs
+@using HomeAnalytica.Web.Services
 @rendermode InteractiveServer
 @inject IHttpClientFactory HttpClientFactory
+@inject ISensorDataService SensorDataService
 
 <PageTitle>Counter</PageTitle>
 
@@ -41,6 +44,8 @@
 
 @code {
 
+
+
     private double temperature;
 
     private double humidity;
@@ -51,14 +56,15 @@
 
 
 
-    private async Task SubmitData()
+    private async Task SubmitMetadata()
     {
         var data = new SensorDataDto
         {
+            SensorType = SensorType.Temperature,
+
             Timestamp = DateTime.UtcNow,
-            Temperature = temperature,
-            Humidity = humidity,
-            EnergyConsumption = energyConsumption
+
+            Value = temperature
         };
 
         var client = HttpClientFactory.CreateClient("YarpClient");
@@ -71,8 +77,23 @@
         }
         else
         {
+
             // Handle error
 
         }
+    }
+
+
+
+    private async Task SubmitData()
+    {
+        var data = new SensorDataDto
+        {
+            SensorType = SensorType.Temperature,
+            Timestamp = DateTime.UtcNow,
+            Value = temperature
+        };
+
+        await SensorDataService.ProcessSensorDataAsync(data);
     }
 }

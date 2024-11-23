@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.Net.Client" Version="2.66.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
   </ItemGroup>
 
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HomeAnalytica.Common\HomeAnalytica.Common.csproj" />
+    <ProjectReference Include="..\HomeAnalytica.Grpc.Contracts\HomeAnalytica.Grpc.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
