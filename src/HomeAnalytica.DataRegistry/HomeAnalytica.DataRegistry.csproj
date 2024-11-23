@@ -4,19 +4,25 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>39182efb-43c3-4f7c-ad70-ad1401c28a49</UserSecretsId>
+    <UserSecretsId>fbf050f2-f27c-446c-a88e-d2da5dd483d0</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.66.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HomeAnalytica.DataCollection.Data\HomeAnalytica.DataCollection.Data.csproj" />
+    <ProjectReference Include="..\HomeAnalytica.Common\HomeAnalytica.Common.csproj" />
+    <ProjectReference Include="..\HomeAnalytica.DataRegistry.Data\HomeAnalytica.DataRegistry.Data.csproj" />
     <ProjectReference Include="..\HomeAnalytica.Grpc.Contracts\HomeAnalytica.Grpc.Contracts.csproj" />
   </ItemGroup>
 

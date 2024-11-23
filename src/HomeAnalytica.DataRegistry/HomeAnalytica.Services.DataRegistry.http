@@ -1,0 +1,6 @@
+@HomeAnalytica.DataRegistry_HostAddress = http://localhost:5230
+
+GET {{HomeAnalytica.DataRegistry_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
