@@ -22,18 +22,22 @@ namespace HomeAnalytica.DataRegistry.Data.Context
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("id");
-
+                entity.Property(e => e.DeviceId)
+                   .HasColumnName("device_id");
                 entity.Property(e => e.InstallationDate)
                     .HasColumnName("installation_date");
-
                 entity.Property(e => e.Type)
                     .HasColumnName("type");
-
                 entity.Property(e => e.LastMaintenance)
                     .HasColumnName("last_maintenance");
-
                 entity.Property(e => e.Name)
                     .HasColumnName("name");
+                entity.Property(e => e.Location)
+                    .HasColumnName("location");
+                entity.Property(e => e.Status)
+                    .HasColumnName("status");
+                entity.Property(e => e.Description)
+                    .HasColumnName("description");
             });
         }
     }

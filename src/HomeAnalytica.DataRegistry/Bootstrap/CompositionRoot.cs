@@ -60,11 +60,11 @@ namespace HomeAnalytica.DataRegistry.Bootstrap
             services.AddSwaggerGen();
             services.AddGrpc();
 
-            var analyticsUrl = configuration["ServiceUrls:Analytics"];
+            var dataRegistryUrl = configuration["ServiceUrls:DataRegistry"];
 
             services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
             {
-                o.Address = new Uri(analyticsUrl);
+                o.Address = new Uri(dataRegistryUrl);
             })
             .ConfigureChannel(options =>
             {

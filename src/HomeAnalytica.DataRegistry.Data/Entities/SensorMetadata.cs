@@ -11,6 +11,11 @@ public class SensorMetadata
     public long Id { get; set; }
 
     /// <summary>
+    /// Gets or sets the unique device id of the sensor.
+    /// </summary>
+    public string DeviceId { get; set; }
+
+    /// <summary>
     /// Gets or sets the name or label of the sensor for easier identification.
     /// </summary>
     public string Name { get; set; }

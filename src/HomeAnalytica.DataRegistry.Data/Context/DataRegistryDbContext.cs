@@ -19,7 +19,7 @@ public class DataRegistryDbContext : DbContext
     /// <summary>
     /// Gets or sets the <see cref="DbSet{SensorData}"/> for accessing and managing <see cref="HomeAnalytica.DataRegistry.Data.Entities.SensorMetadata"/> entities in the database.
     /// </summary>
-    public DbSet<SensorMetadata> SensorData { get; set; } = null!;
+    public DbSet<SensorMetadata> SensorMetadata { get; set; } = null!;
 
     // Uncomment and configure if needed to set up the database connection explicitly.
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -44,6 +44,8 @@ public class DataRegistryDbContext : DbContext
         modelBuilder.Entity<SensorMetadata>(entity =>
         {
             entity.HasKey(e => e.Id);
+            entity.Property(e => e.DeviceId)
+                .IsRequired();
             entity.Property(e => e.InstallationDate)
                 .IsRequired();
             entity.Property(e => e.LastMaintenance)
