@@ -12,10 +12,12 @@ public class SensorDataClient
         _client = client;
     }
 
-    public async Task SendSensorDataAsync(DateTime timestamp, double value)
+    public async Task SendSensorDataAsync(string deviceId, SensorType sensorType, DateTime timestamp, double value)
     {
         var request = new SensorDataRequest
         {
+            DeviceId = deviceId,
+            SensorType = sensorType,
             Timestamp = Timestamp.FromDateTime(timestamp),
             Value = value
         };

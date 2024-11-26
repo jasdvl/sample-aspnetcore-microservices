@@ -28,7 +28,8 @@ public class SensorDataService : ISensorDataService
             var res = await _sensorDataSenderClient.SubmitSensorDataAsync(
                                                         new SensorDataRequest()
                                                         {
-                                                            SensorType = (int)data.SensorType,
+                                                            DeviceId = data.DeviceId,
+                                                            SensorType = (SensorType)data.SensorType,
                                                             Timestamp = Timestamp.FromDateTime(data.Timestamp),
                                                             Value = data.Value
                                                         });
