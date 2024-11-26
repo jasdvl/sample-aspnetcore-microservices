@@ -4,6 +4,15 @@ option csharp_namespace = "HomeAnalytica.Grpc.Contracts.Protos";
 
 package sensor;
 
+import "google/protobuf/timestamp.proto";
+
+enum SensorType {
+    SENSOR_TYPE_UNSPECIFIED = 0;
+    TEMPERATURE = 1;
+    HUMIDITY = 2;
+    ENERGY_CONSUMPTION = 3;
+}
+
 // The sensor data service definition.
 service SensorDataSender {
   // Sends sensor data
@@ -12,12 +21,13 @@ service SensorDataSender {
 
 // The request message containing sensor data.
 message SensorDataRequest {
-  double temperature = 1;
-  double humidity = 2;
-  double energy_consumption = 3;
+    string device_id = 1;
+    google.protobuf.Timestamp timestamp = 2;
+    SensorType sensor_type = 3;
+    double value = 4;
 }
 
 // The response message confirming receipt of the data.
 message SensorDataResponse {
-  string message = 1;
+    string message = 1;
 }

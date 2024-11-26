@@ -1,3 +1,8 @@
+using Grpc.Core;
+using HomeAnalytica.Grpc.Contracts.Protos;
+using HomeAnalytica.Web.Grpc;
+using HomeAnalytica.Web.Services;
+
 namespace HomeAnalytica.Web.Bootstrap
 {
     /// <summary>
@@ -58,6 +63,19 @@ namespace HomeAnalytica.Web.Bootstrap
             services.AddRazorComponents().AddInteractiveServerComponents();
             services.AddHttpClient();
 
+            services.AddGrpc();
+
+            var dataCollectionServiceUrl = configuration["ServiceUrls:DataCollection"];
+
+            services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
+            {
+                o.Address = new Uri(dataCollectionServiceUrl);
+            })
+            .ConfigureChannel(options =>
+            {
+                options.Credentials = ChannelCredentials.Insecure;
+            });
+
             //services.AddServerSideBlazor()
             //    .AddHubOptions(options =>
             //    {
@@ -67,13 +85,9 @@ namespace HomeAnalytica.Web.Bootstrap
 
         private void RegisterServices(IServiceCollection services)
         {
-            // Singleton Services
+            services.AddScoped<ISensorDataService, SensorDataService>();
 
-
-            // Scoped Services
-
-
-            // Transient
+            services.AddTransient<SensorDataClient>();
         }
     }
 }
