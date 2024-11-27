@@ -49,8 +49,11 @@ public class SensorMetadataService : ISensorMetadataService
     {
         SensorMetadata sensorMetadata = new SensorMetadata
         {
+            DeviceId = metadata.DeviceId,
             Name = metadata.Name,
-            LastMaintenance = metadata.LastMaintenance
+            Type = (int)metadata.Type,
+            LastMaintenance = metadata.LastMaintenance,
+            Status = metadata.Status
         };
 
         await _unitOfWork.SensorMetadataRepository.InsertAsync(sensorMetadata);
@@ -63,6 +66,8 @@ public class SensorMetadataService : ISensorMetadataService
 
         var sensorMetadataDtos = sensorMetadataEntities.Select(entity => new SensorMetadataDto
         {
+            DeviceId = entity.DeviceId,
+            Type = (Common.Const.SensorType)entity.Type,
             Name = entity.Name
         });
 

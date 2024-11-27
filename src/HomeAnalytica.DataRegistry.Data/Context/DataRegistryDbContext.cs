@@ -46,14 +46,22 @@ public class DataRegistryDbContext : DbContext
             entity.HasKey(e => e.Id);
             entity.Property(e => e.DeviceId)
                 .IsRequired();
-            entity.Property(e => e.InstallationDate)
-                .IsRequired();
-            entity.Property(e => e.LastMaintenance)
-                .IsRequired();
             entity.Property(e => e.Type)
                 .IsRequired();
+            entity.Property(e => e.InstallationDate)
+                .IsRequired(false);
+            entity.Property(e => e.LastMaintenance)
+                .IsRequired(false);
             entity.Property(e => e.Name)
-                .IsRequired();
+                .IsRequired(false);
+            entity.Property(e => e.Location)
+                .IsRequired(false);
+            entity.Property(e => e.InstallationDate)
+                .IsRequired(false);
+            entity.Property(e => e.Status)
+                .IsRequired(false);
+            entity.Property(e => e.Description)
+                .IsRequired(false);
         });
     }
 }

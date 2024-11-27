@@ -19,13 +19,13 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     device_id = table.Column<string>(type: "text", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    type = table.Column<string>(type: "text", nullable: false),
-                    location = table.Column<string>(type: "text", nullable: false),
-                    installation_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false),
-                    last_maintenance = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: true),
+                    type = table.Column<int>(type: "integer", nullable: false),
+                    location = table.Column<string>(type: "text", nullable: true),
+                    installation_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    status = table.Column<string>(type: "text", nullable: true),
+                    last_maintenance = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
