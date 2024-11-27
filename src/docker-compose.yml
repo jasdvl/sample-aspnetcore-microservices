@@ -1,18 +1,21 @@
 services:
-    sensor-data-db:
+    homeanalytica.dataregistry.db:
         image: postgres
 
-    homeanalytica.analytics:
-        image: ${DOCKER_REGISTRY-}homeanalyticaanalytics
-        build:
-          context: .
-          dockerfile: HomeAnalytica.Analytics/Dockerfile
-        
+    homeanalytica.datacollection.db:
+        image: mongo
+
     homeanalytica.datacollection:
         image: ${DOCKER_REGISTRY-}homeanalyticadatacollection
         build:
+          context: .
+          dockerfile: HomeAnalytica.DataCollection/Dockerfile
+        
+    homeanalytica.dataregistry:
+        image: ${DOCKER_REGISTRY-}homeanalyticadataregistry
+        build:
             context: .
-            dockerfile: HomeAnalytica.DataCollection/Dockerfile
+            dockerfile: HomeAnalytica.DataRegistry/Dockerfile
             
     homeanalytica.gateway.yarp:
         image: ${DOCKER_REGISTRY-}homeanalyticagatewayyarp
@@ -25,7 +28,3 @@ services:
         build:
             context: .
             dockerfile: HomeAnalytica.Web/Dockerfile
-
-volumes:
-    sensor_data:
-    data_protection_keys:
