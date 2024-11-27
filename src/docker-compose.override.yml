@@ -1,26 +1,40 @@
 services:
-    sensor-data-db:
-        container_name: sensor-data-db
+    homeanalytica.dataregistry.db:
+        container_name: homeanalytica.dataregistry.db
         environment:
           - POSTGRES_USER=postgres
           - POSTGRES_PASSWORD=postgres
-          - POSTGRES_DB=sensor_data
+          - POSTGRES_DB=data_registry
         restart: always
         ports:
             - "5440:5432"
         volumes:
-          - sensor_data:/var/lib/postgresql/data/
+            - ${APPDATA}/HomeAnalytica/data_registry:/var/lib/postgresql/data/
 
-    homeanalytica.analytics:
+    homeanalytica.datacollection.db:
+        container_name: homeanalytica.datacollection.db
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: secret
+        ports:
+            - "27017:27017"
+        volumes:
+            - ${APPDATA}/HomeAnalytica/data_collection:/data/db
+
+    homeanalytica.datacollection:
+        container_name: homeanalytica.datacollection
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - TARGET_ENVIRONMENT=Docker
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-            - data_protection_keys:/root/.aspnet/https
+            - ${APPDATA}/HomeAnalytica/data_protection_keys:/root/.aspnet/https
+        depends_on:
+            - homeanalytica.datacollection.db
 
-    homeanalytica.datacollection:
+    homeanalytica.dataregistry:
+        container_name: homeanalytica.dataregistry
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - TARGET_ENVIRONMENT=Docker
@@ -28,11 +42,12 @@ services:
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-            - data_protection_keys:/root/.aspnet/https
+            - ${APPDATA}/HomeAnalytica/data_protection_keys:/root/.aspnet/https
         depends_on:
-            - sensor-data-db
+            - homeanalytica.dataregistry.db
 
     homeanalytica.gateway.yarp:
+        container_name: homeanalytica.gateway.yarp
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - TARGET_ENVIRONMENT=Docker
@@ -41,11 +56,10 @@ services:
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-            - data_protection_keys:/root/.aspnet/https
-        depends_on:
-            - homeanalytica.datacollection
+            - ${APPDATA}/HomeAnalytica/data_protection_keys:/root/.aspnet/https
 
     homeanalytica.web:
+        container_name: homeanalytica.web
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - TARGET_ENVIRONMENT=Docker
@@ -59,4 +73,4 @@ services:
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-            - data_protection_keys:/root/.aspnet/https
+            - ${APPDATA}/HomeAnalytica/data_protection_keys:/root/.aspnet/https
