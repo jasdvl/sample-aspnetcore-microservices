@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeAnalytica.DataRegistry.Data.Migrations
 {
     [DbContext(typeof(DataRegistryDbContext))]
-    [Migration("20241123211459_InitialCreate")]
+    [Migration("20241125221740_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,7 +35,6 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description");
 
@@ -45,33 +44,27 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                         .HasColumnName("device_id");
 
                     b.Property<DateTime?>("InstallationDate")
-                        .IsRequired()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("installation_date");
 
                     b.Property<DateTime?>("LastMaintenance")
-                        .IsRequired()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_maintenance");
 
                     b.Property<string>("Location")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("location");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("status");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
                         .HasColumnName("type");
 
                     b.HasKey("Id");

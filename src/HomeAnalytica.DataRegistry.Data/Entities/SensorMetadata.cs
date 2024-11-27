@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace HomeAnalytica.DataRegistry.Data.Entities;
 
 public class SensorMetadata
@@ -7,13 +5,12 @@ public class SensorMetadata
     /// <summary>
     /// Gets or sets the unique identifier for the sensor.
     /// </summary>
-    [Key]
     public long Id { get; set; }
 
     /// <summary>
     /// Gets or sets the unique device id of the sensor.
     /// </summary>
-    public string DeviceId { get; set; }
+    public required string DeviceId { get; set; }
 
     /// <summary>
     /// Gets or sets the name or label of the sensor for easier identification.
@@ -23,7 +20,7 @@ public class SensorMetadata
     /// <summary>
     /// Gets or sets the type of the sensor (e.g., "Temperature", "Humidity", "EnergyConsumption").
     /// </summary>
-    public string Type { get; set; }
+    public int Type { get; set; }
 
     /// <summary>
     /// Gets or sets the location of the sensor, such as a room name, building, or GPS coordinates.
