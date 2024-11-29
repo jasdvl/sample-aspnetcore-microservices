@@ -12,17 +12,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Pr
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataCollection.Data", "HomeAnalytica.DataCollection.Data\HomeAnalytica.DataCollection.Data.csproj", "{78929316-9F9F-4D68-B8B8-8F2040C07BD3}"
-EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{364B4F15-28EF-475F-97D0-46F660278F21}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Analytics", "HomeAnalytica.Analytics\HomeAnalytica.Analytics.csproj", "{ABF96DA2-8DAE-49D7-A3FC-7099A6D2E3B1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataCollection", "HomeAnalytica.DataCollection\HomeAnalytica.DataCollection.csproj", "{53118147-498A-4E74-83E1-415A5C7BFEA3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Grpc.Contracts", "HomeAnalytica.Grpc.Contracts\HomeAnalytica.Grpc.Contracts.csproj", "{62B77C6D-8B1D-4926-B197-61D964EFB1A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeAnalytica.Common", "HomeAnalytica.Common\HomeAnalytica.Common.csproj", "{47578145-7EBA-46AA-8778-A82D3505B813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.Common", "HomeAnalytica.Common\HomeAnalytica.Common.csproj", "{47578145-7EBA-46AA-8778-A82D3505B813}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataRegistry", "HomeAnalytica.DataRegistry\HomeAnalytica.DataRegistry.csproj", "{46C15FDF-6EF6-4E1F-829C-DFA174B4A867}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataRegistry.Data", "HomeAnalytica.DataRegistry.Data\HomeAnalytica.DataRegistry.Data.csproj", "{31C610D0-7364-487A-9B10-ACB38660F7EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataCollection", "HomeAnalytica.DataCollection\HomeAnalytica.DataCollection.csproj", "{BA8E701C-BDFB-4C1C-B629-EFDA15380470}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAnalytica.DataCollection.Data", "HomeAnalytica.DataCollection.Data\HomeAnalytica.DataCollection.Data.csproj", "{A317A709-665C-4692-9CF5-3145A4120F33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,21 +40,9 @@ Global
 		{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CF3D2C6-CCC0-4A40-B96A-F0C5F6AB1B5E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78929316-9F9F-4D68-B8B8-8F2040C07BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78929316-9F9F-4D68-B8B8-8F2040C07BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78929316-9F9F-4D68-B8B8-8F2040C07BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78929316-9F9F-4D68-B8B8-8F2040C07BD3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{364B4F15-28EF-475F-97D0-46F660278F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{364B4F15-28EF-475F-97D0-46F660278F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{364B4F15-28EF-475F-97D0-46F660278F21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ABF96DA2-8DAE-49D7-A3FC-7099A6D2E3B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABF96DA2-8DAE-49D7-A3FC-7099A6D2E3B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ABF96DA2-8DAE-49D7-A3FC-7099A6D2E3B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ABF96DA2-8DAE-49D7-A3FC-7099A6D2E3B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53118147-498A-4E74-83E1-415A5C7BFEA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{53118147-498A-4E74-83E1-415A5C7BFEA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{53118147-498A-4E74-83E1-415A5C7BFEA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{53118147-498A-4E74-83E1-415A5C7BFEA3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{62B77C6D-8B1D-4926-B197-61D964EFB1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{62B77C6D-8B1D-4926-B197-61D964EFB1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62B77C6D-8B1D-4926-B197-61D964EFB1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,6 +51,22 @@ Global
 		{47578145-7EBA-46AA-8778-A82D3505B813}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47578145-7EBA-46AA-8778-A82D3505B813}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47578145-7EBA-46AA-8778-A82D3505B813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46C15FDF-6EF6-4E1F-829C-DFA174B4A867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46C15FDF-6EF6-4E1F-829C-DFA174B4A867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46C15FDF-6EF6-4E1F-829C-DFA174B4A867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46C15FDF-6EF6-4E1F-829C-DFA174B4A867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31C610D0-7364-487A-9B10-ACB38660F7EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31C610D0-7364-487A-9B10-ACB38660F7EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31C610D0-7364-487A-9B10-ACB38660F7EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31C610D0-7364-487A-9B10-ACB38660F7EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA8E701C-BDFB-4C1C-B629-EFDA15380470}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA8E701C-BDFB-4C1C-B629-EFDA15380470}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA8E701C-BDFB-4C1C-B629-EFDA15380470}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA8E701C-BDFB-4C1C-B629-EFDA15380470}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A317A709-665C-4692-9CF5-3145A4120F33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A317A709-665C-4692-9CF5-3145A4120F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A317A709-665C-4692-9CF5-3145A4120F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A317A709-665C-4692-9CF5-3145A4120F33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
