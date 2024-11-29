@@ -4,39 +4,32 @@ using MongoDB.Driver;
 
 namespace HomeAnalytica.DataCollection.Data.Repositories;
 
-public class TemperatureDataRepository : ITemperatureDataRepository
+/// <summary>
+/// A repository implementation for managing temperature sensor data in the database.
+/// Inherits from <see cref="SensorDataRepository{TemperatureData}"/> and implements
+/// <see cref="ITemperatureDataRepository"/>.
+/// </summary>
+public class TemperatureDataRepository : SensorDataRepository<TemperatureData>, ITemperatureDataRepository
 {
-    private readonly IMongoCollection<TemperatureData> _temperatureDataCollection;
-
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TemperatureDataRepository"/> class.
+    /// </summary>
+    /// <param name="dbContext">The database context used for accessing the temperature data collection.</param>
     public TemperatureDataRepository(SensorDataDbContext dbContext)
+        : base(dbContext, dbContext.TemperatureDataCollection)
     {
-        _temperatureDataCollection = dbContext.TemperatureDataCollection;
     }
 
-    public async Task InsertSensorDataAsync(TemperatureData data)
+    /// <summary>
+    /// Retrieves the average temperature value from the temperature data collection.
+    /// </summary>
+    /// <returns>
+    /// A <see cref="Task{TResult}"/> representing the asynchronous operation. The result
+    /// contains the average temperature value as a <see cref="double"/>.
+    /// </returns>
+    public override async Task<double> GetAverageSensorDataValueAsync()
     {
-        await _temperatureDataCollection.InsertOneAsync(data);
-    }
-
-    public async Task<TemperatureData> GetLatestValue()
-    {
-        var sort = Builders<TemperatureData>.Sort.Descending(data => data.Timestamp);
-
-        var result = await _temperatureDataCollection.Find(FilterDefinition<TemperatureData>.Empty)
-                                      .Sort(sort)
-                                      .Limit(1)
-                                      .FirstOrDefaultAsync();
-        return result;
-    }
-
-    public async Task<List<TemperatureData>> FindSensorDataAsync(FilterDefinition<TemperatureData> filter)
-    {
-        return await _temperatureDataCollection.Find(filter).ToListAsync();
-    }
-
-    public async Task<double> GetAverageTemperatureAsync()
-    {
-        var averageTemperature = await _temperatureDataCollection
+        var averageTemperature = await _dataCollection
             .Aggregate()
             .Group(sensor => 1, g => new { AverageTemp = g.Average(s => s.Temperature) })
             .FirstOrDefaultAsync();
@@ -44,3 +37,4 @@ public class TemperatureDataRepository : ITemperatureDataRepository
         return averageTemperature?.AverageTemp ?? 0.0;
     }
 }
+

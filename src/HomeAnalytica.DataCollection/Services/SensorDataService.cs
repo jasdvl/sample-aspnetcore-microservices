@@ -1,5 +1,6 @@
 using Grpc.Core;
-using HomeAnalytica.DataCollection.Data.Repositories;
+using HomeAnalytica.DataCollection.DataProcessing;
+using HomeAnalytica.DataCollection.Factories;
 using HomeAnalytica.Grpc.Contracts.Protos;
 
 namespace HomeAnalytica.DataCollection.Services;
@@ -8,41 +9,32 @@ public class SensorDataService : SensorDataSender.SensorDataSenderBase
 {
     private readonly ILogger<SensorDataService> _logger;
 
-    private readonly ITemperatureDataRepository _temperatureDataRepository;
+    private readonly ISensorDataHandlerFactory _sensorDataProcessorFactory;
 
-    public SensorDataService(ILogger<SensorDataService> logger, ITemperatureDataRepository temperatureDataRepository)
+    public SensorDataService(
+                            ILogger<SensorDataService> logger,
+                            ISensorDataHandlerFactory sensorDataHandlerFactory)
     {
         _logger = logger;
-        _temperatureDataRepository = temperatureDataRepository;
+        _sensorDataProcessorFactory = sensorDataHandlerFactory;
     }
 
     public override async Task<SensorDataResponse> SubmitSensorData(SensorDataRequest request, ServerCallContext context)
     {
-        _logger.LogInformation($"Received data: Value = {request.Value}");
+        _logger.LogInformation($"Received sensor data: Value = {request.Value}");
 
-        await Insert(request);
+        await HandleSensorDataAsync(request);
 
         return new SensorDataResponse
         {
-            Message = "Data successfully received and processed"
+            Message = "Sensor data successfully received and processed"
         };
     }
 
-    private async Task Insert(SensorDataRequest request)
+    private async Task HandleSensorDataAsync(SensorDataRequest request)
     {
-        throw new NotImplementedException();
+        ISensorDataProcessor sensorDataProcessor = _sensorDataProcessorFactory.GetDataProcessor(request.SensorType);
 
-        //switch (request.SensorType)
-        //{
-
-        //}
-
-        //var sensorData = new TemperatureData
-        //{
-        //    Timestamp = request.Timestamp.ToDateTime(),
-        //    Temperature = request.Value
-        //};
-
-        // await _temperatureDataRepository.InsertSensorDataAsync(sensorData);
+        await sensorDataProcessor.HandleSensorDataAsync(request);
     }
 }
