@@ -4,10 +4,10 @@ using HomeAnalytica.DataRegistry.Data.Entities;
 namespace HomeAnalytica.DataRegistry.Data.Repositories;
 
 /// <summary>
-/// A repository class for handling data operations related to <see cref="SensorMetadata"/> entities.
+/// A repository class for handling data operations related to <see cref="SensorDevice"/> entities.
 /// Inherits from the generic <see cref="Repository{TEntity}"/> class.
 /// </summary>
-internal class SensorMetadataRepository : Repository<SensorMetadata>
+internal class SensorMetadataRepository : Repository<SensorDevice>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SensorMetadataRepository"/> class.

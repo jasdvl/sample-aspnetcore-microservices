@@ -18,7 +18,7 @@ namespace HomeAnalytica.DataRegistry.Data.Context
         /// </remarks>
         internal static void DbObjectNamesToSnakeCase(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SensorMetadata>(entity =>
+            modelBuilder.Entity<SensorDevice>(entity =>
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("id");

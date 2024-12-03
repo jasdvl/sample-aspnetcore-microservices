@@ -1,6 +1,6 @@
 namespace HomeAnalytica.DataRegistry.Data.Entities;
 
-public class SensorMetadata
+public class SensorDevice
 {
     /// <summary>
     /// Gets or sets the unique identifier for the sensor.
@@ -15,7 +15,7 @@ public class SensorMetadata
     /// <summary>
     /// Gets or sets the name or label of the sensor for easier identification.
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// Gets or sets the type of the sensor (e.g., "Temperature", "Humidity", "EnergyConsumption").
@@ -25,7 +25,7 @@ public class SensorMetadata
     /// <summary>
     /// Gets or sets the location of the sensor, such as a room name, building, or GPS coordinates.
     /// </summary>
-    public string Location { get; set; }
+    public string? Location { get; set; }
 
     /// <summary>
     /// Gets or sets the date when the sensor was installed.
@@ -35,7 +35,7 @@ public class SensorMetadata
     /// <summary>
     /// Gets or sets the status of the sensor, like "Active", "Inactive", or "Maintenance".
     /// </summary>
-    public string Status { get; set; } = "Active";
+    public string? Status { get; set; } = "Active";
 
     /// <summary>
     /// Gets or sets the date when the sensor was last maintained or calibrated.
@@ -45,5 +45,5 @@ public class SensorMetadata
     /// <summary>
     /// Gets or sets additional information or a description of the sensor.
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
 }

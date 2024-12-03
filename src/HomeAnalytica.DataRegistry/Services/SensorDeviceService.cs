@@ -5,22 +5,22 @@ using HomeAnalytica.Grpc.Contracts.Protos;
 
 namespace HomeAnalytica.DataRegistry.Services;
 
-public class SensorMetadataService : ISensorMetadataService
+public class SensorDeviceService : ISensorDeviceService
 {
-    private readonly ILogger<SensorMetadataService> _logger;
+    private readonly ILogger<SensorDeviceService> _logger;
 
     private readonly SensorDataSender.SensorDataSenderClient _sensorDataSenderClient;
 
     private readonly IUnitOfWork _unitOfWork;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SensorMetadataService"/> class.
+    /// Initializes a new instance of the <see cref="SensorDeviceService"/> class.
     /// </summary>
     /// <param name="logger">The logger for this service.</param>
     /// <param name="sender">The gRPC client for sending sensor data.</param>
     /// <param name="unitOfWork">The unit of work for database operations.</param>
-    public SensorMetadataService(
-                ILogger<SensorMetadataService> logger,
+    public SensorDeviceService(
+                ILogger<SensorDeviceService> logger,
                 SensorDataSender.SensorDataSenderClient sender,
                 IUnitOfWork unitOfWork)
     {
@@ -45,22 +45,7 @@ public class SensorMetadataService : ISensorMetadataService
         }
     }
 
-    private async Task AddSensorMetadataAsync(SensorMetadataDto metadata)
-    {
-        SensorMetadata sensorMetadata = new SensorMetadata
-        {
-            DeviceId = metadata.DeviceId,
-            Name = metadata.Name,
-            Type = (int)metadata.Type,
-            LastMaintenance = metadata.LastMaintenance,
-            Status = metadata.Status
-        };
-
-        await _unitOfWork.SensorMetadataRepository.InsertAsync(sensorMetadata);
-        await _unitOfWork.SaveAsync();
-    }
-
-    private async Task<IEnumerable<SensorMetadataDto>> GetAllSensorMetadataAsync()
+    public async Task<IEnumerable<SensorMetadataDto>> GetAllSensorDevicesAsync()
     {
         var sensorMetadataEntities = await _unitOfWork.SensorMetadataRepository.GetAsync();
 
@@ -68,9 +53,32 @@ public class SensorMetadataService : ISensorMetadataService
         {
             DeviceId = entity.DeviceId,
             Type = (Common.Const.SensorType)entity.Type,
-            Name = entity.Name
+            Name = entity.Name,
+            InstallationDate = entity.InstallationDate,
+            LastMaintenance = entity.LastMaintenance,
+            Status = entity.Status,
+            Description = entity.Description,
+            Location = entity.Location
         });
 
         return sensorMetadataDtos;
+    }
+
+    private async Task AddSensorMetadataAsync(SensorMetadataDto metadata)
+    {
+        SensorDevice sensorMetadata = new SensorDevice
+        {
+            DeviceId = metadata.DeviceId,
+            Type = (int)metadata.Type,
+            Name = metadata.Name,
+            InstallationDate = metadata.InstallationDate,
+            LastMaintenance = metadata.LastMaintenance,
+            Status = metadata.Status,
+            Description = metadata.Description,
+            Location = metadata.Location
+        };
+
+        await _unitOfWork.SensorMetadataRepository.InsertAsync(sensorMetadata);
+        await _unitOfWork.SaveAsync();
     }
 }

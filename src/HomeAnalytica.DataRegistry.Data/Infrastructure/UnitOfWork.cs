@@ -12,7 +12,7 @@ public interface IUnitOfWork
     /// <summary>
     /// Gets the repository for SensorData entities.
     /// </summary>
-    IRepository<SensorMetadata> SensorMetadataRepository { get; }
+    IRepository<SensorDevice> SensorMetadataRepository { get; }
 
     /// <summary>
     /// Asynchronously saves all changes made in this unit of work to the database.
@@ -28,7 +28,7 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly DataRegistryDbContext _context;
 
-    private IRepository<SensorMetadata> _sensorMetadataRepository;
+    private IRepository<SensorDevice> _sensorMetadataRepository;
 
     private bool _disposed = false;
 
@@ -44,11 +44,11 @@ public class UnitOfWork : IUnitOfWork
     /// <summary>
     /// Gets the repository for SensorData entities. Creates a new instance if it doesn't exist.
     /// </summary>
-    public IRepository<SensorMetadata> SensorMetadataRepository {
+    public IRepository<SensorDevice> SensorMetadataRepository {
         get {
             if (_sensorMetadataRepository == null)
             {
-                _sensorMetadataRepository = new Repository<SensorMetadata>(_context);
+                _sensorMetadataRepository = new Repository<SensorDevice>(_context);
             }
             return _sensorMetadataRepository;
         }

@@ -17,9 +17,9 @@ public class DataRegistryDbContext : DbContext
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="DbSet{SensorData}"/> for accessing and managing <see cref="HomeAnalytica.DataRegistry.Data.Entities.SensorMetadata"/> entities in the database.
+    /// Gets or sets the <see cref="DbSet{SensorData}"/> for accessing and managing <see cref="HomeAnalytica.DataRegistry.Data.Entities.SensorDevice"/> entities in the database.
     /// </summary>
-    public DbSet<SensorMetadata> SensorMetadata { get; set; } = null!;
+    public DbSet<SensorDevice> SensorMetadata { get; set; } = null!;
 
     // Uncomment and configure if needed to set up the database connection explicitly.
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -41,7 +41,7 @@ public class DataRegistryDbContext : DbContext
         // Applies a custom naming convention to convert database object names to snake_case.
         DatabaseSchemaFormatter.DbObjectNamesToSnakeCase(modelBuilder);
 
-        modelBuilder.Entity<SensorMetadata>(entity =>
+        modelBuilder.Entity<SensorDevice>(entity =>
         {
             entity.HasKey(e => e.Id);
             entity.Property(e => e.DeviceId)
