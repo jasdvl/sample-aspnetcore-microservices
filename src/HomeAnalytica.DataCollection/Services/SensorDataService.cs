@@ -31,6 +31,15 @@ public class SensorDataService : SensorDataSender.SensorDataSenderBase
         };
     }
 
+    public override async Task<GetSensorDataResponse> GetSensorDataByType(GetSensorDataRequest request, ServerCallContext context)
+    {
+        ISensorDataProcessor sensorDataProcessor = _sensorDataProcessorFactory.GetDataProcessor(request.SensorType);
+
+        var response = await sensorDataProcessor.GetSensorData();
+
+        return response;
+    }
+
     private async Task HandleSensorDataAsync(SensorDataRequest request)
     {
         ISensorDataProcessor sensorDataProcessor = _sensorDataProcessorFactory.GetDataProcessor(request.SensorType);
