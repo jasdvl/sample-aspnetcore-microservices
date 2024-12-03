@@ -7,14 +7,14 @@ public static class ApiRoutesConfiguration
 {
     public static void ConfigureRoutes(this WebApplication app)
     {
-        // Define the "data/submit" endpoint
-        app.MapPost("/data/submit", async (SensorMetadataDto metadata, ISensorMetadataService sensorDataService) =>
+        // Define the "sensor-devices/post" endpoint
+        app.MapPost("/sensor-devices/post", async (SensorMetadataDto metadata, ISensorDeviceService sensorDeviceService) =>
         {
             Console.WriteLine($"Received metadata: Sensor = {metadata.Name}");
 
             try
             {
-                await sensorDataService.ProcessSensorMetadataAsync(metadata);
+                await sensorDeviceService.ProcessSensorMetadataAsync(metadata);
             }
             catch (Exception ex)
             {
@@ -24,6 +24,20 @@ public static class ApiRoutesConfiguration
             }
 
             return Results.Ok("Sensor data successfully processed.");
+        });
+
+        app.MapGet("/sensor-devices/get", async (ISensorDeviceService sensorDeviceService) =>
+        {
+            try
+            {
+                var sensorDevices = await sensorDeviceService.GetAllSensorDevicesAsync();
+                return Results.Ok(sensorDevices);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error fetching sensor metadata: {ex.Message}");
+                return Results.StatusCode(StatusCodes.Status500InternalServerError);
+            }
         });
     }
 }
