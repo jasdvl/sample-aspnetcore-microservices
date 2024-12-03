@@ -1,0 +1,113 @@
+@page "/sensor-devices"
+@using HomeAnalytica.Common.Const
+@using HomeAnalytica.Common.DTOs
+@using HomeAnalytica.Web.Services
+@rendermode InteractiveServer
+@inject IHttpClientFactory HttpClientFactory
+@inject ISensorDataService SensorDataService
+
+<PageTitle>Register Sensor Devices</PageTitle>
+<h1>Sensor Devices</h1>
+
+<div class="card my-4">
+    <div class="card-header">
+        <h4>Add Sensor Device</h4>
+    </div>
+    <div class="card-body">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Device ID</span>
+            <input @bind="_deviceId" type="text" class="form-control" />
+        </div>
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="sensorTypeSelect">Sensor Type</label>
+            <select id="sensorTypeSelect" class="form-select" @bind="_sensorType">
+                @foreach (var sensorType in Enum.GetValues<SensorType>())
+                {
+                    <option value="@sensorType">@sensorType</option>
+                }
+            </select>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Name</span>
+            <input @bind="_name" type="text" class="form-control" />
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Description</span>
+            <input @bind="_description" type="text" class="form-control" />
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Location</span>
+            <input @bind="_location" type="text" class="form-control" />
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Installation Date</span>
+            <input @bind="_installationDate" type="datetime-local" class="form-control" />
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Last Maintenance</span>
+            <input @bind="_lastMaintenance" type="datetime-local" class="form-control" />
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary" @onclick="SubmitSensorDeviceDataAndRefreshDeviceList">Add Sensor Device</button>
+        </div>
+    </div>
+</div>
+
+@if (isDataSubmitted)
+{
+    <div class="my-3">
+    <h3>Submitted Data:</h3>
+    <ul>
+        <li>Device ID: @_deviceId</li>
+        <li>Sensor Type: @_sensorType</li>
+        
+    </ul>
+    </div>
+}
+
+<h3>Registered Sensor Devices</h3>
+@if (_sensorDevices is null)
+{
+    <p>Loading...</p>
+}
+else if (_sensorDevices.Count == 0)
+{
+    <p>No devices found.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Device ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Installation Date</th>
+                <th>Last Maintenance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var device in _sensorDevices)
+            {
+                <tr>
+                    <td>@device.DeviceId</td>
+                    <td>@device.Name</td>
+                    <td>@device.Type</td>
+                    <td>@device.Description</td>
+                    <td>@device.Location</td>
+                    <td>@device.InstallationDate?.ToString("yyyy-MM-dd")</td>
+                    <td>@device.LastMaintenance?.ToString("yyyy-MM-dd")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

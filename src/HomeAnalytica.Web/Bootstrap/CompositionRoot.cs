@@ -86,6 +86,7 @@ namespace HomeAnalytica.Web.Bootstrap
         private void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<ISensorDataService, SensorDataService>();
+            services.AddScoped<ISensorDeviceService, SensorDeviceService>();
 
             services.AddTransient<SensorDataClient>();
         }
