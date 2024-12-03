@@ -15,11 +15,32 @@ enum SensorType {
 
 // The sensor data service definition.
 service SensorDataSender {
-  // Sends sensor data
-  rpc SubmitSensorData (SensorDataRequest) returns (SensorDataResponse);
+    // Sends sensor data
+    rpc SubmitSensorData (SensorDataRequest) returns (SensorDataResponse);
+    
+    // Retrieves sensor data for a specific type
+    rpc GetSensorDataByType (GetSensorDataRequest) returns (GetSensorDataResponse);
 }
 
-// The request message containing sensor data.
+// The request message for retrieving sensor data by type
+message GetSensorDataRequest {
+    SensorType sensor_type = 1;
+}
+
+// The response message containing the sensor data
+message GetSensorDataResponse {
+    repeated SensorDataRecord records = 1;
+}
+
+// A single sensor data record
+message SensorDataRecord {
+    string device_id = 1;
+    google.protobuf.Timestamp timestamp = 2;
+    SensorType sensor_type = 3;
+    double value = 4;
+}
+
+// The request message containing sensor data
 message SensorDataRequest {
     string device_id = 1;
     google.protobuf.Timestamp timestamp = 2;
@@ -27,7 +48,7 @@ message SensorDataRequest {
     double value = 4;
 }
 
-// The response message confirming receipt of the data.
+// The response message confirming receipt of the data
 message SensorDataResponse {
     string message = 1;
 }
