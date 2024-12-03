@@ -6,94 +6,89 @@
 @inject IHttpClientFactory HttpClientFactory
 @inject ISensorDataService SensorDataService
 
-<PageTitle>Counter</PageTitle>
-
 <PageTitle>Data Input</PageTitle>
 
-<h1>Data Input</h1>
+<h1>Sensor Data</h1>
 
 <p role="status">Please enter your data:</p>
 
-<div class="input-group mb-3">
-    <span class="input-group-text">Temperature (°C)</span>
-    <input @bind="temperature" type="number" class="form-control" step="0.1" />
+<div class="card my-2">
+    <div class="card-header">
+        <h5>Temperature Sensor</h5>
+    </div>
+    <div class="card-body">
+        <div class="input-group mb-2">
+            <label class="input-group-text" for="temperatureSensorSelect">Select Sensor</label>
+            <select id="temperatureSensorSelect" class="form-select" @bind="_selectedTempSensorId">
+                <option value="" disabled selected>Please select a sensor</option>
+                @foreach (var sensor in _tempSensorDevices)
+                {
+                    <option value="@sensor.DeviceId">@sensor.Name (@sensor.DeviceId)</option>
+                }
+            </select>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text">Temperature (°C)</span>
+            <input @bind="_temperature" type="number" class="form-control" step="0.1" />
+        </div>
+    </div>
 </div>
 
-<div class="input-group mb-3">
-    <span class="input-group-text">Humidity (%)</span>
-    <input @bind="humidity" type="number" class="form-control" step="1" />
+
+<div class="card my-2">
+    <div class="card-header">
+        <h5>Humidity Sensor</h5>
+    </div>
+    <div class="card-body">
+        <div class="input-group mb-2">
+            <label class="input-group-text" for="humiditySensorSelect">Select Sensor</label>
+            <select id="humiditySensorSelect" class="form-select" @bind="_selectedHumiditySensorId">
+                <option value="" disabled selected>Please select a sensor</option>
+                @foreach (var sensor in _humiditySensorDevices)
+                {
+                    <option value="@sensor.DeviceId">@sensor.Name (@sensor.DeviceId)</option>
+                }
+            </select>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text">Humidity (%)</span>
+            <input @bind="_humidity" type="number" class="form-control" step="1" />
+        </div>
+    </div>
 </div>
 
-<div class="input-group mb-3">
-    <span class="input-group-text">Energy Consumption (kWh)</span>
-    <input @bind="energyConsumption" type="number" class="form-control" step="0.1" />
+<div class="card my-2">
+    <div class="card-header">
+        <h5>Energy Consumption Sensor</h5>
+    </div>
+    <div class="card-body">
+        <div class="input-group mb-2">
+            <label class="input-group-text" for="energySensorSelect">Select Sensor</label>
+            <select id="energySensorSelect" class="form-select" @bind="_selectedEnergyConsumptionSensorId">
+                <option value="" disabled selected>Please select a sensor</option>
+                @foreach (var sensor in _energyConsumptionSensorDevices)
+                {
+                    <option value="@sensor.DeviceId">@sensor.Name (@sensor.DeviceId)</option>
+                }
+            </select>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text">Energy Consumption (kWh)</span>
+            <input @bind="_energyConsumption" type="number" class="form-control" step="0.1" />
+        </div>
+    </div>
 </div>
 
-<button class="btn btn-primary" @onclick="SubmitData">Submit Data</button>
+<div class="d-flex justify-content-end my-4">
+    <button class="btn btn-primary" @onclick="SubmitData">Submit Data</button>
+</div>
 
 @if (isDataSubmitted)
-
 {
     <h3>Submitted Data:</h3>
     <ul>
-        <li>Temperature: @temperature °C</li>
-        <li>Humidity: @humidity %</li>
-        <li>Energy Consumption: @energyConsumption kWh</li>
+        <li>Temperature: @_temperature °C</li>
+        <li>Humidity: @_humidity %</li>
+        <li>Energy Consumption: @_energyConsumption kWh</li>
     </ul>
-}
-
-@code {
-
-
-
-    private double temperature;
-
-    private double humidity;
-
-    private double energyConsumption;
-
-    private bool isDataSubmitted = false;
-
-
-
-    private async Task SubmitMetadata()
-    {
-        var data = new SensorDataDto
-        {
-            SensorType = SensorType.Temperature,
-
-            Timestamp = DateTime.UtcNow,
-
-            Value = temperature
-        };
-
-        var client = HttpClientFactory.CreateClient("YarpClient");
-
-        var response = await client.PostAsJsonAsync("/data/submit", data);
-
-        if (response.IsSuccessStatusCode)
-        {
-            isDataSubmitted = true;
-        }
-        else
-        {
-
-            // Handle error
-
-        }
-    }
-
-
-
-    private async Task SubmitData()
-    {
-        var data = new SensorDataDto
-        {
-            SensorType = SensorType.Temperature,
-            Timestamp = DateTime.UtcNow,
-            Value = temperature
-        };
-
-        await SensorDataService.ProcessSensorDataAsync(data);
-    }
 }
