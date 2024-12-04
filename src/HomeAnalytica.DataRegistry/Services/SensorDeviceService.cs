@@ -29,7 +29,7 @@ public class SensorDeviceService : ISensorDeviceService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task ProcessSensorMetadataAsync(SensorMetadataDto metadata)
+    public async Task ProcessSensorMetadataAsync(SensorDeviceDto metadata)
     {
         _logger.LogInformation($"Processing sensor metadata: Value = {metadata.Name}");
 
@@ -45,13 +45,14 @@ public class SensorDeviceService : ISensorDeviceService
         }
     }
 
-    public async Task<IEnumerable<SensorMetadataDto>> GetAllSensorDevicesAsync()
+    public async Task<IEnumerable<SensorDeviceDto>> GetAllSensorDevicesAsync()
     {
-        var sensorMetadataEntities = await _unitOfWork.SensorMetadataRepository.GetAsync();
+        var sensorDeviceEntities = await _unitOfWork.SensorDeviceRepository.GetAsync();
 
-        var sensorMetadataDtos = sensorMetadataEntities.Select(entity => new SensorMetadataDto
+        var sensorDeviceDtos = sensorDeviceEntities.Select(entity => new SensorDeviceDto
         {
-            DeviceId = entity.DeviceId,
+            Id = entity.Id,
+            SerialNo = entity.SerialNo,
             Type = (Common.Const.SensorType)entity.Type,
             Name = entity.Name,
             InstallationDate = entity.InstallationDate,
@@ -61,14 +62,14 @@ public class SensorDeviceService : ISensorDeviceService
             Location = entity.Location
         });
 
-        return sensorMetadataDtos;
+        return sensorDeviceDtos;
     }
 
-    private async Task AddSensorMetadataAsync(SensorMetadataDto metadata)
+    private async Task AddSensorMetadataAsync(SensorDeviceDto metadata)
     {
-        SensorDevice sensorMetadata = new SensorDevice
+        SensorDevice sensorDevice = new SensorDevice
         {
-            DeviceId = metadata.DeviceId,
+            SerialNo = metadata.SerialNo,
             Type = (int)metadata.Type,
             Name = metadata.Name,
             InstallationDate = metadata.InstallationDate,
@@ -78,7 +79,7 @@ public class SensorDeviceService : ISensorDeviceService
             Location = metadata.Location
         };
 
-        await _unitOfWork.SensorMetadataRepository.InsertAsync(sensorMetadata);
+        await _unitOfWork.SensorDeviceRepository.InsertAsync(sensorDevice);
         await _unitOfWork.SaveAsync();
     }
 }

@@ -8,7 +8,7 @@ public static class ApiRoutesConfiguration
     public static void ConfigureRoutes(this WebApplication app)
     {
         // Define the "sensor-devices/post" endpoint
-        app.MapPost("/sensor-devices/post", async (SensorMetadataDto metadata, ISensorDeviceService sensorDeviceService) =>
+        app.MapPost("/sensor-devices/post", async (SensorDeviceDto metadata, ISensorDeviceService sensorDeviceService) =>
         {
             Console.WriteLine($"Received metadata: Sensor = {metadata.Name}");
 

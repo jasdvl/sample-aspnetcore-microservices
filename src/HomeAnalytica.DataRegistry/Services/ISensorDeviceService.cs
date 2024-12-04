@@ -4,7 +4,7 @@ using HomeAnalytica.Common.DTOs;
 
 public interface ISensorDeviceService
 {
-    Task ProcessSensorMetadataAsync(SensorMetadataDto metadata);
+    Task ProcessSensorMetadataAsync(SensorDeviceDto metadata);
 
-    Task<IEnumerable<SensorMetadataDto>> GetAllSensorDevicesAsync();
+    Task<IEnumerable<SensorDeviceDto>> GetAllSensorDevicesAsync();
 }
