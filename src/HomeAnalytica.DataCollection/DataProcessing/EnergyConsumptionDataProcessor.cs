@@ -12,10 +12,9 @@ public class EnergyConsumptionDataProcessor : SensorDataProcessor<EnergyConsumpt
     {
     }
 
-    public override async Task<GetSensorDataResponse> GetSensorData()
+    public override async Task<GetSensorDataResponse> GetSensorData(long deviceId)
     {
-        var filter = Builders<EnergyConsumptionData>.Filter.Empty;
-
+        var filter = Builders<EnergyConsumptionData>.Filter.Eq(data => data.DeviceId, deviceId);
         var res = await _repository.FindSensorDataAsync(filter);
 
         var response = new GetSensorDataResponse
@@ -23,7 +22,7 @@ public class EnergyConsumptionDataProcessor : SensorDataProcessor<EnergyConsumpt
             Records = { res.Select(r => new SensorDataRecord
             {
                 DeviceId = r.DeviceId,
-                Timestamp = Timestamp.FromDateTime(r.Timestamp.ToUniversalTime()),
+                Timestamp = Timestamp.FromDateTime(r.Timestamp),
                 SensorType = SensorType.EnergyConsumption,
                 Value = r.EnergyConsumption
             })}

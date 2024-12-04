@@ -24,7 +24,7 @@ public class SensorDataBase
     /// This is used to identify which device generated the measurements.
     /// </summary>
     [BsonElement("device_id")]
-    public required string DeviceId { get; set; }
+    public required long DeviceId { get; set; }
 
     /// <summary>
     /// Gets or sets the timestamp indicating when the data was recorded.

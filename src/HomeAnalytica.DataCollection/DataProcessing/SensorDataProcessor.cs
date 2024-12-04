@@ -6,7 +6,7 @@ namespace HomeAnalytica.DataCollection.DataProcessing;
 
 public interface ISensorDataProcessor
 {
-    Task<GetSensorDataResponse> GetSensorData();
+    Task<GetSensorDataResponse> GetSensorData(long deviceId);
 
     Task HandleSensorDataAsync(SensorDataRequest request);
 }
@@ -20,7 +20,7 @@ public abstract class SensorDataProcessor<T> : ISensorDataProcessor where T : Se
         _repository = repository;
     }
 
-    public abstract Task<GetSensorDataResponse> GetSensorData();
+    public abstract Task<GetSensorDataResponse> GetSensorData(long deviceId);
 
     public abstract Task HandleSensorDataAsync(SensorDataRequest request);
 }

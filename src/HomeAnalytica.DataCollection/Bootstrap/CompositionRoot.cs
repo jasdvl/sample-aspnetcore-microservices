@@ -1,6 +1,8 @@
 using HomeAnalytica.DataCollection.Configuration;
+using HomeAnalytica.DataCollection.Data;
 using HomeAnalytica.DataCollection.Data.Context;
 using HomeAnalytica.DataCollection.Data.Repositories;
+using HomeAnalytica.DataCollection.Data.Services;
 using HomeAnalytica.DataCollection.DataProcessing;
 using HomeAnalytica.DataCollection.Factories;
 
@@ -62,13 +64,17 @@ namespace HomeAnalytica.DataCollection.Bootstrap
 
         private void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
-            var dbSettings = configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>();
+            services.AddSingleton<SensorDataDbContext>(sp =>
+            {
+                var dbSettings = configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>();
+                var connectionString = configuration.GetConnectionString("MongoDb");
+                var databaseName = dbSettings.DatabaseName;
+                return new SensorDataDbContext(connectionString, databaseName);
+            });
 
-            var mongoDbConnectionString = configuration.GetConnectionString("MongoDb");
+            services.AddSingleton<DatabaseInitializationService>();
+            services.AddHostedService<DatabaseInitializationHostedService>();
 
-            var mongoDbContext = new SensorDataDbContext(mongoDbConnectionString, dbSettings.DatabaseName);
-
-            services.AddSingleton(mongoDbContext);
             services.AddScoped<ISensorDataHandlerFactory, SensorDataProcessorFactory>();
             services.AddScoped<ITemperatureDataRepository, TemperatureDataRepository>();
             services.AddScoped<IHumidityDataRepository, HumidityDataRepository>();
