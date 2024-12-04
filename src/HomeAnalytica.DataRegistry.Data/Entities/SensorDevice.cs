@@ -8,9 +8,9 @@ public class SensorDevice
     public long Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the unique device id of the sensor.
+    /// Gets or sets the unique serial number of the sensor device.
     /// </summary>
-    public required string DeviceId { get; set; }
+    public required string SerialNo { get; set; }
 
     /// <summary>
     /// Gets or sets the name or label of the sensor for easier identification.

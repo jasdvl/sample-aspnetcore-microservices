@@ -22,7 +22,7 @@ namespace HomeAnalytica.DataRegistry.Data.Context
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("id");
-                entity.Property(e => e.DeviceId)
+                entity.Property(e => e.SerialNo)
                    .HasColumnName("device_id");
                 entity.Property(e => e.InstallationDate)
                     .HasColumnName("installation_date");

@@ -44,7 +44,7 @@ public class DataRegistryDbContext : DbContext
         modelBuilder.Entity<SensorDevice>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.DeviceId)
+            entity.Property(e => e.SerialNo)
                 .IsRequired();
             entity.Property(e => e.Type)
                 .IsRequired();
