@@ -35,7 +35,7 @@ public class SensorDataService : SensorDataSender.SensorDataSenderBase
     {
         ISensorDataProcessor sensorDataProcessor = _sensorDataProcessorFactory.GetDataProcessor(request.SensorType);
 
-        var response = await sensorDataProcessor.GetSensorData();
+        var response = await sensorDataProcessor.GetSensorData(request.DeviceId);
 
         return response;
     }
