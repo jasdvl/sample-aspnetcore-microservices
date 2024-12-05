@@ -17,17 +17,18 @@ public class SensorDataClient
         _client = client;
     }
 
-    public async Task<GetSensorDataResponse> GetSensorDataByTypeAsync(SensorType sensorType)
+    public async Task<GetSensorDataResponse> GetSensorDataByTypeAsync(SensorType sensorType, long deviceId)
     {
         var res = await _client.GetSensorDataByTypeAsync(
                         new GetSensorDataRequest()
                         {
-                            SensorType = (SensorType)sensorType
+                            SensorType = sensorType,
+                            DeviceId = deviceId
                         });
         return res;
     }
 
-    public async Task<SensorDataResponse> SendSensorDataAsync(string deviceId, SensorType sensorType, Timestamp timestamp, double value)
+    public async Task<SensorDataResponse> SendSensorDataAsync(long deviceId, SensorType sensorType, Timestamp timestamp, double value)
     {
         var request = new SensorDataRequest
         {
