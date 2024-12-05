@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace HomeAnalytica.Web.Components.Pages;
 
-public partial class DataInput : ComponentBase
+public partial class SensorData : ComponentBase
 {
     private double _temperature;
 
@@ -15,17 +15,17 @@ public partial class DataInput : ComponentBase
 
     private bool isDataSubmitted = false;
 
-    private string? _selectedTempSensorId;
+    private long? _selectedTempSensorId;
 
-    private string? _selectedHumiditySensorId;
+    private long? _selectedHumiditySensorId;
 
-    private string? _selectedEnergyConsumptionSensorId;
+    private long? _selectedEnergyConsumptionSensorId;
 
-    private List<SensorMetadataDto> _tempSensorDevices { get; set; } = new();
+    private List<SensorDeviceDto> _tempSensorDevices { get; set; } = new();
 
-    private List<SensorMetadataDto> _humiditySensorDevices { get; set; } = new();
+    private List<SensorDeviceDto> _humiditySensorDevices { get; set; } = new();
 
-    private List<SensorMetadataDto> _energyConsumptionSensorDevices { get; set; } = new();
+    private List<SensorDeviceDto> _energyConsumptionSensorDevices { get; set; } = new();
 
     [Inject]
     private ISensorDeviceService SensorDeviceService { get; set; } = default!;
@@ -37,13 +37,11 @@ public partial class DataInput : ComponentBase
 
     private async Task SubmitData()
     {
-        var res = await SensorDataService.GetSensorDataAsync(SensorType.Temperature);
-
-        if (!string.IsNullOrEmpty(_selectedTempSensorId))
+        if (_selectedTempSensorId != null)
         {
             var data = new SensorDataDto
             {
-                DeviceId = _selectedTempSensorId,
+                DeviceId = (long)_selectedTempSensorId,
                 SensorType = SensorType.Temperature,
                 Timestamp = DateTime.UtcNow,
                 Value = _temperature

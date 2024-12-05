@@ -15,8 +15,8 @@
     </div>
     <div class="card-body">
         <div class="input-group mb-3">
-            <span class="input-group-text">Device ID</span>
-            <input @bind="_deviceId" type="text" class="form-control" />
+            <span class="input-group-text">Serial No.</span>
+            <input @bind="_serialNo" type="text" class="form-control" />
         </div>
 
         <div class="input-group mb-3">
@@ -65,7 +65,7 @@
     <div class="my-3">
     <h3>Submitted Data:</h3>
     <ul>
-        <li>Device ID: @_deviceId</li>
+        <li>Device ID: @_serialNo</li>
         <li>Sensor Type: @_sensorType</li>
         
     </ul>
@@ -86,7 +86,8 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Device ID</th>
+                <th>Id</th>
+                <th>Serial No.</th>
                 <th>Name</th>
                 <th>Type</th>
                 <th>Description</th>
@@ -99,7 +100,8 @@ else
             @foreach (var device in _sensorDevices)
             {
                 <tr>
-                    <td>@device.DeviceId</td>
+                    <td>@device.Id</td>
+                    <td>@device.SerialNo</td>
                     <td>@device.Name</td>
                     <td>@device.Type</td>
                     <td>@device.Description</td>
