@@ -1,4 +1,4 @@
-@page "/data-input"
+@page "/sensor-data"
 @using HomeAnalytica.Common.Const
 @using HomeAnalytica.Common.DTOs
 @using HomeAnalytica.Web.Services
@@ -23,7 +23,7 @@
                 <option value="" disabled selected>Please select a sensor</option>
                 @foreach (var sensor in _tempSensorDevices)
                 {
-                    <option value="@sensor.DeviceId">@sensor.Name (@sensor.DeviceId)</option>
+                    <option value="@sensor.Id">@sensor.Name (@sensor.Id)</option>
                 }
             </select>
         </div>
@@ -46,7 +46,7 @@
                 <option value="" disabled selected>Please select a sensor</option>
                 @foreach (var sensor in _humiditySensorDevices)
                 {
-                    <option value="@sensor.DeviceId">@sensor.Name (@sensor.DeviceId)</option>
+                    <option value="@sensor.Id">@sensor.Name (@sensor.Id)</option>
                 }
             </select>
         </div>
@@ -68,7 +68,7 @@
                 <option value="" disabled selected>Please select a sensor</option>
                 @foreach (var sensor in _energyConsumptionSensorDevices)
                 {
-                    <option value="@sensor.DeviceId">@sensor.Name (@sensor.DeviceId)</option>
+                    <option value="@sensor.Id">@sensor.Name (@sensor.Id)</option>
                 }
             </select>
         </div>

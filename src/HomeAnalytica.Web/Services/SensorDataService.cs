@@ -19,15 +19,17 @@ public class SensorDataService : ISensorDataService
         _sensorDataClient = sensorDataClient;
     }
 
-    public async Task<List<SensorDataDto>> GetSensorDataAsync(HomeAnalytica.Common.Const.SensorType sensorType)
+    public async Task<List<SensorDataDto>> GetSensorDataAsync(HomeAnalytica.Common.Const.SensorType sensorType, long deviceId)
     {
         try
         {
-            var data = await _sensorDataClient.GetSensorDataByTypeAsync((SensorType)sensorType);
+            var data = await _sensorDataClient.GetSensorDataByTypeAsync((SensorType)sensorType, deviceId);
 
             var res = data.Records.Select(d => new SensorDataDto
             {
-                DeviceId = d.DeviceId
+                DeviceId = d.DeviceId,
+                Timestamp = d.Timestamp.ToDateTime(),
+                Value = d.Value
             }).ToList();
 
             return res;

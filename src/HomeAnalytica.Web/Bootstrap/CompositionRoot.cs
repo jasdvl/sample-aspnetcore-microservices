@@ -2,6 +2,7 @@ using Grpc.Core;
 using HomeAnalytica.Grpc.Contracts.Protos;
 using HomeAnalytica.Web.Grpc;
 using HomeAnalytica.Web.Services;
+using MudBlazor.Services;
 
 namespace HomeAnalytica.Web.Bootstrap
 {
@@ -75,6 +76,8 @@ namespace HomeAnalytica.Web.Bootstrap
             {
                 options.Credentials = ChannelCredentials.Insecure;
             });
+
+            services.AddMudServices();
 
             //services.AddServerSideBlazor()
             //    .AddHubOptions(options =>

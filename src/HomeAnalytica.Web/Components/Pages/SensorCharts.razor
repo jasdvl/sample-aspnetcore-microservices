@@ -1,0 +1,36 @@
+@page "/sensor-charts"
+@using HomeAnalytica.Common.Const
+@using HomeAnalytica.Common.DTOs
+@using HomeAnalytica.Web.Services
+@using MudBlazor
+@rendermode InteractiveServer
+@inject IHttpClientFactory HttpClientFactory
+@inject ISensorDataService SensorDataService
+
+<PageTitle>Sensor Charts</PageTitle>
+
+
+<h1>Sensor Charts</h1>
+
+<div class="input-group mb-2">
+    <label class="input-group-text" for="sensorSelect">Select Sensor</label>
+    <select id="sensorSelect" class="form-select" @onchange="OnSensorSelectedAsync">
+        <option value="" disabled selected>Please select a sensor</option>
+        @foreach (var sensor in _sensorDevices)
+        {
+            <option value="@sensor.Id">@sensor.Name (@sensor.Type)</option>
+        }
+    </select>
+</div>
+
+<div>
+    <MudChart ChartType="ChartType.Line" ChartSeries="@ChartData" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels" Width="100%" Height="350px" ChartOptions="@Options" />
+    <MudGrid>
+        @* <MudItem xs="6">
+            <MudText Typo="Typo.body1" Class="py-3">Selected: @(Index < 0 ? "None" : ChartData[Index].Name)</MudText>
+        </MudItem> *@
+        <MudItem xs="6">
+            <MudSlider @bind-Value="Options.LineStrokeWidth" Min="1" Max="10" Color="Color.Info">Line Width: @Options.LineStrokeWidth.ToString()</MudSlider>
+        </MudItem>
+    </MudGrid>
+</div>

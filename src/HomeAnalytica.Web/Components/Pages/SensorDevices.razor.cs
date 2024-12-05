@@ -7,7 +7,9 @@ namespace HomeAnalytica.Web.Components.Pages;
 
 public partial class SensorDevices : ComponentBase
 {
-    private string _deviceId = string.Empty;
+    private long? _deviceId = null;
+
+    private string _serialNo = string.Empty;
 
     private SensorType _sensorType = SensorType.Unknown;
 
@@ -23,7 +25,7 @@ public partial class SensorDevices : ComponentBase
 
     private bool isDataSubmitted = false;
 
-    private List<SensorMetadataDto> _sensorDevices { get; set; } = new();
+    private List<SensorDeviceDto> _sensorDevices { get; set; } = new();
 
     [Inject]
     private ISensorDeviceService SensorDeviceService { get; set; } = default!;
@@ -41,9 +43,9 @@ public partial class SensorDevices : ComponentBase
 
     private async Task SubmitSensorDeviceDataAsync()
     {
-        var data = new SensorMetadataDto
+        var data = new SensorDeviceDto
         {
-            DeviceId = _deviceId,
+            SerialNo = _serialNo,
             Name = _name,
             Type = _sensorType,
             InstallationDate = _installationDate.HasValue ? DateTime.SpecifyKind(_installationDate.Value, DateTimeKind.Utc) : null,
@@ -67,7 +69,7 @@ public partial class SensorDevices : ComponentBase
         }
     }
 
-    private async Task<List<SensorMetadataDto>> LoadSensorDevicesAsync()
+    private async Task<List<SensorDeviceDto>> LoadSensorDevicesAsync()
     {
         var devices = await SensorDeviceService.GetSensorDevicesAsync();
 
