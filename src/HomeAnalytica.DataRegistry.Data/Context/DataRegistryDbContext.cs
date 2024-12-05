@@ -19,7 +19,7 @@ public class DataRegistryDbContext : DbContext
     /// <summary>
     /// Gets or sets the <see cref="DbSet{SensorData}"/> for accessing and managing <see cref="HomeAnalytica.DataRegistry.Data.Entities.SensorDevice"/> entities in the database.
     /// </summary>
-    public DbSet<SensorDevice> SensorMetadata { get; set; } = null!;
+    public DbSet<SensorDevice> SensorDevices { get; set; } = null!;
 
     // Uncomment and configure if needed to set up the database connection explicitly.
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
