@@ -10,7 +10,7 @@ namespace HomeAnalytica.Common.DTOs
         /// <summary>
         /// Gets or sets the unique sensor device id.
         /// </summary>
-        public string DeviceId { get; set; }
+        public long DeviceId { get; set; }
 
         /// <summary>
         /// Gets or sets the sensor type.

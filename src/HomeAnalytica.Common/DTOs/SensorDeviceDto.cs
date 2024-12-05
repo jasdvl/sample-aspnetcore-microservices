@@ -2,7 +2,7 @@ using HomeAnalytica.Common.Const;
 
 namespace HomeAnalytica.Common.DTOs;
 
-public class SensorMetadataDto
+public class SensorDeviceDto
 {
     /// <summary>
     /// Gets or sets the unique identifier for the sensor.
@@ -10,9 +10,9 @@ public class SensorMetadataDto
     public long Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the unique device id of the sensor.
+    /// Gets or sets the unique serial number of the sensor device.
     /// </summary>
-    public required string DeviceId { get; set; }
+    public required string SerialNo { get; set; }
 
     /// <summary>
     /// Gets or sets the location of the sensor, such as a room name, building, or GPS coordinates.
