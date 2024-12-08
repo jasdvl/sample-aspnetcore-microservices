@@ -13,12 +13,12 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "SensorMetadata",
+                name: "SensorDevices",
                 columns: table => new
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    device_id = table.Column<string>(type: "text", nullable: false),
+                    serial_no = table.Column<string>(type: "text", nullable: false),
                     name = table.Column<string>(type: "text", nullable: true),
                     type = table.Column<int>(type: "integer", nullable: false),
                     location = table.Column<string>(type: "text", nullable: true),
@@ -29,7 +29,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SensorMetadata", x => x.id);
+                    table.PrimaryKey("PK_SensorDevices", x => x.id);
                 });
         }
 
@@ -37,7 +37,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SensorMetadata");
+                name: "SensorDevices");
         }
     }
 }
