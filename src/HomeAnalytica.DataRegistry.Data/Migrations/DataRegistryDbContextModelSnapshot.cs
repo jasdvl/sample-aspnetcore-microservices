@@ -22,7 +22,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("HomeAnalytica.DataRegistry.Data.Entities.SensorMetadata", b =>
+            modelBuilder.Entity("HomeAnalytica.DataRegistry.Data.Entities.SensorDevice", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,11 +34,6 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text")
                         .HasColumnName("description");
-
-                    b.Property<string>("DeviceId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("device_id");
 
                     b.Property<DateTime?>("InstallationDate")
                         .HasColumnType("timestamp with time zone")
@@ -56,6 +51,11 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<string>("SerialNo")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("serial_no");
+
                     b.Property<string>("Status")
                         .HasColumnType("text")
                         .HasColumnName("status");
@@ -66,7 +66,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SensorMetadata");
+                    b.ToTable("SensorDevices");
                 });
 #pragma warning restore 612, 618
         }
