@@ -1,8 +1,8 @@
+using ApexCharts;
 using Grpc.Core;
 using HomeAnalytica.Grpc.Contracts.Protos;
 using HomeAnalytica.Web.Grpc;
 using HomeAnalytica.Web.Services;
-using MudBlazor.Services;
 
 namespace HomeAnalytica.Web.Bootstrap
 {
@@ -56,13 +56,24 @@ namespace HomeAnalytica.Web.Bootstrap
         {
             var yarpBaseAddress = configuration["Yarp:BaseAddress"];
 
-            services.AddHttpClient("YarpClient", client =>
+            services.AddHttpClient<ISensorDeviceService, SensorDeviceService>(client =>
             {
                 client.BaseAddress = new Uri(yarpBaseAddress);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
+            {
+                // Connections are reused for 10 minutes
+                PooledConnectionLifetime = TimeSpan.FromMinutes(10),
+                // Supports multiple parallel HTTP/2 connections
+                EnableMultipleHttp2Connections = true,
+                UseProxy = false
             });
 
+            // Uncomment the following line to register a general or non-typed HttpClient
+            // for cases where an IHttpClientFactory is used to create HttpClient instances.
+            // services.AddHttpClient();
+
             services.AddRazorComponents().AddInteractiveServerComponents();
-            services.AddHttpClient();
 
             services.AddGrpc();
 
@@ -75,9 +86,21 @@ namespace HomeAnalytica.Web.Bootstrap
             .ConfigureChannel(options =>
             {
                 options.Credentials = ChannelCredentials.Insecure;
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
+            {
+                PooledConnectionLifetime = TimeSpan.FromMinutes(10),
+                EnableMultipleHttp2Connections = true
             });
 
-            services.AddMudServices();
+            services.AddApexCharts(e =>
+            {
+                e.GlobalOptions = new ApexChartBaseOptions
+                {
+                    Debug = true,
+                    Theme = new Theme { Palette = PaletteType.Palette6 }
+                };
+            });
 
             //services.AddServerSideBlazor()
             //    .AddHubOptions(options =>
@@ -89,7 +112,8 @@ namespace HomeAnalytica.Web.Bootstrap
         private void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<ISensorDataService, SensorDataService>();
-            services.AddScoped<ISensorDeviceService, SensorDeviceService>();
+
+            // ISensorDeviceService is already registered using: services.AddHttpClient<ISensorDeviceService, SensorDeviceService>
 
             services.AddTransient<SensorDataClient>();
         }
