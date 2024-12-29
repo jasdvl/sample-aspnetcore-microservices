@@ -25,10 +25,12 @@ public partial class SensorDevices : ComponentBase
 
     private bool isDataSubmitted = false;
 
+    public string ErrorMessage { get; set; } = string.Empty;
+
     private List<SensorDeviceDto> _sensorDevices { get; set; } = new();
 
     [Inject]
-    private ISensorDeviceService SensorDeviceService { get; set; } = default!;
+    private ISensorDeviceService SensorDeviceService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -38,11 +40,13 @@ public partial class SensorDevices : ComponentBase
     private async Task SubmitSensorDeviceDataAndRefreshDeviceList()
     {
         await SubmitSensorDeviceDataAsync();
-        await LoadSensorDevicesAsync();
+        _sensorDevices = await LoadSensorDevicesAsync();
     }
 
     private async Task SubmitSensorDeviceDataAsync()
     {
+        ErrorMessage = string.Empty;
+
         var data = new SensorDeviceDto
         {
             SerialNo = _serialNo,
@@ -55,17 +59,13 @@ public partial class SensorDevices : ComponentBase
             Location = _location
         };
 
-        var client = HttpClientFactory.CreateClient("YarpClient");
-
-        var response = await client.PostAsJsonAsync("/sensor-devices/post", data);
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            isDataSubmitted = true;
+            await SensorDeviceService.PostSensorDeviceAsync(data);
         }
-        else
+        catch (Exception ex)
         {
-            // Handle error
+            ErrorMessage = ex.Message;
         }
     }
 

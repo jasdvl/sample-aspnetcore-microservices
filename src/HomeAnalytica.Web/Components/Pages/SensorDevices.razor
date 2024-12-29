@@ -3,8 +3,6 @@
 @using HomeAnalytica.Common.DTOs
 @using HomeAnalytica.Web.Services
 @rendermode InteractiveServer
-@inject IHttpClientFactory HttpClientFactory
-@inject ISensorDataService SensorDataService
 
 <PageTitle>Register Sensor Devices</PageTitle>
 <h1>Sensor Devices</h1>
@@ -69,6 +67,13 @@
         <li>Sensor Type: @_sensorType</li>
         
     </ul>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @ErrorMessage
     </div>
 }
 

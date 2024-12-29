@@ -1,8 +1,8 @@
+using ApexCharts;
 using HomeAnalytica.Common.Const;
 using HomeAnalytica.Common.DTOs;
 using HomeAnalytica.Web.Services;
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
 
 namespace HomeAnalytica.Web.Components.Pages;
 
@@ -11,22 +11,24 @@ public partial class SensorCharts : ComponentBase
     [Inject]
     private ISensorDeviceService SensorDeviceService { get; set; } = default!;
 
+    [Inject]
+    private ISensorDataService SensorDataService { get; set; } = default!;
+
     private List<SensorDeviceDto> _sensorDevices { get; set; } = new();
 
-    //default value cannot be 0 -> first selectedindex is 0.
-    private int Index = -1;
+    private List<SensorDataDto> ChartData = new();
 
-    public ChartOptions Options = new ChartOptions();
+    private ApexChartOptions<SensorDataDto> ChartOptions;
 
-    public List<ChartSeries> ChartData = new();
+    private string SelectedSensorName { get; set; } = default!;
 
-    // Labels for the x-axis (timestamps)
-    private string[] XAxisLabels = Array.Empty<string>();
+    private ApexChart<SensorDataDto>? ChartRef;
 
-    private Dictionary<SensorType, string> ChartSeriesNames = new() {
-                                                                { SensorType.Temperature, "Temperature (°C)" },
-                                                                { SensorType.Humidity, "Rel. Humidity (%)" },
-                                                                { SensorType.EnergyConsumption, "Energy Consumption (kWh)" }
+    private Dictionary<SensorType, string> ChartSeriesNames = new()
+                                                                {
+                                                                    { SensorType.Temperature, "Temperature (°C)" },
+                                                                    { SensorType.Humidity, "Rel. Humidity (%)" },
+                                                                    { SensorType.EnergyConsumption, "Energy Consumption (kWh)" }
                                                                 };
 
     protected override async Task OnInitializedAsync()
@@ -37,15 +39,49 @@ public partial class SensorCharts : ComponentBase
     // Transform data for the chart
     private void TransformToChartData(SensorType sensorType, List<SensorDataDto> sensorData)
     {
-        XAxisLabels = sensorData.Select(d => d.Timestamp.ToString("HH:mm")).ToArray();
-        ChartData = new List<ChartSeries>
+        ChartData.Clear();
+        ChartData.AddRange(sensorData);
+
+        if (ChartOptions == null)
         {
-            new ChartSeries
+            ChartOptions = new ApexChartOptions<SensorDataDto>
             {
-                Name = ChartSeriesNames[sensorType],
-                Data = sensorData.Select(d => d.Value).ToArray()
-            }
-        };
+                Chart = new Chart
+                {
+                    Toolbar = new Toolbar { Show = false },
+                    DropShadow = new DropShadow
+                    {
+                        Enabled = true,
+                        Blur = 5,
+                        Opacity = 0.3
+                    }
+                },
+                Stroke = new Stroke { Curve = Curve.MonotoneCubic },
+                DataLabels = new ApexCharts.DataLabels { Enabled = true },
+                Xaxis = new XAxis
+                {
+                    Type = XAxisType.Datetime,
+                    Labels = new XAxisLabels
+                    {
+                        Format = "hh:mm tt",
+                        Rotate = -45
+                    }
+                },
+                Yaxis = new List<YAxis>() { new YAxis() { Title = new AxisTitle() { Text = "Sensor Value" } } },
+                Markers = new Markers { Shape = ShapeEnum.Circle, Size = 6, Colors = "#2e3f78", FillOpacity = new Opacity(0.8d) },
+                Tooltip = new Tooltip
+                {
+                    Enabled = true,
+                    X = new TooltipX
+                    {
+                        Formatter = "function(value) { " +
+                            "  const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true }; " +
+                            "  return new Intl.DateTimeFormat('en-US', options).format(new Date(value)); " +
+                            "}"
+                    }
+                },
+            };
+        }
     }
 
     private async Task OnSensorSelectedAsync(ChangeEventArgs e)
@@ -54,10 +90,19 @@ public partial class SensorCharts : ComponentBase
         {
             var selectedDeviceId = deviceId;
             var selectedSensor = _sensorDevices.First(s => s.Id == selectedDeviceId);
+            SelectedSensorName = selectedSensor.Name;
 
             List<SensorDataDto> sensorData = await LoadSensorDataAsync(selectedSensor.Type, selectedDeviceId);
 
             TransformToChartData(selectedSensor.Type, sensorData);
+
+            if (ChartRef != null)
+            {
+                await InvokeAsync(StateHasChanged);
+
+                //await ChartRef.UpdateOptionsAsync(true, true, false);
+                await ChartRef.UpdateSeriesAsync(true);
+            }
         }
     }
 
