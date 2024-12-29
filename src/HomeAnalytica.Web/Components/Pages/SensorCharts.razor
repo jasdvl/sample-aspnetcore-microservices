@@ -2,10 +2,8 @@
 @using HomeAnalytica.Common.Const
 @using HomeAnalytica.Common.DTOs
 @using HomeAnalytica.Web.Services
-@using MudBlazor
+
 @rendermode InteractiveServer
-@inject IHttpClientFactory HttpClientFactory
-@inject ISensorDataService SensorDataService
 
 <PageTitle>Sensor Charts</PageTitle>
 
@@ -23,14 +21,38 @@
     </select>
 </div>
 
-<div>
-    <MudChart ChartType="ChartType.Line" ChartSeries="@ChartData" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels" Width="100%" Height="350px" ChartOptions="@Options" />
-    <MudGrid>
-        @* <MudItem xs="6">
-            <MudText Typo="Typo.body1" Class="py-3">Selected: @(Index < 0 ? "None" : ChartData[Index].Name)</MudText>
-        </MudItem> *@
-        <MudItem xs="6">
-            <MudSlider @bind-Value="Options.LineStrokeWidth" Min="1" Max="10" Color="Color.Info">Line Width: @Options.LineStrokeWidth.ToString()</MudSlider>
-        </MudItem>
-    </MudGrid>
+<!-- https://apexcharts.github.io -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Sensor Data Visualization</h5>
+                </div>
+                <div class="card-body">
+                    @if (ChartData.Any())
+                    {
+                        <ApexChart TItem="SensorDataDto"
+                                   Title="Sensor Data"
+                                   @ref ="ChartRef"
+                                   Options="@ChartOptions">
+
+                            <ApexPointSeries TItem="SensorDataDto"
+                                             Items="@ChartData"
+                                             Name="@SelectedSensorName"
+                                             SeriesType="SeriesType.Line"
+                                             XValue="@(e => e.Timestamp.ToString())"
+                                             YValue="@(e => (decimal) e.Value)"
+                                             Stroke="@(new ApexCharts.SeriesStroke { Color = "#97a9cd", DashSpace = 3, Width = 5 })"
+                                             />
+                        </ApexChart>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Select a sensor to view its data.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

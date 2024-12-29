@@ -3,8 +3,6 @@
 @using HomeAnalytica.Common.DTOs
 @using HomeAnalytica.Web.Services
 @rendermode InteractiveServer
-@inject IHttpClientFactory HttpClientFactory
-@inject ISensorDataService SensorDataService
 
 <PageTitle>Data Input</PageTitle>
 
@@ -19,9 +17,9 @@
     <div class="card-body">
         <div class="input-group mb-2">
             <label class="input-group-text" for="temperatureSensorSelect">Select Sensor</label>
-            <select id="temperatureSensorSelect" class="form-select" @bind="_selectedTempSensorId">
+            <select id="temperatureSensorSelect" class="form-select" @bind="_selectedTemperatureSensorDeviceId">
                 <option value="" disabled selected>Please select a sensor</option>
-                @foreach (var sensor in _tempSensorDevices)
+                @foreach (var sensor in _temperatureSensorDevices)
                 {
                     <option value="@sensor.Id">@sensor.Name (@sensor.Id)</option>
                 }
@@ -42,7 +40,7 @@
     <div class="card-body">
         <div class="input-group mb-2">
             <label class="input-group-text" for="humiditySensorSelect">Select Sensor</label>
-            <select id="humiditySensorSelect" class="form-select" @bind="_selectedHumiditySensorId">
+            <select id="humiditySensorSelect" class="form-select" @bind="_selectedHumiditySensorDeviceId">
                 <option value="" disabled selected>Please select a sensor</option>
                 @foreach (var sensor in _humiditySensorDevices)
                 {
@@ -64,7 +62,7 @@
     <div class="card-body">
         <div class="input-group mb-2">
             <label class="input-group-text" for="energySensorSelect">Select Sensor</label>
-            <select id="energySensorSelect" class="form-select" @bind="_selectedEnergyConsumptionSensorId">
+            <select id="energySensorSelect" class="form-select" @bind="_selectedEnergyConsumptionSensorDeviceId">
                 <option value="" disabled selected>Please select a sensor</option>
                 @foreach (var sensor in _energyConsumptionSensorDevices)
                 {
@@ -80,7 +78,7 @@
 </div>
 
 <div class="d-flex justify-content-end my-4">
-    <button class="btn btn-primary" @onclick="SubmitData">Submit Data</button>
+    <button class="btn btn-primary" @onclick="SubmitAllSensorData">Submit Data</button>
 </div>
 
 @if (isDataSubmitted)

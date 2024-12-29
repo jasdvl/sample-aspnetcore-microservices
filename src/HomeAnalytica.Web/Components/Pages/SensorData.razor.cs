@@ -7,21 +7,21 @@ namespace HomeAnalytica.Web.Components.Pages;
 
 public partial class SensorData : ComponentBase
 {
-    private double _temperature;
+    private double? _temperature;
 
-    private double _humidity;
+    private double? _humidity;
 
-    private double _energyConsumption;
+    private double? _energyConsumption;
 
     private bool isDataSubmitted = false;
 
-    private long? _selectedTempSensorId;
+    private long? _selectedTemperatureSensorDeviceId;
 
-    private long? _selectedHumiditySensorId;
+    private long? _selectedHumiditySensorDeviceId;
 
-    private long? _selectedEnergyConsumptionSensorId;
+    private long? _selectedEnergyConsumptionSensorDeviceId;
 
-    private List<SensorDeviceDto> _tempSensorDevices { get; set; } = new();
+    private List<SensorDeviceDto> _temperatureSensorDevices { get; set; } = new();
 
     private List<SensorDeviceDto> _humiditySensorDevices { get; set; } = new();
 
@@ -30,36 +30,50 @@ public partial class SensorData : ComponentBase
     [Inject]
     private ISensorDeviceService SensorDeviceService { get; set; } = default!;
 
+    [Inject]
+    private ISensorDataService SensorDataService { get; set; } = default!;
+
     protected override async Task OnInitializedAsync()
     {
         await LoadSensorDevicesAsync();
     }
 
-    private async Task SubmitData()
+    private async Task SubmitAllSensorData()
     {
-        if (_selectedTempSensorId != null)
+        await SubmitSensorData(SensorType.Temperature, _selectedTemperatureSensorDeviceId, _temperature);
+        await SubmitSensorData(SensorType.Humidity, _selectedHumiditySensorDeviceId, _humidity);
+        await SubmitSensorData(SensorType.EnergyConsumption, _selectedEnergyConsumptionSensorDeviceId, _energyConsumption);
+
+        _selectedTemperatureSensorDeviceId = null;
+        _selectedHumiditySensorDeviceId = null;
+        _selectedEnergyConsumptionSensorDeviceId = null;
+
+        _temperature = null;
+        _humidity = null;
+        _energyConsumption = null;
+    }
+
+    private async Task SubmitSensorData(SensorType sensorType, long? deviceId, double? value)
+    {
+        if (deviceId != null && value != null)
         {
             var data = new SensorDataDto
             {
-                DeviceId = (long)_selectedTempSensorId,
-                SensorType = SensorType.Temperature,
+                DeviceId = (long) deviceId,
+                SensorType = sensorType,
                 Timestamp = DateTime.UtcNow,
-                Value = _temperature
+                Value = (double) value
             };
 
             await SensorDataService.ProcessSensorDataAsync(data);
-
-            _selectedTempSensorId = null;
-            _temperature = 0;
         }
-
     }
 
     private async Task LoadSensorDevicesAsync()
     {
         var devices = await SensorDeviceService.GetSensorDevicesAsync();
 
-        _tempSensorDevices = devices.FindAll(d => d.Type == SensorType.Temperature);
+        _temperatureSensorDevices = devices.FindAll(d => d.Type == SensorType.Temperature);
         _humiditySensorDevices = devices.FindAll(d => d.Type == SensorType.Humidity);
         _energyConsumptionSensorDevices = devices.FindAll(d => d.Type == SensorType.EnergyConsumption);
     }
