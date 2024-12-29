@@ -19,7 +19,9 @@ The solution is divided into multiple projects to simulate key functionalities w
 ### Key Components
 
 1. **HomeAnalytica.Web (Blazor Web App)**
-   - A Blazor Web App that provides a straightforward interface for users to input and view sample analytics data. The UI prioritizes simplicity to keep the focus on backend and architectural functionality.
+   - A Blazor Web App that provides a straightforward interface for users to input and view sample analytics data. The UI prioritizes simplicity to keep the focus on backend and architectural functionality.  
+     Apex Charts was integrated for creating interactive charts.  
+     See also https://apexcharts.github.io/Blazor-ApexCharts/
 
 2. **HomeAnalytica.Grpc.Contracts (gRPC Service)**
    - A gRPC service to facilitate efficient communication between microservices, allowing seamless data exchange and integration of insights from various components.
@@ -45,43 +47,69 @@ This sample project provides a practical example of integrating ASP.NET Core wit
 
 ## Setting up the HTTPS Certificates (Windows)
 
-To run the Docker container with HTTPS support, please create an SSL certificate and trust it by following these steps:
+To run the Docker container with HTTPS support for `homeanalytica.web` (the Blazor Web App), please create the following SSL certificates and trust them by following these steps:
 
 ```bash
-dotnet dev-certs https -ep %APPDATA%\ASP.NET\Https\HomeAnalytica.Analytics.pfx -p 8247c5bc-698a-42b7-5910-ec40578db4a5
-dotnet dev-certs https -ep %APPDATA%\ASP.NET\Https\HomeAnalytica.DataCollection.pfx -p 9017c5bc-676d-49b7-8990-fe87578db4a5
-dotnet dev-certs https -ep %APPDATA%\ASP.NET\Https\HomeAnalytica.Gateway.Yarp.pfx -p 4113c5ac-614d-49b7-8920-ff40578eb2b1
+dotnet dev-certs https
 dotnet dev-certs https -ep %APPDATA%\ASP.NET\Https\HomeAnalytica.Web.pfx -p 8517c5bc-614d-49b7-8990-ff40578db4a5
 dotnet dev-certs https --trust
 ```
 
 ## Getting Started
 
+### Option 1: Start the Application with dotnet Commands
+
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/jasdvl/sample-aspnetcore-microservices.git
-   ```
+    ```bash
+    git clone https://github.com/jasdvl/sample-aspnetcore-microservices.git
+    ```
 
 2. Navigate to the project directory:
 
-   ```bash
-   cd sample-aspnetcore-microservices/src
-   ```
+    ```bash
+    cd sample-aspnetcore-microservices/src
+    ```
 
 3. Restore dependencies:
 
-   ```bash
-   dotnet restore
-   ```
+    ```bash
+    dotnet restore
+    ```
 
-4. Run the application:
+Start the database service:
 
-   ```bash
-   dotnet run --project ./HomeAnalytica.Web
-   ```
+```
+docker-compose up --build -d sensor-data-db
+```
 
-5. Open a web browser and navigate to [https://localhost:6200](https://localhost:6200) to view the application.
+Run the application:
+
+```
+dotnet run --project ./HomeAnalytica.Web
+```
+
+### Option 2: Start All Services with Docker Compose
+
+Clone the repository if you haven’t already:
+
+```
+git clone https://github.com/jasdvl/sample-aspnetcore-microservices.git
+```
+
+Navigate to the project directory:
+
+```
+cd sample-aspnetcore-microservices/src
+```
+
+Start all services (database and microservices) with Docker Compose:
+
+```
+docker-compose up --build -d
+```
+
+This will build and start all services defined in the docker-compose.yml file, including the database and all microservices.
 
 ## Project Structure
 
