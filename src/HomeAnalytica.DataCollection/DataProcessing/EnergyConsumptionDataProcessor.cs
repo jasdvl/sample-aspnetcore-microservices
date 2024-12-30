@@ -24,7 +24,7 @@ public class EnergyConsumptionDataProcessor : SensorDataProcessor<EnergyConsumpt
                 DeviceId = r.DeviceId,
                 Timestamp = Timestamp.FromDateTime(r.Timestamp),
                 SensorType = SensorType.EnergyConsumption,
-                Value = r.EnergyConsumption
+                Value = r.TotalEnergyConsumption
             })}
         };
 
@@ -37,7 +37,7 @@ public class EnergyConsumptionDataProcessor : SensorDataProcessor<EnergyConsumpt
         {
             DeviceId = request.DeviceId,
             Timestamp = request.Timestamp.ToDateTime(),
-            EnergyConsumption = request.Value
+            TotalEnergyConsumption = request.Value
         };
 
         await _repository.InsertSensorDataAsync(sensorData);

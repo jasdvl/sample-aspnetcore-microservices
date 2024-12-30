@@ -12,6 +12,6 @@ public class EnergyConsumptionData : SensorDataBase
     /// <summary>
     /// Gets or sets the energy consumption value recorded by the sensor, measured in kilowatt-hours (kWh).
     /// </summary>
-    [BsonElement("energy_consumption")]
-    public double EnergyConsumption { get; set; }
+    [BsonElement("total_energy_consumption")]
+    public double TotalEnergyConsumption { get; set; }
 }
