@@ -22,9 +22,9 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                     name = table.Column<string>(type: "text", nullable: true),
                     type = table.Column<int>(type: "integer", nullable: false),
                     location = table.Column<string>(type: "text", nullable: true),
-                    installation_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    installation_date = table.Column<DateTime>(type: "date", nullable: true),
                     status = table.Column<string>(type: "text", nullable: true),
-                    last_maintenance = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    last_maintenance = table.Column<DateTime>(type: "date", nullable: true),
                     description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

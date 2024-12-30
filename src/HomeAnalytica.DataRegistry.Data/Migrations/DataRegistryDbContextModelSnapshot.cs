@@ -36,11 +36,11 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                         .HasColumnName("description");
 
                     b.Property<DateTime?>("InstallationDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("date")
                         .HasColumnName("installation_date");
 
                     b.Property<DateTime?>("LastMaintenance")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("date")
                         .HasColumnName("last_maintenance");
 
                     b.Property<string>("Location")
