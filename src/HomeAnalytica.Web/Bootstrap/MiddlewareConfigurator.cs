@@ -24,7 +24,8 @@ namespace HomeAnalytica.Web.Bootstrap
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // Disabled HTTPS redirection for debugging purposes. Re-enable in production for secure connections.
+            // app.UseHttpsRedirection();
 
             app.UseStaticFiles();
             app.UseAntiforgery();
