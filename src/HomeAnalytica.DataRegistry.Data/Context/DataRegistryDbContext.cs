@@ -49,9 +49,11 @@ public class DataRegistryDbContext : DbContext
             entity.Property(e => e.Type)
                 .IsRequired();
             entity.Property(e => e.InstallationDate)
-                .IsRequired(false);
+                .IsRequired(false)
+                .HasColumnType("date");
             entity.Property(e => e.LastMaintenance)
-                .IsRequired(false);
+                .IsRequired(false)
+                .HasColumnType("date");
             entity.Property(e => e.Name)
                 .IsRequired(false);
             entity.Property(e => e.Location)

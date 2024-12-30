@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeAnalytica.DataRegistry.Data.Migrations
 {
     [DbContext(typeof(DataRegistryDbContext))]
-    [Migration("20241205125903_InitialCreate")]
+    [Migration("20241229231040_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -39,11 +39,11 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                         .HasColumnName("description");
 
                     b.Property<DateTime?>("InstallationDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("date")
                         .HasColumnName("installation_date");
 
                     b.Property<DateTime?>("LastMaintenance")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("date")
                         .HasColumnName("last_maintenance");
 
                     b.Property<string>("Location")
