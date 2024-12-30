@@ -14,7 +14,7 @@ public class EnergyConsumptionDataRepository : SensorDataRepository<EnergyConsum
     {
         var averageHumidity = await _dataCollection
             .Aggregate()
-            .Group(sensor => 1, g => new { AverageEnergyConsumption = g.Average(s => s.EnergyConsumption) })
+            .Group(sensor => 1, g => new { AverageEnergyConsumption = g.Average(s => s.TotalEnergyConsumption) })
             .FirstOrDefaultAsync();
 
         return averageHumidity?.AverageEnergyConsumption ?? 0.0;
