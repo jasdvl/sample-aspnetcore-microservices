@@ -91,7 +91,6 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Serial No.</th>
                 <th>Name</th>
                 <th>Type</th>
@@ -105,7 +104,6 @@ else
             @foreach (var device in _sensorDevices)
             {
                 <tr>
-                    <td>@device.Id</td>
                     <td>@device.SerialNo</td>
                     <td>@device.Name</td>
                     <td>@device.Type</td>
@@ -117,4 +115,5 @@ else
             }
         </tbody>
     </table>
+
 }
