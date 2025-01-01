@@ -26,30 +26,30 @@
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="card-title mb-0">Sensor Data Visualization</h5>
+                <div class="card-header bg-card-header">
+                    <h5 class="card-title mb-0">@SelectedSensorName</h5>
                 </div>
                 <div class="card-body">
                     @if (ChartData.Any())
                     {
                         <ApexChart TItem="SensorDataDto"
-                                   Title="Sensor Data"
+                                   Title="@ChartTitle"
                                    @ref ="ChartRef"
-                                   Options="@ChartOptions">
+                                   Options="@ChartOptions" >
 
                             <ApexPointSeries TItem="SensorDataDto"
                                              Items="@ChartData"
                                              Name="@SelectedSensorName"
-                                             SeriesType="SeriesType.Line"
+                                             SeriesType="@SeriesType"
                                              XValue="@(e => e.Timestamp.ToString())"
                                              YValue="@(e => (decimal) e.Value)"
-                                             Stroke="@(new ApexCharts.SeriesStroke { Color = "#97a9cd", DashSpace = 3, Width = 5 })"
+                                             Stroke="@SeriesStroke"
                                              />
                         </ApexChart>
                     }
                     else
                     {
-                        <p class="text-muted">Select a sensor to view its data.</p>
+                        <p class="text-muted">No data available.</p>
                     }
                 </div>
             </div>

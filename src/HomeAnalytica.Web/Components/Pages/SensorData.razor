@@ -10,8 +10,8 @@
 
 <p role="status">Please enter your data:</p>
 
-<div class="card my-2">
-    <div class="card-header">
+<div class="card mt-2 mb-5">
+    <div class="card-header bg-card-header">
         <h5>Temperature Sensor</h5>
     </div>
     <div class="card-body">
@@ -27,14 +27,14 @@
         </div>
         <div class="input-group mb-2">
             <span class="input-group-text">Temperature (°C)</span>
-            <input @bind="_temperature" type="number" class="form-control" step="0.1" />
+            <input @bind="_temperature" type="number" class="form-control" step="0.1" placeholder="Enter the Current Temperature (°C)" />
         </div>
     </div>
 </div>
 
 
-<div class="card my-2">
-    <div class="card-header">
+<div class="card my-5">
+    <div class="card-header bg-card-header">
         <h5>Humidity Sensor</h5>
     </div>
     <div class="card-body">
@@ -50,13 +50,13 @@
         </div>
         <div class="input-group mb-2">
             <span class="input-group-text">Humidity (%)</span>
-            <input @bind="_humidity" type="number" class="form-control" step="1" />
+            <input @bind="_humidity" type="number" class="form-control" step="1" placeholder="Enter the Current Humidity (%)" />
         </div>
     </div>
 </div>
 
-<div class="card my-2">
-    <div class="card-header">
+<div class="card my-5">
+    <div class="card-header bg-card-header">
         <h5>Energy Consumption Sensor</h5>
     </div>
     <div class="card-body">
@@ -72,7 +72,7 @@
         </div>
         <div class="input-group mb-2">
             <span class="input-group-text">Energy Consumption (kWh)</span>
-            <input @bind="_energyConsumption" type="number" class="form-control" step="0.1" />
+            <input @bind="_energyConsumption" type="number" class="form-control" step="0.1" placeholder="Enter the Current Total Energy Consumption (kWh)" />
         </div>
     </div>
 </div>
