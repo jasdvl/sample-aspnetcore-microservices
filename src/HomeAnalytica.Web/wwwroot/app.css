@@ -2,6 +2,14 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+:root {
+    --bs-primary-rgb: 84, 104, 175
+}
+
+.bg-card-header {
+    background-color: #d9ddec;
+}
+
 a, .btn-link {
     color: #006bb7;
 }
