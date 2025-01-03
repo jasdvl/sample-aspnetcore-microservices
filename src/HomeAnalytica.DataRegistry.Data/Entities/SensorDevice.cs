@@ -18,9 +18,14 @@ public class SensorDevice
     public string? Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the type of the sensor (e.g., "Temperature", "Humidity", "EnergyConsumption").
+    /// Gets or sets the foreign key referencing the measured quantity.
     /// </summary>
-    public int Type { get; set; }
+    public int MeasuredQuantityId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the foreign key referencing the physical unit.
+    /// </summary>
+    public int PhysUnitId { get; set; }
 
     /// <summary>
     /// Gets or sets the location of the sensor, such as a room name, building, or GPS coordinates.
@@ -46,4 +51,14 @@ public class SensorDevice
     /// Gets or sets additional information or a description of the sensor.
     /// </summary>
     public string? Description { get; set; }
+
+    /// <summary>
+    /// Gets or sets the measured quantity associated with the sensor.
+    /// </summary>
+    public MeasuredQuantity MeasuredQuantity { get; set; }
+
+    /// <summary>
+    /// Gets or sets the physical unit associated with the measured quantity.
+    /// </summary>
+    public PhysUnit PhysUnit { get; set; }
 }

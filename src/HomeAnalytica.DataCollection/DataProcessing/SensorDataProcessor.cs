@@ -1,6 +1,6 @@
 using HomeAnalytica.DataCollection.Data.Entities;
 using HomeAnalytica.DataCollection.Data.Repositories;
-using HomeAnalytica.Grpc.Contracts.Protos;
+using HomeAnalytica.Grpc.Contracts.DataCollection;
 
 namespace HomeAnalytica.DataCollection.DataProcessing;
 

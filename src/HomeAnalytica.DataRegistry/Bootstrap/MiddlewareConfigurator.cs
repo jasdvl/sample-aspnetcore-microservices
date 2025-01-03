@@ -1,6 +1,3 @@
-using HomeAnalytica.DataRegistry.Data.Context;
-using Microsoft.EntityFrameworkCore;
-
 namespace HomeAnalytica.DataRegistry.Bootstrap
 {
     /// <summary>
@@ -28,13 +25,6 @@ namespace HomeAnalytica.DataRegistry.Bootstrap
             // HTTPS is not required for services behind the reverse proxy,
             // as the proxy handles HTTPS termination and forwards requests via HTTP within the internal network.
             //app.UseHttpsRedirection();
-
-            using (var serviceScope = app.Services.CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<DataRegistryDbContext>();
-
-                context.Database.Migrate();
-            }
         }
     }
 }

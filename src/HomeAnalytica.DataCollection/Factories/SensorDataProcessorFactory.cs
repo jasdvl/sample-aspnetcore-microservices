@@ -1,37 +1,37 @@
 using HomeAnalytica.DataCollection.DataProcessing;
-using HomeAnalytica.Grpc.Contracts.Protos;
+using HomeAnalytica.Grpc.Contracts.DataCollection;
 
 namespace HomeAnalytica.DataCollection.Factories;
 
 public interface ISensorDataHandlerFactory
 {
-    ISensorDataProcessor GetDataProcessor(SensorType sensorType);
+    ISensorDataProcessor GetDataProcessor(MeasuredQuantity sensorType);
 }
 
 public class SensorDataProcessorFactory : ISensorDataHandlerFactory
 {
-    private readonly Dictionary<SensorType, ISensorDataProcessor> _sensorDataHandlers;
+    private readonly Dictionary<MeasuredQuantity, ISensorDataProcessor> _sensorDataHandlers;
 
     public SensorDataProcessorFactory(
                                 ITemperatureDataProcessor temperatureDataProcessor,
                                 IEnergyConsumptionDataProcessor energyConsumptionDataProcessor,
                                 IHumidityDataProcessor humidityDataProcessor)
     {
-        _sensorDataHandlers = new Dictionary<SensorType, ISensorDataProcessor>
+        _sensorDataHandlers = new Dictionary<MeasuredQuantity, ISensorDataProcessor>
         {
-            { SensorType.Temperature, temperatureDataProcessor },
-            { SensorType.EnergyConsumption, energyConsumptionDataProcessor },
-            { SensorType.Humidity, humidityDataProcessor }
+            { MeasuredQuantity.Temperature, temperatureDataProcessor },
+            { MeasuredQuantity.EnergyConsumption, energyConsumptionDataProcessor },
+            { MeasuredQuantity.Humidity, humidityDataProcessor }
         };
     }
 
-    public ISensorDataProcessor GetDataProcessor(SensorType sensorType)
+    public ISensorDataProcessor GetDataProcessor(MeasuredQuantity measuredQuantity)
     {
-        if (_sensorDataHandlers.TryGetValue(sensorType, out var sensorDataHandler))
+        if (_sensorDataHandlers.TryGetValue(measuredQuantity, out var sensorDataHandler))
         {
             return sensorDataHandler;
         }
 
-        throw new ArgumentException($"Unsupported sensor type: {sensorType}");
+        throw new ArgumentException($"Unsupported sensor type: {measuredQuantity}");
     }
 }

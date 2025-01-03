@@ -1,7 +1,7 @@
 using Grpc.Core;
 using HomeAnalytica.DataCollection.DataProcessing;
 using HomeAnalytica.DataCollection.Factories;
-using HomeAnalytica.Grpc.Contracts.Protos;
+using HomeAnalytica.Grpc.Contracts.DataCollection;
 
 namespace HomeAnalytica.DataCollection.Services;
 
@@ -33,7 +33,7 @@ public class SensorDataService : SensorDataSender.SensorDataSenderBase
 
     public override async Task<GetSensorDataResponse> GetSensorDataByType(GetSensorDataRequest request, ServerCallContext context)
     {
-        ISensorDataProcessor sensorDataProcessor = _sensorDataProcessorFactory.GetDataProcessor(request.SensorType);
+        ISensorDataProcessor sensorDataProcessor = _sensorDataProcessorFactory.GetDataProcessor(request.MeasuredQuantity);
 
         var response = await sensorDataProcessor.GetSensorData(request.DeviceId);
 
@@ -42,7 +42,7 @@ public class SensorDataService : SensorDataSender.SensorDataSenderBase
 
     private async Task HandleSensorDataAsync(SensorDataRequest request)
     {
-        ISensorDataProcessor sensorDataProcessor = _sensorDataProcessorFactory.GetDataProcessor(request.SensorType);
+        ISensorDataProcessor sensorDataProcessor = _sensorDataProcessorFactory.GetDataProcessor(request.MeasuredQuantity);
 
         await sensorDataProcessor.HandleSensorDataAsync(request);
     }

@@ -15,9 +15,19 @@ public class SensorDeviceDto
     public required string SerialNo { get; set; }
 
     /// <summary>
-    /// Gets or sets the location of the sensor, such as a room name, building, or GPS coordinates.
+    /// Gets or sets the name or label of the sensor for easier identification.
     /// </summary>
-    public string? Location { get; set; }
+    public string? Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the measured quantity associated with the sensor (e.g., Temperature, Humidity).
+    /// </summary>
+    public MeasuredQuantity MeasuredQuantity { get; set; }
+
+    /// <summary>
+    /// Gets or sets the physical unit associated with the measured quantity (e.g., °C, %, kWh).
+    /// </summary>
+    public PhysicalUnit PhysUnit { get; set; }
 
     /// <summary>
     /// Gets or sets additional information or a description of the sensor.
@@ -25,14 +35,9 @@ public class SensorDeviceDto
     public string? Description { get; set; }
 
     /// <summary>
-    /// Gets or sets the name or label of the sensor for easier identification.
+    /// Gets or sets the location of the sensor, such as a room name, building, or GPS coordinates.
     /// </summary>
-    public string? Name { get; set; }
-
-    /// <summary>
-    /// Gets or sets the type of the sensor (e.g., "Temperature", "Humidity", "EnergyConsumption").
-    /// </summary>
-    public SensorType Type { get; set; }
+    public string? Location { get; set; }
 
     /// <summary>
     /// Gets or sets the date when the sensor was installed.

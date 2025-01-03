@@ -49,9 +49,9 @@ namespace HomeAnalytica.Web.Services
         /// <returns>A <c>Task</c> that represents the asynchronous operation.</returns>
         public async Task PostSensorDeviceAsync(SensorDeviceDto sensorDeviceDto)
         {
-            if (string.IsNullOrEmpty(sensorDeviceDto.SerialNo) || sensorDeviceDto.Type == Common.Const.SensorType.Unknown)
+            if (string.IsNullOrEmpty(sensorDeviceDto.SerialNo) || sensorDeviceDto.MeasuredQuantity == Common.Const.MeasuredQuantity.Unknown)
             {
-                throw new ArgumentException("Serial no. and sensor type are mandatory.");
+                throw new ArgumentException("Serial no. and measured quantity are mandatory.");
             }
 
             try

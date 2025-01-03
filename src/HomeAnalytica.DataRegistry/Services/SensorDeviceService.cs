@@ -1,15 +1,12 @@
 using HomeAnalytica.Common.DTOs;
 using HomeAnalytica.DataRegistry.Data.Entities;
 using HomeAnalytica.DataRegistry.Data.Infrastructure;
-using HomeAnalytica.Grpc.Contracts.Protos;
 
 namespace HomeAnalytica.DataRegistry.Services;
 
 public class SensorDeviceService : ISensorDeviceService
 {
     private readonly ILogger<SensorDeviceService> _logger;
-
-    private readonly SensorDataSender.SensorDataSenderClient _sensorDataSenderClient;
 
     private readonly IUnitOfWork _unitOfWork;
 
@@ -21,11 +18,9 @@ public class SensorDeviceService : ISensorDeviceService
     /// <param name="unitOfWork">The unit of work for database operations.</param>
     public SensorDeviceService(
                 ILogger<SensorDeviceService> logger,
-                SensorDataSender.SensorDataSenderClient sender,
                 IUnitOfWork unitOfWork)
     {
         _logger = logger;
-        _sensorDataSenderClient = sender;
         _unitOfWork = unitOfWork;
     }
 
@@ -53,7 +48,8 @@ public class SensorDeviceService : ISensorDeviceService
         {
             Id = entity.Id,
             SerialNo = entity.SerialNo,
-            Type = (Common.Const.SensorType)entity.Type,
+            MeasuredQuantity = (Common.Const.MeasuredQuantity) entity.MeasuredQuantityId,
+            PhysUnit = (Common.Const.PhysicalUnit) entity.PhysUnitId,
             Name = entity.Name,
             InstallationDate = entity.InstallationDate,
             LastMaintenance = entity.LastMaintenance,
@@ -70,7 +66,8 @@ public class SensorDeviceService : ISensorDeviceService
         SensorDevice sensorDevice = new SensorDevice
         {
             SerialNo = metadata.SerialNo,
-            Type = (int)metadata.Type,
+            MeasuredQuantityId = (int) metadata.MeasuredQuantity,
+            PhysUnitId = (int) metadata.PhysUnit,
             Name = metadata.Name,
             InstallationDate = metadata.InstallationDate,
             LastMaintenance = metadata.LastMaintenance,

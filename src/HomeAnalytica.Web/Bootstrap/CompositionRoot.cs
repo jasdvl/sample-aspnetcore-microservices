@@ -1,6 +1,6 @@
 using ApexCharts;
 using Grpc.Core;
-using HomeAnalytica.Grpc.Contracts.Protos;
+using HomeAnalytica.Grpc.Contracts.DataCollection;
 using HomeAnalytica.Web.Grpc;
 using HomeAnalytica.Web.Services;
 

@@ -1,16 +1,24 @@
 using Google.Protobuf.WellKnownTypes;
 using HomeAnalytica.Common.DTOs;
-using HomeAnalytica.Grpc.Contracts.Protos;
+using HomeAnalytica.Grpc.Contracts.DataCollection;
 using HomeAnalytica.Web.Grpc;
 
 namespace HomeAnalytica.Web.Services;
 
+/// <summary>
+/// Service for handling sensor data operations, including retrieving and processing sensor data.
+/// </summary>
 public class SensorDataService : ISensorDataService
 {
     private readonly ILogger<SensorDataService> _logger;
 
     private readonly SensorDataClient _sensorDataClient;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SensorDataService"/> class.
+    /// </summary>
+    /// <param name="logger">The logger for logging information and errors.</param>
+    /// <param name="sensorDataClient">The client for interacting with the sensor data service.</param>
     public SensorDataService(
                 ILogger<SensorDataService> logger,
                 SensorDataClient sensorDataClient)
@@ -19,11 +27,11 @@ public class SensorDataService : ISensorDataService
         _sensorDataClient = sensorDataClient;
     }
 
-    public async Task<List<SensorDataDto>> GetSensorDataAsync(HomeAnalytica.Common.Const.SensorType sensorType, long deviceId)
+    public async Task<List<SensorDataDto>> GetSensorDataAsync(HomeAnalytica.Common.Const.MeasuredQuantity measuredQuantity, long deviceId)
     {
         try
         {
-            var data = await _sensorDataClient.GetSensorDataByTypeAsync((SensorType)sensorType, deviceId);
+            var data = await _sensorDataClient.GetSensorDataByTypeAsync((MeasuredQuantity) measuredQuantity, deviceId);
 
             var res = data.Records.Select(d => new SensorDataDto
             {
@@ -50,7 +58,7 @@ public class SensorDataService : ISensorDataService
         {
             var res = await _sensorDataClient.SendSensorDataAsync(
                                                                 data.DeviceId,
-                                                                (SensorType)data.SensorType,
+                                                                (MeasuredQuantity) data.MeasuredQuantity,
                                                                 Timestamp.FromDateTime(data.Timestamp),
                                                                 data.Value);
         }
