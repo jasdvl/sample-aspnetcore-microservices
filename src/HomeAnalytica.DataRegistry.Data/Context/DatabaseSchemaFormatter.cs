@@ -18,18 +18,45 @@ namespace HomeAnalytica.DataRegistry.Data.Context
         /// </remarks>
         internal static void DbObjectNamesToSnakeCase(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<PhysUnit>(entity =>
+            {
+                entity.ToTable("phys_units");
+                entity.Property(e => e.Id)
+                    .HasColumnName("id");
+                entity.Property(e => e.Name)
+                   .HasColumnName("name");
+                entity.Property(e => e.Symbol)
+                    .HasColumnName("symbol");
+                entity.Property(e => e.Description)
+                    .HasColumnName("description");
+            });
+
+            modelBuilder.Entity<MeasuredQuantity>(entity =>
+            {
+                entity.ToTable("measured_quantities");
+                entity.Property(e => e.Id)
+                    .HasColumnName("id");
+                entity.Property(e => e.Name)
+                    .HasColumnName("name");
+                entity.Property(e => e.Description)
+                    .HasColumnName("description");
+            });
+
             modelBuilder.Entity<SensorDevice>(entity =>
             {
+                entity.ToTable("sensor_devices");
                 entity.Property(e => e.Id)
                     .HasColumnName("id");
                 entity.Property(e => e.SerialNo)
                    .HasColumnName("serial_no");
-                entity.Property(e => e.InstallationDate)
-                    .HasColumnName("installation_date");
-                entity.Property(e => e.Type)
-                    .HasColumnName("type");
+                entity.Property(e => e.MeasuredQuantityId)
+                    .HasColumnName("measured_quantity_id");
+                entity.Property(e => e.PhysUnitId)
+                    .HasColumnName("phys_unit_id");
                 entity.Property(e => e.LastMaintenance)
                     .HasColumnName("last_maintenance");
+                entity.Property(e => e.InstallationDate)
+                    .HasColumnName("installation_date");
                 entity.Property(e => e.Name)
                     .HasColumnName("name");
                 entity.Property(e => e.Location)
