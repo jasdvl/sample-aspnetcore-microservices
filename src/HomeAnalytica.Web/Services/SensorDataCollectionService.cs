@@ -8,19 +8,19 @@ namespace HomeAnalytica.Web.Services;
 /// <summary>
 /// Service for handling sensor data operations, including retrieving and processing sensor data.
 /// </summary>
-public class SensorDataService : ISensorDataService
+public class SensorDataCollectionService : ISensorDataCollectionService
 {
-    private readonly ILogger<SensorDataService> _logger;
+    private readonly ILogger<SensorDataCollectionService> _logger;
 
     private readonly SensorDataClient _sensorDataClient;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SensorDataService"/> class.
+    /// Initializes a new instance of the <see cref="SensorDataCollectionService"/> class.
     /// </summary>
     /// <param name="logger">The logger for logging information and errors.</param>
     /// <param name="sensorDataClient">The client for interacting with the sensor data service.</param>
-    public SensorDataService(
-                ILogger<SensorDataService> logger,
+    public SensorDataCollectionService(
+                ILogger<SensorDataCollectionService> logger,
                 SensorDataClient sensorDataClient)
     {
         _logger = logger;
@@ -31,7 +31,7 @@ public class SensorDataService : ISensorDataService
     {
         try
         {
-            var data = await _sensorDataClient.GetSensorDataByTypeAsync((MeasuredQuantity) measuredQuantity, deviceId);
+            var data = await _sensorDataClient.GetDataByQuantityAsync((MeasuredQuantity) measuredQuantity, deviceId);
 
             var res = data.Records.Select(d => new SensorDataDto
             {

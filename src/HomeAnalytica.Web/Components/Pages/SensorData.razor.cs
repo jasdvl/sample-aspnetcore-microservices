@@ -31,7 +31,7 @@ public partial class SensorData : ComponentBase
     private ISensorDeviceService SensorDeviceService { get; set; } = default!;
 
     [Inject]
-    private ISensorDataService SensorDataService { get; set; } = default!;
+    private ISensorDataCollectionService SensorDataService { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {

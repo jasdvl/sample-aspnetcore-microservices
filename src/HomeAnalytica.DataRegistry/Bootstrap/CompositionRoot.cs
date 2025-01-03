@@ -62,7 +62,7 @@ namespace HomeAnalytica.DataRegistry.Bootstrap
 
             var dataRegistryUrl = configuration["ServiceUrls:DataRegistry"];
 
-            services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
+            services.AddGrpcClient<DeviceDataService.DeviceDataServiceClient>(o =>
             {
                 o.Address = new Uri(dataRegistryUrl);
             })

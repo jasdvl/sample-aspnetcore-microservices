@@ -7,19 +7,19 @@ public class SensorDataClient
 {
     private readonly ILogger<SensorDataClient> _logger;
 
-    private readonly SensorDataSender.SensorDataSenderClient _client;
+    private readonly DeviceDataService.DeviceDataServiceClient _client;
 
     public SensorDataClient(
                           ILogger<SensorDataClient> logger,
-                          SensorDataSender.SensorDataSenderClient client)
+                          DeviceDataService.DeviceDataServiceClient client)
     {
         _logger = logger;
         _client = client;
     }
 
-    public async Task<GetSensorDataResponse> GetSensorDataByTypeAsync(MeasuredQuantity measuredQuantity, long deviceId)
+    public async Task<GetSensorDataResponse> GetDataByQuantityAsync(MeasuredQuantity measuredQuantity, long deviceId)
     {
-        var res = await _client.GetSensorDataByTypeAsync(
+        var res = await _client.GetDataByQuantityAsync(
                         new GetSensorDataRequest()
                         {
                             MeasuredQuantity = measuredQuantity,
@@ -28,9 +28,9 @@ public class SensorDataClient
         return res;
     }
 
-    public async Task<SensorDataResponse> SendSensorDataAsync(long deviceId, MeasuredQuantity measuredQuantity, Timestamp timestamp, double value)
+    public async Task<SubmitSensorDataResponse> SendSensorDataAsync(long deviceId, MeasuredQuantity measuredQuantity, Timestamp timestamp, double value)
     {
-        var request = new SensorDataRequest
+        var request = new SubmitSensorDataRequest
         {
             DeviceId = deviceId,
             MeasuredQuantity = measuredQuantity,
@@ -38,8 +38,8 @@ public class SensorDataClient
             Value = value
         };
 
-        var response = await _client.SubmitSensorDataAsync(request);
-        _logger.LogDebug($"Response from Analytics Service: {response.Message}");
+        var response = await _client.SubmitDataAsync(request);
+        _logger.LogDebug($"Response from Analytics Service: {response.StatusMessage}");
 
         return response;
     }

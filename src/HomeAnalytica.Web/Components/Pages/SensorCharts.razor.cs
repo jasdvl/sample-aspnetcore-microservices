@@ -18,7 +18,7 @@ public partial class SensorCharts : ComponentBase
     /// Gets or sets the service that handles sensor data operations, including retrieving and processing sensor data.
     /// </summary>
     [Inject]
-    private ISensorDataService SensorDataService { get; set; } = default!;
+    private ISensorDataCollectionService SensorDataService { get; set; } = default!;
 
     private List<SensorDeviceDto> _sensorDevices { get; set; } = new();
 

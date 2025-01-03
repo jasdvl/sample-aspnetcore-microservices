@@ -7,15 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="data_collection\sensor_data.proto" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="data_collection\sensor_data.proto" GrpcServices="Both" />
+    <Protobuf Include="data_collection\device_data_service.proto" GrpcServices="Both" />
   </ItemGroup>
 
 </Project>

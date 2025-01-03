@@ -5,7 +5,7 @@ using HomeAnalytica.Grpc.Contracts.DataCollection;
 
 namespace HomeAnalytica.DataCollection.Services;
 
-public class SensorDataService : SensorDataSender.SensorDataSenderBase
+public class SensorDataService : DeviceDataService.DeviceDataServiceBase
 {
     private readonly ILogger<SensorDataService> _logger;
 
@@ -19,19 +19,19 @@ public class SensorDataService : SensorDataSender.SensorDataSenderBase
         _sensorDataProcessorFactory = sensorDataHandlerFactory;
     }
 
-    public override async Task<SensorDataResponse> SubmitSensorData(SensorDataRequest request, ServerCallContext context)
+    public override async Task<SubmitSensorDataResponse> SubmitData(SubmitSensorDataRequest request, ServerCallContext context)
     {
         _logger.LogInformation($"Received sensor data: Value = {request.Value}");
 
         await HandleSensorDataAsync(request);
 
-        return new SensorDataResponse
+        return new SubmitSensorDataResponse
         {
-            Message = "Sensor data successfully received and processed"
+            StatusMessage = "Sensor data successfully received and processed"
         };
     }
 
-    public override async Task<GetSensorDataResponse> GetSensorDataByType(GetSensorDataRequest request, ServerCallContext context)
+    public override async Task<GetSensorDataResponse> GetDataByQuantity(GetSensorDataRequest request, ServerCallContext context)
     {
         ISensorDataProcessor sensorDataProcessor = _sensorDataProcessorFactory.GetDataProcessor(request.MeasuredQuantity);
 
@@ -40,7 +40,7 @@ public class SensorDataService : SensorDataSender.SensorDataSenderBase
         return response;
     }
 
-    private async Task HandleSensorDataAsync(SensorDataRequest request)
+    private async Task HandleSensorDataAsync(SubmitSensorDataRequest request)
     {
         ISensorDataProcessor sensorDataProcessor = _sensorDataProcessorFactory.GetDataProcessor(request.MeasuredQuantity);
 

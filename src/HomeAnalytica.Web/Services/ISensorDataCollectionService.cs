@@ -6,7 +6,7 @@ namespace HomeAnalytica.Web.Services;
 /// <summary>
 /// Defines the contract for the service that handles sensor data operations, including retrieving and processing sensor data.
 /// </summary>
-public interface ISensorDataService
+public interface ISensorDataCollectionService
 {
     /// <summary>
     /// Asynchronously retrieves sensor data based on the specified sensor type and device ID.

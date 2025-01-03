@@ -31,7 +31,7 @@ public class TemperatureDataProcessor : SensorDataProcessor<TemperatureData>, IT
         return response;
     }
 
-    public override async Task HandleSensorDataAsync(SensorDataRequest request)
+    public override async Task HandleSensorDataAsync(SubmitSensorDataRequest request)
     {
         var sensorData = new TemperatureData
         {

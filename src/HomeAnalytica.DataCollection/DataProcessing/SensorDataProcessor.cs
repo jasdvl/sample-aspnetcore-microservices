@@ -8,7 +8,7 @@ public interface ISensorDataProcessor
 {
     Task<GetSensorDataResponse> GetSensorData(long deviceId);
 
-    Task HandleSensorDataAsync(SensorDataRequest request);
+    Task HandleSensorDataAsync(SubmitSensorDataRequest request);
 }
 
 public abstract class SensorDataProcessor<T> : ISensorDataProcessor where T : SensorDataBase
@@ -22,6 +22,6 @@ public abstract class SensorDataProcessor<T> : ISensorDataProcessor where T : Se
 
     public abstract Task<GetSensorDataResponse> GetSensorData(long deviceId);
 
-    public abstract Task HandleSensorDataAsync(SensorDataRequest request);
+    public abstract Task HandleSensorDataAsync(SubmitSensorDataRequest request);
 }
 

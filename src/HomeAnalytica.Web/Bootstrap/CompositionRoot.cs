@@ -79,7 +79,7 @@ namespace HomeAnalytica.Web.Bootstrap
 
             var dataCollectionServiceUrl = configuration["ServiceUrls:DataCollection"];
 
-            services.AddGrpcClient<SensorDataSender.SensorDataSenderClient>(o =>
+            services.AddGrpcClient<DeviceDataService.DeviceDataServiceClient>(o =>
             {
                 o.Address = new Uri(dataCollectionServiceUrl);
             })
@@ -111,7 +111,7 @@ namespace HomeAnalytica.Web.Bootstrap
 
         private void RegisterServices(IServiceCollection services)
         {
-            services.AddScoped<ISensorDataService, SensorDataService>();
+            services.AddScoped<ISensorDataCollectionService, SensorDataCollectionService>();
 
             // ISensorDeviceService is already registered using: services.AddHttpClient<ISensorDeviceService, SensorDeviceService>
 
