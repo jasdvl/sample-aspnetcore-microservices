@@ -1,7 +1,7 @@
 using Google.Protobuf.WellKnownTypes;
 using HomeAnalytica.DataCollection.Data.Entities;
 using HomeAnalytica.DataCollection.Data.Repositories;
-using HomeAnalytica.Grpc.Contracts.Protos;
+using HomeAnalytica.Grpc.Contracts.DataCollection;
 using MongoDB.Driver;
 
 namespace HomeAnalytica.DataCollection.DataProcessing;
@@ -23,7 +23,7 @@ public class HumidityDataProcessor : SensorDataProcessor<HumidityData>, IHumidit
             {
                 DeviceId = r.DeviceId,
                 Timestamp = Timestamp.FromDateTime(r.Timestamp),
-                SensorType = SensorType.Humidity,
+                MeasuredQuantity = MeasuredQuantity.Humidity,
                 Value = r.Humidity
             })}
         };

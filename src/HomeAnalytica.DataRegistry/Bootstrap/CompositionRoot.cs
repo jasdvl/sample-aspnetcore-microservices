@@ -2,7 +2,7 @@ using Grpc.Core;
 using HomeAnalytica.DataRegistry.Data.Context;
 using HomeAnalytica.DataRegistry.Data.Infrastructure;
 using HomeAnalytica.DataRegistry.Services;
-using HomeAnalytica.Grpc.Contracts.Protos;
+using HomeAnalytica.Grpc.Contracts.DataCollection;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeAnalytica.DataRegistry.Bootstrap

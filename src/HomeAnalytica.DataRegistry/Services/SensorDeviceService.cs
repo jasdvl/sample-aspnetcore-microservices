@@ -1,15 +1,12 @@
 using HomeAnalytica.Common.DTOs;
 using HomeAnalytica.DataRegistry.Data.Entities;
 using HomeAnalytica.DataRegistry.Data.Infrastructure;
-using HomeAnalytica.Grpc.Contracts.Protos;
 
 namespace HomeAnalytica.DataRegistry.Services;
 
 public class SensorDeviceService : ISensorDeviceService
 {
     private readonly ILogger<SensorDeviceService> _logger;
-
-    private readonly SensorDataSender.SensorDataSenderClient _sensorDataSenderClient;
 
     private readonly IUnitOfWork _unitOfWork;
 
@@ -21,11 +18,9 @@ public class SensorDeviceService : ISensorDeviceService
     /// <param name="unitOfWork">The unit of work for database operations.</param>
     public SensorDeviceService(
                 ILogger<SensorDeviceService> logger,
-                SensorDataSender.SensorDataSenderClient sender,
                 IUnitOfWork unitOfWork)
     {
         _logger = logger;
-        _sensorDataSenderClient = sender;
         _unitOfWork = unitOfWork;
     }
 

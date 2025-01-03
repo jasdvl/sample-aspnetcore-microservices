@@ -1,5 +1,5 @@
 using Google.Protobuf.WellKnownTypes;
-using HomeAnalytica.Grpc.Contracts.Protos;
+using HomeAnalytica.Grpc.Contracts.DataCollection;
 
 namespace HomeAnalytica.Web.Grpc;
 
@@ -17,23 +17,23 @@ public class SensorDataClient
         _client = client;
     }
 
-    public async Task<GetSensorDataResponse> GetSensorDataByTypeAsync(SensorType sensorType, long deviceId)
+    public async Task<GetSensorDataResponse> GetSensorDataByTypeAsync(MeasuredQuantity measuredQuantity, long deviceId)
     {
         var res = await _client.GetSensorDataByTypeAsync(
                         new GetSensorDataRequest()
                         {
-                            SensorType = sensorType,
+                            MeasuredQuantity = measuredQuantity,
                             DeviceId = deviceId
                         });
         return res;
     }
 
-    public async Task<SensorDataResponse> SendSensorDataAsync(long deviceId, SensorType sensorType, Timestamp timestamp, double value)
+    public async Task<SensorDataResponse> SendSensorDataAsync(long deviceId, MeasuredQuantity measuredQuantity, Timestamp timestamp, double value)
     {
         var request = new SensorDataRequest
         {
             DeviceId = deviceId,
-            SensorType = sensorType,
+            MeasuredQuantity = measuredQuantity,
             Timestamp = timestamp,
             Value = value
         };
