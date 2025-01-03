@@ -36,11 +36,11 @@ public partial class SensorCharts : ComponentBase
 
     private string SelectedSensorName { get; set; } = default!;
 
-    private Dictionary<SensorType, string> ChartSeriesUnits = new()
+    private Dictionary<MeasuredQuantity, string> ChartSeriesUnits = new()
                                                                 {
-                                                                    { SensorType.Temperature, "°C" },
-                                                                    { SensorType.Humidity, "%" },
-                                                                    { SensorType.EnergyConsumption, "kWh" }
+                                                                    { MeasuredQuantity.Temperature, "°C" },
+                                                                    { MeasuredQuantity.Humidity, "%" },
+                                                                    { MeasuredQuantity.EnergyConsumption, "kWh" }
                                                                 };
 
     /// <summary>
@@ -61,9 +61,9 @@ public partial class SensorCharts : ComponentBase
         _sensorDevices = await SensorDeviceService.GetSensorDevicesAsync();
     }
 
-    private async Task<List<SensorDataDto>> LoadSensorDataAsync(SensorType sensorType, long deviceId)
+    private async Task<List<SensorDataDto>> LoadSensorDataAsync(MeasuredQuantity measuredQuantity, long deviceId)
     {
-        var sensorData = await SensorDataService.GetSensorDataAsync(sensorType, deviceId);
+        var sensorData = await SensorDataService.GetSensorDataAsync(measuredQuantity, deviceId);
         return sensorData;
     }
 
@@ -71,22 +71,22 @@ public partial class SensorCharts : ComponentBase
     /// Updates the chart data and configures the chart options based on the provided sensor type.
     /// It sets the appropriate chart series type (line or bar) and applies relevant styling to the chart.
     /// </summary>
-    /// <param name="sensorType">The type of sensor data (e.g., EnergyConsumption, Temperature) used to determine chart configuration.</param>
+    /// <param name="measuredQuantity">The type of sensor data (e.g., EnergyConsumption, Temperature) used to determine chart configuration.</param>
     /// <param name="sensorData">The sensor data to be displayed in the chart, containing timestamps and corresponding values.</param>
     /// <remarks>
-    /// - For <see cref="SensorType.EnergyConsumption"/>, the chart will display a bar chart with customized styling (e.g., column width and rounded corners).
+    /// - For <see cref="MeasuredQuantity.EnergyConsumption"/>, the chart will display a bar chart with customized styling (e.g., column width and rounded corners).
     /// - For other sensor types, a line chart will be used with different styling.
     /// - The Y-axis title will be set according to the unit of measurement for the selected sensor type.
     /// </remarks>
-    private void UpdateChartDataAndOptions(SensorType sensorType, List<SensorDataDto> sensorData)
+    private void UpdateChartDataAndOptions(MeasuredQuantity measuredQuantity, List<SensorDataDto> sensorData)
     {
         ChartData.Clear();
         ChartData.AddRange(sensorData);
-        ChartTitle = sensorType.ToString();
+        ChartTitle = measuredQuantity.ToString();
 
         if (ChartOptions != null)
         {
-            if (sensorType == SensorType.EnergyConsumption)
+            if (measuredQuantity == MeasuredQuantity.EnergyConsumption)
             {
                 SeriesType = SeriesType.Bar;
                 SeriesStroke = new ApexCharts.SeriesStroke { Color = "#97a9cd", Width = 1 };
@@ -111,7 +111,7 @@ public partial class SensorCharts : ComponentBase
                 {
                     Title = new AxisTitle()
                     {
-                        Text = ChartSeriesUnits[sensorType],
+                        Text = ChartSeriesUnits[measuredQuantity],
                         Style = new AxisTitleStyle() {FontSize = "18", FontWeight = 600 }
                     }
                 }
@@ -189,9 +189,9 @@ public partial class SensorCharts : ComponentBase
             {
                 SelectedSensorName = selectedSensor.Name ?? "Unnamed Sensor";
 
-                List<SensorDataDto> sensorData = await LoadSensorDataAsync(selectedSensor.Type, selectedDeviceId);
+                List<SensorDataDto> sensorData = await LoadSensorDataAsync(selectedSensor.MeasuredQuantity, selectedDeviceId);
 
-                UpdateChartDataAndOptions(selectedSensor.Type, sensorData);
+                UpdateChartDataAndOptions(selectedSensor.MeasuredQuantity, sensorData);
                 StateHasChanged();
                 ChartRef?.UpdateOptionsAsync(true, true, true);
             }

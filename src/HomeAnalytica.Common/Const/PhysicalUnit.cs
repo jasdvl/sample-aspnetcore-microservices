@@ -6,6 +6,11 @@ namespace HomeAnalytica.Common.Const
     public enum PhysicalUnit
     {
         /// <summary>
+        /// Represents the absence of a physical unit or an undefined unit.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// Temperature measurement in degrees Celsius.
         /// </summary>
         CelsiusDegrees = 1,

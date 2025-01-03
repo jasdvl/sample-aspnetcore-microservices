@@ -11,7 +11,9 @@ public partial class SensorDevices : ComponentBase
 
     private string _serialNo = string.Empty;
 
-    private SensorType _sensorType = SensorType.Unknown;
+    private MeasuredQuantity _measuredQuantity = MeasuredQuantity.Unknown;
+
+    private PhysicalUnit _physUnit = PhysicalUnit.None;
 
     private string? _name;
 
@@ -51,7 +53,8 @@ public partial class SensorDevices : ComponentBase
         {
             SerialNo = _serialNo,
             Name = _name,
-            Type = _sensorType,
+            MeasuredQuantity = _measuredQuantity,
+            PhysUnit = _physUnit,
             InstallationDate = _installationDate.HasValue ? DateTime.SpecifyKind(_installationDate.Value, DateTimeKind.Utc) : null,
             LastMaintenance = _lastMaintenance.HasValue ? DateTime.SpecifyKind(_lastMaintenance.Value, DateTimeKind.Utc) : null,
             Status = "Active",

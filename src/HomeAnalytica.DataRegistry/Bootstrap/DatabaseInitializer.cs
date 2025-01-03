@@ -39,21 +39,21 @@ namespace HomeAnalytica.DataRegistry.Bootstrap
                 {
                     new PhysUnit
                     {
-                        Id = (int) Common.Const.PhysUnit.CelsiusDegrees,
+                        Id = (int) Common.Const.PhysicalUnit.CelsiusDegrees,
                         Name = "Degree Celsius",
                         Symbol = "°C",
                         Description = "Unit of temperature measurement in the Celsius scale"
                     },
                     new PhysUnit
                     {
-                        Id = (int) Common.Const.PhysUnit.Percent,
+                        Id = (int) Common.Const.PhysicalUnit.Percent,
                         Name = "Percentage",
                         Symbol = "%",
                         Description = "Unit representing a value as a fraction of 100"
                     },
                     new PhysUnit
                     {
-                        Id = (int) Common.Const.PhysUnit.KiloWattHours,
+                        Id = (int) Common.Const.PhysicalUnit.KiloWattHours,
                         Name = "Kilowatt Hour",
                         Symbol = "kWh",
                         Description = "Unit of energy equivalent to one kilowatt of power consumed for one hour"

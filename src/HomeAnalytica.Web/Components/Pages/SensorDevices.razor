@@ -18,11 +18,21 @@
         </div>
 
         <div class="input-group mb-3">
-            <label class="input-group-text" for="sensorTypeSelect">Sensor Type</label>
-            <select id="sensorTypeSelect" class="form-select" @bind="_sensorType">
-                @foreach (var sensorType in Enum.GetValues<SensorType>())
+            <label class="input-group-text" for="measuredQuantitySelect">Measured Quantity</label>
+            <select id="measuredQuantitySelect" class="form-select" @bind="_measuredQuantity">
+                @foreach (var measuredQuantity in Enum.GetValues<MeasuredQuantity>())
                 {
-                    <option value="@sensorType">@sensorType</option>
+                    <option value="@measuredQuantity">@measuredQuantity</option>
+                }
+            </select>
+        </div>
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="physUnitSelect">Physical Unit</label>
+            <select id="physUnitSelect" class="form-select" @bind="_physUnit">
+                @foreach (var physUnit in Enum.GetValues<PhysicalUnit>())
+                {
+                    <option value="@physUnit">@physUnit</option>
                 }
             </select>
         </div>
@@ -64,7 +74,7 @@
     <h3>Submitted Data:</h3>
     <ul>
         <li>Device ID: @_serialNo</li>
-        <li>Sensor Type: @_sensorType</li>
+        <li>Measured Quantity: @_measuredQuantity</li>
         
     </ul>
     </div>
@@ -93,7 +103,8 @@ else
             <tr>
                 <th>Serial No.</th>
                 <th>Name</th>
-                <th>Type</th>
+                <th>Measured Quantity</th>
+                <th>Physical Unit</th>
                 <th>Description</th>
                 <th>Location</th>
                 <th>Installation Date</th>
@@ -106,7 +117,8 @@ else
                 <tr>
                     <td>@device.SerialNo</td>
                     <td>@device.Name</td>
-                    <td>@device.Type</td>
+                    <td>@device.MeasuredQuantity.ToString()</td>
+                    <td>@device.PhysUnit.ToString()</td>
                     <td>@device.Description</td>
                     <td>@device.Location</td>
                     <td>@device.InstallationDate?.ToString("yyyy-MM-dd")</td>

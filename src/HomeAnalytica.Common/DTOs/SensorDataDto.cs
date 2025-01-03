@@ -13,9 +13,9 @@ namespace HomeAnalytica.Common.DTOs
         public long DeviceId { get; set; }
 
         /// <summary>
-        /// Gets or sets the sensor type.
+        /// Gets or sets the measured quantity.
         /// </summary>
-        public SensorType SensorType { get; set; }
+        public MeasuredQuantity MeasuredQuantity { get; set; }
 
         /// <summary>
         /// Gets or sets the time of measurement.

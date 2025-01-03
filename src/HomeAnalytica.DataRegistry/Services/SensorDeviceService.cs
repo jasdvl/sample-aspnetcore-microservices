@@ -53,7 +53,8 @@ public class SensorDeviceService : ISensorDeviceService
         {
             Id = entity.Id,
             SerialNo = entity.SerialNo,
-            Type = (Common.Const.SensorType)entity.Type,
+            MeasuredQuantity = (Common.Const.MeasuredQuantity) entity.MeasuredQuantityId,
+            PhysUnit = (Common.Const.PhysicalUnit) entity.PhysUnitId,
             Name = entity.Name,
             InstallationDate = entity.InstallationDate,
             LastMaintenance = entity.LastMaintenance,
@@ -70,7 +71,8 @@ public class SensorDeviceService : ISensorDeviceService
         SensorDevice sensorDevice = new SensorDevice
         {
             SerialNo = metadata.SerialNo,
-            Type = (int)metadata.Type,
+            MeasuredQuantityId = (int) metadata.MeasuredQuantity,
+            PhysUnitId = (int) metadata.PhysUnit,
             Name = metadata.Name,
             InstallationDate = metadata.InstallationDate,
             LastMaintenance = metadata.LastMaintenance,

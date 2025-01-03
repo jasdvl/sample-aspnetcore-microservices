@@ -40,9 +40,9 @@ public partial class SensorData : ComponentBase
 
     private async Task SubmitAllSensorData()
     {
-        await SubmitSensorData(SensorType.Temperature, _selectedTemperatureSensorDeviceId, _temperature);
-        await SubmitSensorData(SensorType.Humidity, _selectedHumiditySensorDeviceId, _humidity);
-        await SubmitSensorData(SensorType.EnergyConsumption, _selectedEnergyConsumptionSensorDeviceId, _energyConsumption);
+        await SubmitSensorData(MeasuredQuantity.Temperature, _selectedTemperatureSensorDeviceId, _temperature);
+        await SubmitSensorData(MeasuredQuantity.Humidity, _selectedHumiditySensorDeviceId, _humidity);
+        await SubmitSensorData(MeasuredQuantity.EnergyConsumption, _selectedEnergyConsumptionSensorDeviceId, _energyConsumption);
 
         _selectedTemperatureSensorDeviceId = null;
         _selectedHumiditySensorDeviceId = null;
@@ -53,14 +53,14 @@ public partial class SensorData : ComponentBase
         _energyConsumption = null;
     }
 
-    private async Task SubmitSensorData(SensorType sensorType, long? deviceId, double? value)
+    private async Task SubmitSensorData(MeasuredQuantity measuredQuantity, long? deviceId, double? value)
     {
         if (deviceId != null && value != null)
         {
             var data = new SensorDataDto
             {
                 DeviceId = (long) deviceId,
-                SensorType = sensorType,
+                MeasuredQuantity = measuredQuantity,
                 Timestamp = DateTime.UtcNow,
                 Value = (double) value
             };
@@ -73,8 +73,8 @@ public partial class SensorData : ComponentBase
     {
         var devices = await SensorDeviceService.GetSensorDevicesAsync();
 
-        _temperatureSensorDevices = devices.FindAll(d => d.Type == SensorType.Temperature);
-        _humiditySensorDevices = devices.FindAll(d => d.Type == SensorType.Humidity);
-        _energyConsumptionSensorDevices = devices.FindAll(d => d.Type == SensorType.EnergyConsumption);
+        _temperatureSensorDevices = devices.FindAll(d => d.MeasuredQuantity == MeasuredQuantity.Temperature);
+        _humiditySensorDevices = devices.FindAll(d => d.MeasuredQuantity == MeasuredQuantity.Humidity);
+        _energyConsumptionSensorDevices = devices.FindAll(d => d.MeasuredQuantity == MeasuredQuantity.EnergyConsumption);
     }
 }
