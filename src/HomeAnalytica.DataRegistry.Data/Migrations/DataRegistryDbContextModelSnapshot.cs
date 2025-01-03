@@ -22,6 +22,58 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("HomeAnalytica.DataRegistry.Data.Entities.MeasuredQuantity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("measured_quantities", (string)null);
+                });
+
+            modelBuilder.Entity("HomeAnalytica.DataRegistry.Data.Entities.PhysUnit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("symbol");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("phys_units", (string)null);
+                });
+
             modelBuilder.Entity("HomeAnalytica.DataRegistry.Data.Entities.SensorDevice", b =>
                 {
                     b.Property<long>("Id")
@@ -47,9 +99,17 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("location");
 
+                    b.Property<int>("MeasuredQuantityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("measured_quantity_id");
+
                     b.Property<string>("Name")
                         .HasColumnType("text")
                         .HasColumnName("name");
+
+                    b.Property<int>("PhysUnitId")
+                        .HasColumnType("integer")
+                        .HasColumnName("phys_unit_id");
 
                     b.Property<string>("SerialNo")
                         .IsRequired()
@@ -60,13 +120,34 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("status");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer")
-                        .HasColumnName("type");
-
                     b.HasKey("Id");
 
-                    b.ToTable("SensorDevices");
+                    b.HasIndex("MeasuredQuantityId");
+
+                    b.HasIndex("PhysUnitId");
+
+                    b.ToTable("sensor_devices", (string)null);
+                });
+
+            modelBuilder.Entity("HomeAnalytica.DataRegistry.Data.Entities.SensorDevice", b =>
+                {
+                    b.HasOne("HomeAnalytica.DataRegistry.Data.Entities.MeasuredQuantity", "MeasuredQuantity")
+                        .WithMany()
+                        .HasForeignKey("MeasuredQuantityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_SensorDevice_MeasuredQuantity");
+
+                    b.HasOne("HomeAnalytica.DataRegistry.Data.Entities.PhysUnit", "PhysUnit")
+                        .WithMany()
+                        .HasForeignKey("PhysUnitId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_SensorDevice_PhysUnit");
+
+                    b.Navigation("MeasuredQuantity");
+
+                    b.Navigation("PhysUnit");
                 });
 #pragma warning restore 612, 618
         }
