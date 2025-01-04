@@ -3,7 +3,8 @@ using HomeAnalytica.Common.Const;
 namespace HomeAnalytica.Common.DTOs
 {
     /// <summary>
-    /// Represents the sensor data collected from IoT devices.
+    /// Represents a Data Transfer Object (DTO) that holds sensor data collected from IoT devices.
+    /// This DTO is used for transferring sensor measurement data between layers or services.
     /// </summary>
     public class SensorDataDto
     {

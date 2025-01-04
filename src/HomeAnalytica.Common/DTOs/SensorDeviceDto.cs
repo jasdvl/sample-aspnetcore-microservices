@@ -1,7 +1,9 @@
-using HomeAnalytica.Common.Const;
-
 namespace HomeAnalytica.Common.DTOs;
 
+/// <summary>
+/// Represents a Data Transfer Object (DTO) that holds information about a sensor device.
+/// This DTO is used for transferring sensor data between layers or services.
+/// </summary>
 public class SensorDeviceDto
 {
     /// <summary>
@@ -20,14 +22,14 @@ public class SensorDeviceDto
     public string? Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the measured quantity associated with the sensor (e.g., Temperature, Humidity).
+    /// Gets or sets the identifier of the measured quantity associated with the sensor (e.g., Temperature, Humidity).
     /// </summary>
-    public MeasuredQuantity MeasuredQuantity { get; set; }
+    public int MeasuredQuantityId { get; set; }
 
     /// <summary>
-    /// Gets or sets the physical unit associated with the measured quantity (e.g., °C, %, kWh).
+    /// Gets or sets the identifier of the physical unit associated with the measured quantity (e.g., °C, %, kWh).
     /// </summary>
-    public PhysicalUnit PhysUnit { get; set; }
+    public int PhysicalUnitId { get; set; }
 
     /// <summary>
     /// Gets or sets additional information or a description of the sensor.
@@ -53,4 +55,14 @@ public class SensorDeviceDto
     /// Gets or sets the date when the sensor was last maintained or calibrated.
     /// </summary>
     public DateTime? LastMaintenance { get; set; }
+
+    /// <summary>
+    /// Gets or sets the measured quantity associated with the sensor.
+    /// </summary>
+    public MeasuredQuantityDto MeasuredQuantity { get; set; }
+
+    /// <summary>
+    /// Gets or sets the physical unit associated with the measured quantity.
+    /// </summary>
+    public PhysicalUnitDto PhysicalUnit { get; set; }
 }
