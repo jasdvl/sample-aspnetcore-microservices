@@ -29,12 +29,12 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     /// </summary>
     /// <param name="filter">A function to filter the results.</param>
     /// <param name="orderBy">A function to order the results.</param>
-    /// <param name="includeProperties">A comma-separated list of navigation properties to include.</param>
+    /// <param name="includeProperties">An array of expressions that specify which navigation properties to include.</param>
     /// <returns>A collection of entities that match the specified criteria.</returns>
     public virtual async Task<IEnumerable<TEntity>> GetAsync(
-                                                        Expression<Func<TEntity, bool>> filter = null,
-                                                        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                                        string includeProperties = "")
+                                                            Expression<Func<TEntity, bool>>? filter = null,
+                                                            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+                                                            params Expression<Func<TEntity, object>>[] includeProperties)
     {
         IQueryable<TEntity> query = _dbSet;
 
@@ -43,7 +43,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             query = query.Where(filter);
         }
 
-        foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        foreach (var includeProperty in includeProperties)
         {
             query = query.Include(includeProperty);
         }

@@ -53,12 +53,12 @@ public class SensorDevice
     public string? Description { get; set; }
 
     /// <summary>
-    /// Gets or sets the measured quantity associated with the sensor.
+    /// Gets or sets the measured quantity associated with the sensor device.
     /// </summary>
     public MeasuredQuantity MeasuredQuantity { get; set; }
 
     /// <summary>
     /// Gets or sets the physical unit associated with the measured quantity.
     /// </summary>
-    public PhysUnit PhysUnit { get; set; }
+    public PhysicalUnit PhysUnit { get; set; }
 }

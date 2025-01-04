@@ -18,7 +18,7 @@ namespace HomeAnalytica.DataRegistry.Data.Context
         /// </remarks>
         internal static void DbObjectNamesToSnakeCase(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PhysUnit>(entity =>
+            modelBuilder.Entity<PhysicalUnit>(entity =>
             {
                 entity.ToTable("phys_units");
                 entity.Property(e => e.Id)
