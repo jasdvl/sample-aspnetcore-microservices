@@ -14,7 +14,6 @@ public class SensorDeviceService : ISensorDeviceService
     /// Initializes a new instance of the <see cref="SensorDeviceService"/> class.
     /// </summary>
     /// <param name="logger">The logger for this service.</param>
-    /// <param name="sender">The gRPC client for sending sensor data.</param>
     /// <param name="unitOfWork">The unit of work for database operations.</param>
     public SensorDeviceService(
                 ILogger<SensorDeviceService> logger,
@@ -24,13 +23,13 @@ public class SensorDeviceService : ISensorDeviceService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task ProcessSensorMetadataAsync(SensorDeviceDto metadata)
+    public async Task AddSensorDeviceAsync(SensorDeviceDto deviceDto)
     {
-        _logger.LogInformation($"Processing sensor metadata: Value = {metadata.Name}");
+        _logger.LogInformation($"Processing sensor metadata: Value = {deviceDto.Name}");
 
         try
         {
-            await AddSensorMetadataAsync(metadata);
+            await InsertSensorDeviceAsync(deviceDto);
         }
         catch (Exception ex)
         {
@@ -42,14 +41,16 @@ public class SensorDeviceService : ISensorDeviceService
 
     public async Task<IEnumerable<SensorDeviceDto>> GetAllSensorDevicesAsync()
     {
-        var sensorDeviceEntities = await _unitOfWork.SensorDeviceRepository.GetAsync();
+        var sensorDeviceEntities = await _unitOfWork.SensorDeviceRepository.GetAsync(null, null, x => x.MeasuredQuantity, y => y.PhysUnit);
 
         var sensorDeviceDtos = sensorDeviceEntities.Select(entity => new SensorDeviceDto
         {
             Id = entity.Id,
             SerialNo = entity.SerialNo,
-            MeasuredQuantity = (Common.Const.MeasuredQuantity) entity.MeasuredQuantityId,
-            PhysUnit = (Common.Const.PhysicalUnit) entity.PhysUnitId,
+            MeasuredQuantityId = entity.MeasuredQuantityId,
+            MeasuredQuantity = new MeasuredQuantityDto { Id = entity.MeasuredQuantity.Id, Name = entity.MeasuredQuantity.Name, Description = entity.MeasuredQuantity.Description },
+            PhysicalUnitId = entity.PhysUnitId,
+            PhysicalUnit = new PhysicalUnitDto { Id = entity.PhysUnit.Id, Symbol = entity.PhysUnit.Symbol, Name = entity.PhysUnit.Name, Description = entity.PhysUnit.Description },
             Name = entity.Name,
             InstallationDate = entity.InstallationDate,
             LastMaintenance = entity.LastMaintenance,
@@ -61,19 +62,19 @@ public class SensorDeviceService : ISensorDeviceService
         return sensorDeviceDtos;
     }
 
-    private async Task AddSensorMetadataAsync(SensorDeviceDto metadata)
+    private async Task InsertSensorDeviceAsync(SensorDeviceDto deviceDto)
     {
         SensorDevice sensorDevice = new SensorDevice
         {
-            SerialNo = metadata.SerialNo,
-            MeasuredQuantityId = (int) metadata.MeasuredQuantity,
-            PhysUnitId = (int) metadata.PhysUnit,
-            Name = metadata.Name,
-            InstallationDate = metadata.InstallationDate,
-            LastMaintenance = metadata.LastMaintenance,
-            Status = metadata.Status,
-            Description = metadata.Description,
-            Location = metadata.Location
+            SerialNo = deviceDto.SerialNo,
+            MeasuredQuantityId = deviceDto.MeasuredQuantityId,
+            PhysUnitId = deviceDto.PhysicalUnitId,
+            Name = deviceDto.Name,
+            InstallationDate = deviceDto.InstallationDate,
+            LastMaintenance = deviceDto.LastMaintenance,
+            Status = deviceDto.Status,
+            Description = deviceDto.Description,
+            Location = deviceDto.Location
         };
 
         await _unitOfWork.SensorDeviceRepository.InsertAsync(sensorDevice);

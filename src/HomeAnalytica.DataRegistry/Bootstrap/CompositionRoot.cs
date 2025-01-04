@@ -83,6 +83,7 @@ namespace HomeAnalytica.DataRegistry.Bootstrap
 
         private void RegisterServices(IServiceCollection services)
         {
+            services.AddScoped<IReferenceDataService, ReferenceDataService>();
             services.AddScoped<ISensorDeviceService, SensorDeviceService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
