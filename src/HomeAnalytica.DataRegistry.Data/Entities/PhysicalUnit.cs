@@ -3,7 +3,7 @@ namespace HomeAnalytica.DataRegistry.Data.Entities;
 /// <summary>
 /// Represents a physical unit, such as temperature (°C), humidity (%), or energy consumption (kWh).
 /// </summary>
-public class PhysUnit
+public class PhysicalUnit
 {
     /// <summary>
     /// Gets or sets the unique identifier for the physical unit.
@@ -11,7 +11,7 @@ public class PhysUnit
     public int Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the name of the physical unit (e.g., "Degrees Celsius", "Percent").
+    /// Gets or sets the name of the physical unit (e.g., "Degree Celsius", "Percent").
     /// </summary>
     public required string Name { get; set; }
 

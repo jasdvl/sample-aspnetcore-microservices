@@ -17,12 +17,18 @@ public class DataRegistryDbContext : DbContext
     {
     }
 
+    /// <summary>
+    /// Gets or sets the <see cref="DbSet{MeasuredQuantity}"/> for accessing and managing <see cref="MeasuredQuantity"/> entities in the database.
+    /// </summary>
     public DbSet<MeasuredQuantity> MeasuredQuantities { get; set; }
 
-    public DbSet<PhysUnit> PhysUnits { get; set; }
+    /// <summary>
+    /// Gets or sets the <see cref="DbSet{PhysicalUnit}"/> for accessing and managing <see cref="PhysicalUnit"/> entities in the database.
+    /// </summary>
+    public DbSet<PhysicalUnit> PhysUnits { get; set; }
 
     /// <summary>
-    /// Gets or sets the <see cref="DbSet{SensorData}"/> for accessing and managing <see cref="HomeAnalytica.DataRegistry.Data.Entities.SensorDevice"/> entities in the database.
+    /// Gets or sets the <see cref="DbSet{SensorDevice}"/> for accessing and managing <see cref="SensorDevice"/> entities in the database.
     /// </summary>
     public DbSet<SensorDevice> SensorDevices { get; set; } = null!;
 
@@ -46,7 +52,7 @@ public class DataRegistryDbContext : DbContext
         // Applies a custom naming convention to convert database object names to snake_case.
         DatabaseSchemaFormatter.DbObjectNamesToSnakeCase(modelBuilder);
 
-        modelBuilder.Entity<PhysUnit>(entity =>
+        modelBuilder.Entity<PhysicalUnit>(entity =>
         {
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id)

@@ -33,25 +33,25 @@ namespace HomeAnalytica.DataRegistry.Bootstrap
 
         private void SeedDatabase(DataRegistryDbContext context)
         {
-            if (!context.Set<PhysUnit>().Any())
+            if (!context.Set<PhysicalUnit>().Any())
             {
-                var units = new List<PhysUnit>
+                var units = new List<PhysicalUnit>
                 {
-                    new PhysUnit
+                    new PhysicalUnit
                     {
                         Id = (int) Common.Const.PhysicalUnit.CelsiusDegrees,
                         Name = "Degree Celsius",
                         Symbol = "°C",
                         Description = "Unit of temperature measurement in the Celsius scale"
                     },
-                    new PhysUnit
+                    new PhysicalUnit
                     {
                         Id = (int) Common.Const.PhysicalUnit.Percent,
                         Name = "Percentage",
                         Symbol = "%",
                         Description = "Unit representing a value as a fraction of 100"
                     },
-                    new PhysUnit
+                    new PhysicalUnit
                     {
                         Id = (int) Common.Const.PhysicalUnit.KiloWattHours,
                         Name = "Kilowatt Hour",
@@ -61,7 +61,7 @@ namespace HomeAnalytica.DataRegistry.Bootstrap
                 };
 
 
-                context.Set<PhysUnit>().AddRange(units);
+                context.Set<PhysicalUnit>().AddRange(units);
                 context.SaveChanges();
             }
 

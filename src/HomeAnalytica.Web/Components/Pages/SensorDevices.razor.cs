@@ -7,6 +7,12 @@ namespace HomeAnalytica.Web.Components.Pages;
 
 public partial class SensorDevices : ComponentBase
 {
+    [Inject]
+    private ISensorDeviceService SensorDeviceService { get; set; }
+
+    [Inject]
+    private IReferenceDataService ReferenceDataService { get; set; }
+
     private long? _deviceId = null;
 
     private string _serialNo = string.Empty;
@@ -27,16 +33,23 @@ public partial class SensorDevices : ComponentBase
 
     private bool isDataSubmitted = false;
 
-    public string ErrorMessage { get; set; } = string.Empty;
+    private ReferenceDataDto _referenceData { get; set; } = new();
 
     private List<SensorDeviceDto> _sensorDevices { get; set; } = new();
 
-    [Inject]
-    private ISensorDeviceService SensorDeviceService { get; set; }
+    private string ErrorMessage { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        _sensorDevices = await LoadSensorDevicesAsync();
+        try
+        {
+            _referenceData = await LoadReferenceDataAsync();
+            _sensorDevices = await LoadSensorDevicesAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
     }
 
     private async Task SubmitSensorDeviceDataAndRefreshDeviceList()
@@ -53,8 +66,8 @@ public partial class SensorDevices : ComponentBase
         {
             SerialNo = _serialNo,
             Name = _name,
-            MeasuredQuantity = _measuredQuantity,
-            PhysUnit = _physUnit,
+            MeasuredQuantityId = (int) _measuredQuantity,
+            PhysicalUnitId = (int) _physUnit,
             InstallationDate = _installationDate.HasValue ? DateTime.SpecifyKind(_installationDate.Value, DateTimeKind.Utc) : null,
             LastMaintenance = _lastMaintenance.HasValue ? DateTime.SpecifyKind(_lastMaintenance.Value, DateTimeKind.Utc) : null,
             Status = "Active",
@@ -72,10 +85,15 @@ public partial class SensorDevices : ComponentBase
         }
     }
 
+    private async Task<ReferenceDataDto> LoadReferenceDataAsync()
+    {
+        var referenceData = await ReferenceDataService.GetReferenceDataAsync();
+        return referenceData;
+    }
+
     private async Task<List<SensorDeviceDto>> LoadSensorDevicesAsync()
     {
         var devices = await SensorDeviceService.GetSensorDevicesAsync();
-
         return devices;
     }
 }

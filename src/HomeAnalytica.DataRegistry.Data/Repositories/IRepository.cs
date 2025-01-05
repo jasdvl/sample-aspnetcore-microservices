@@ -21,13 +21,16 @@ public interface IRepository<TEntity> where TEntity : class
     void Delete(TEntity entityToDelete);
 
     /// <summary>
-    /// Asynchronously retrieves entities based on a filter, order, and included properties.
+    /// Asynchronously retrieves a collection of entities based on specified criteria.
     /// </summary>
-    /// <param name="filter">An optional expression to filter the entities.</param>
-    /// <param name="orderBy">An optional function to order the entities.</param>
-    /// <param name="includeProperties">Comma-separated list of related entities to include.</param>
-    /// <returns>A task that represents the asynchronous operation, containing a collection of entities.</returns>
-    Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "");
+    /// <param name="filter">A function to filter the results.</param>
+    /// <param name="orderBy">A function to order the results.</param>
+    /// <param name="includeProperties">An array of expressions that specify which navigation properties to include.</param>
+    /// <returns>A collection of entities that match the specified criteria.</returns>
+    Task<IEnumerable<TEntity>> GetAsync(
+                                        Expression<Func<TEntity, bool>>? filter = null,
+                                        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+                                        params Expression<Func<TEntity, object>>[] includeProperties);
 
     /// <summary>
     /// Asynchronously retrieves an entity by its identifier.
