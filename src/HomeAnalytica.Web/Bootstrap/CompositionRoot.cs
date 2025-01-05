@@ -56,6 +56,19 @@ namespace HomeAnalytica.Web.Bootstrap
         {
             var yarpBaseAddress = configuration["Yarp:BaseAddress"];
 
+            services.AddHttpClient<IReferenceDataService, ReferenceDataService>(client =>
+            {
+                client.BaseAddress = new Uri(yarpBaseAddress);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
+            {
+                // Connections are reused for 10 minutes
+                PooledConnectionLifetime = TimeSpan.FromMinutes(10),
+                // Supports multiple parallel HTTP/2 connections
+                EnableMultipleHttp2Connections = true,
+                UseProxy = false
+            });
+
             services.AddHttpClient<ISensorDeviceService, SensorDeviceService>(client =>
             {
                 client.BaseAddress = new Uri(yarpBaseAddress);
@@ -113,6 +126,7 @@ namespace HomeAnalytica.Web.Bootstrap
         {
             services.AddScoped<ISensorDataCollectionService, SensorDataCollectionService>();
 
+            // IReferenceDataService is already registered using: services.AddHttpClient<IReferenceDataService, ReferenceDataService>
             // ISensorDeviceService is already registered using: services.AddHttpClient<ISensorDeviceService, SensorDeviceService>
 
             services.AddTransient<SensorDataClient>();
