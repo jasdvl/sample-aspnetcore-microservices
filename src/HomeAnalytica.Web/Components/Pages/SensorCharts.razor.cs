@@ -36,6 +36,8 @@ public partial class SensorCharts : ComponentBase
 
     private string SelectedSensorName { get; set; } = default!;
 
+    private string ErrorMessage { get; set; } = string.Empty;
+
     private Dictionary<MeasuredQuantity, string> ChartSeriesUnits = new()
                                                                 {
                                                                     { MeasuredQuantity.Temperature, "°C" },
@@ -49,8 +51,15 @@ public partial class SensorCharts : ComponentBase
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
-        await LoadSensorDevicesAsync();
-        ChartOptions = CreateChartOptions();
+        try
+        {
+            await LoadSensorDevicesAsync();
+            ChartOptions = CreateChartOptions();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
     }
 
     /// <summary>
@@ -189,11 +198,18 @@ public partial class SensorCharts : ComponentBase
             {
                 SelectedSensorName = selectedSensor.Name ?? "Unnamed Sensor";
 
-                List<SensorDataDto> sensorData = await LoadSensorDataAsync(selectedSensor.MeasuredQuantity, selectedDeviceId);
+                try
+                {
+                    List<SensorDataDto> sensorData = await LoadSensorDataAsync((MeasuredQuantity) selectedSensor.MeasuredQuantityId, selectedDeviceId);
 
-                UpdateChartDataAndOptions(selectedSensor.MeasuredQuantity, sensorData);
-                StateHasChanged();
-                ChartRef?.UpdateOptionsAsync(true, true, true);
+                    UpdateChartDataAndOptions((MeasuredQuantity) selectedSensor.MeasuredQuantityId, sensorData);
+                    StateHasChanged();
+                    ChartRef?.UpdateOptionsAsync(true, true, true);
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = ex.Message;
+                }
             }
         }
     }

@@ -7,6 +7,12 @@ namespace HomeAnalytica.Web.Components.Pages;
 
 public partial class SensorData : ComponentBase
 {
+    [Inject]
+    private ISensorDeviceService SensorDeviceService { get; set; } = default!;
+
+    [Inject]
+    private ISensorDataCollectionService SensorDataService { get; set; } = default!;
+
     private double? _temperature;
 
     private double? _humidity;
@@ -27,22 +33,32 @@ public partial class SensorData : ComponentBase
 
     private List<SensorDeviceDto> _energyConsumptionSensorDevices { get; set; } = new();
 
-    [Inject]
-    private ISensorDeviceService SensorDeviceService { get; set; } = default!;
-
-    [Inject]
-    private ISensorDataCollectionService SensorDataService { get; set; } = default!;
+    private string ErrorMessage { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadSensorDevicesAsync();
+        try
+        {
+            await LoadSensorDevicesAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
     }
 
     private async Task SubmitAllSensorData()
     {
-        await SubmitSensorData(MeasuredQuantity.Temperature, _selectedTemperatureSensorDeviceId, _temperature);
-        await SubmitSensorData(MeasuredQuantity.Humidity, _selectedHumiditySensorDeviceId, _humidity);
-        await SubmitSensorData(MeasuredQuantity.EnergyConsumption, _selectedEnergyConsumptionSensorDeviceId, _energyConsumption);
+        try
+        {
+            await SubmitSensorData(MeasuredQuantity.Temperature, _selectedTemperatureSensorDeviceId, _temperature);
+            await SubmitSensorData(MeasuredQuantity.Humidity, _selectedHumiditySensorDeviceId, _humidity);
+            await SubmitSensorData(MeasuredQuantity.EnergyConsumption, _selectedEnergyConsumptionSensorDeviceId, _energyConsumption);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
 
         _selectedTemperatureSensorDeviceId = null;
         _selectedHumiditySensorDeviceId = null;
@@ -72,9 +88,8 @@ public partial class SensorData : ComponentBase
     private async Task LoadSensorDevicesAsync()
     {
         var devices = await SensorDeviceService.GetSensorDevicesAsync();
-
-        _temperatureSensorDevices = devices.FindAll(d => d.MeasuredQuantity == MeasuredQuantity.Temperature);
-        _humiditySensorDevices = devices.FindAll(d => d.MeasuredQuantity == MeasuredQuantity.Humidity);
-        _energyConsumptionSensorDevices = devices.FindAll(d => d.MeasuredQuantity == MeasuredQuantity.EnergyConsumption);
+        _temperatureSensorDevices = devices.FindAll(d => d.MeasuredQuantityId == (int) MeasuredQuantity.Temperature);
+        _humiditySensorDevices = devices.FindAll(d => d.MeasuredQuantityId == (int) MeasuredQuantity.Humidity);
+        _energyConsumptionSensorDevices = devices.FindAll(d => d.MeasuredQuantityId == (int) MeasuredQuantity.EnergyConsumption);
     }
 }

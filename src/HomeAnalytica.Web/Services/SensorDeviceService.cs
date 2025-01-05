@@ -49,22 +49,24 @@ namespace HomeAnalytica.Web.Services
         /// <returns>A <c>Task</c> that represents the asynchronous operation.</returns>
         public async Task PostSensorDeviceAsync(SensorDeviceDto sensorDeviceDto)
         {
-            if (string.IsNullOrEmpty(sensorDeviceDto.SerialNo) || sensorDeviceDto.MeasuredQuantity == Common.Const.MeasuredQuantity.Unknown)
+            if (string.IsNullOrEmpty(sensorDeviceDto.SerialNo) || sensorDeviceDto.MeasuredQuantityId == (int) Common.Const.MeasuredQuantity.Unknown)
             {
                 throw new ArgumentException("Serial no. and measured quantity are mandatory.");
             }
 
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("/sensor-devices/post", sensorDeviceDto);
+                var response = await _httpClient.PostAsJsonAsync("/sensor-devices", sensorDeviceDto);
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError($"Error when sending sensor device: {ex.Message}");
+                throw new WebServiceException("Failed to send sensor device data due to a network issue.");
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Unexpected error: {ex.Message}");
+                throw new WebServiceException("An unexpected error occurred.");
             }
         }
 
@@ -76,19 +78,19 @@ namespace HomeAnalytica.Web.Services
         {
             try
             {
-                var devices = await _httpClient.GetFromJsonAsync<List<SensorDeviceDto>>("/sensor-devices/get");
+                var devices = await _httpClient.GetFromJsonAsync<List<SensorDeviceDto>>("/sensor-devices");
 
                 return devices ?? new List<SensorDeviceDto>();
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError($"Request error: {ex.Message}");
-                return new List<SensorDeviceDto>();
+                throw new WebServiceException("Failed to retrieve sensor devices due to a network issue.");
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Unexpected error: {ex.Message}");
-                return new List<SensorDeviceDto>();
+                throw new WebServiceException("An unexpected error occurred.");
             }
         }
     }
