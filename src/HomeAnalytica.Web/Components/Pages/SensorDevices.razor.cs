@@ -1,46 +1,41 @@
-using HomeAnalytica.Common.Const;
 using HomeAnalytica.Common.DTOs;
+using HomeAnalytica.Web.Components.Models;
+using HomeAnalytica.Web.Components.Validation;
 using HomeAnalytica.Web.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace HomeAnalytica.Web.Components.Pages;
 
 public partial class SensorDevices : ComponentBase
 {
     [Inject]
-    private ISensorDeviceService SensorDeviceService { get; set; }
+    private ISensorDeviceService SensorDeviceService { get; set; } = default!;
 
     [Inject]
-    private IReferenceDataService ReferenceDataService { get; set; }
+    private IReferenceDataService ReferenceDataService { get; set; } = default!;
 
-    private long? _deviceId = null;
+    [SupplyParameterFromForm]
+    private SensorDeviceModel? SensorDeviceModel { get; set; }
 
-    private string _serialNo = string.Empty;
+    private EditContext? _editContext;
 
-    private MeasuredQuantity _measuredQuantity = MeasuredQuantity.Unknown;
+    private ReferenceDataDto? _referenceData { get; set; }
 
-    private PhysicalUnit _physUnit = PhysicalUnit.None;
+    private List<SensorDeviceDto>? _sensorDevices { get; set; }
 
-    private string? _name;
-
-    private string? _description;
-
-    private string? _location;
-
-    private DateTime? _installationDate;
-
-    private DateTime? _lastMaintenance;
-
-    private bool isDataSubmitted = false;
-
-    private ReferenceDataDto _referenceData { get; set; } = new();
-
-    private List<SensorDeviceDto> _sensorDevices { get; set; } = new();
-
-    private string ErrorMessage { get; set; } = string.Empty;
+    private string? ErrorMessage { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        ErrorMessage = string.Empty;
+        _referenceData = new();
+        SensorDeviceModel = new SensorDeviceModel();
+        _editContext = new EditContext(SensorDeviceModel);
+
+        // Disable validation-related CSS styles by using a custom FieldCssClassProvider.
+        _editContext.SetFieldCssClassProvider(new NoValidationStyleFieldCssProvider());
+
         try
         {
             _referenceData = await LoadReferenceDataAsync();
@@ -64,20 +59,25 @@ public partial class SensorDevices : ComponentBase
 
         var data = new SensorDeviceDto
         {
-            SerialNo = _serialNo,
-            Name = _name,
-            MeasuredQuantityId = (int) _measuredQuantity,
-            PhysicalUnitId = (int) _physUnit,
-            InstallationDate = _installationDate.HasValue ? DateTime.SpecifyKind(_installationDate.Value, DateTimeKind.Utc) : null,
-            LastMaintenance = _lastMaintenance.HasValue ? DateTime.SpecifyKind(_lastMaintenance.Value, DateTimeKind.Utc) : null,
+            SerialNo = SensorDeviceModel!.SerialNo,
+            Name = SensorDeviceModel.Name,
+            MeasuredQuantityId = (int) SensorDeviceModel.MeasuredQuantityId!,
+            PhysicalUnitId = (int) SensorDeviceModel.PhysicalUnitId!,
+            InstallationDate = SensorDeviceModel.InstallationDate != null
+                                                            ? DateTime.SpecifyKind(SensorDeviceModel.InstallationDate.Value, DateTimeKind.Utc)
+                                                            : null,
+            LastMaintenance = SensorDeviceModel.LastMaintenance != null
+                                                            ? DateTime.SpecifyKind(SensorDeviceModel.LastMaintenance.Value, DateTimeKind.Utc)
+                                                            : null,
             Status = "Active",
-            Description = _description,
-            Location = _location
+            Description = SensorDeviceModel.Description,
+            Location = SensorDeviceModel.Location
         };
 
         try
         {
-            await SensorDeviceService.PostSensorDeviceAsync(data);
+            await SensorDeviceService!.PostSensorDeviceAsync(data);
+            SensorDeviceModel = new SensorDeviceModel();
         }
         catch (Exception ex)
         {

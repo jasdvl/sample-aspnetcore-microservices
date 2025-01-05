@@ -15,78 +15,72 @@
 
 <h1>Sensor Devices</h1>
 
-<div class="card my-4">
-    <div class="card-header bg-card-header">
-        <h4>Add Sensor Device</h4>
+<EditForm EditContext="_editContext" OnValidSubmit="SubmitSensorDeviceDataAndRefreshDeviceList">
+    <DataAnnotationsValidator />
+    
+    <div class="card my-4">
+        <div class="card-header bg-card-header">
+            <h4>Add Sensor Device</h4>
+        </div>
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <span class="input-group-text">Serial No.</span>
+                <InputText @bind-Value="SensorDeviceModel.SerialNo" type="text" class="form-control" />
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="measuredQuantitySelect">Measured Quantity</label>
+                <InputSelect id="measuredQuantitySelect" class="form-select" @bind-Value="SensorDeviceModel.MeasuredQuantityId">
+                    <option value="">-- Please select --</option>
+                    @foreach (var measuredQuantity in _referenceData.MeasuredQuantityDtos)
+                    {
+                        <option value="@measuredQuantity.Id">@measuredQuantity.Name</option>
+                    }
+                </InputSelect>
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="physUnitSelect">Physical Unit</label>
+                <InputSelect id="physUnitSelect" class="form-select" @bind-Value="SensorDeviceModel.PhysicalUnitId">
+                    <option value="">-- Please select --</option>
+                    @foreach (var physUnit in _referenceData.PhysicalUnitDtos)
+                    {
+                        <option value="@physUnit.Id">@physUnit.Symbol</option>
+                    }
+                </InputSelect>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Name</span>
+                <InputText @bind-Value="SensorDeviceModel.Name" type="text" class="form-control" />
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Description</span>
+                <InputText @bind-Value="SensorDeviceModel.Description" type="text" class="form-control" />
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Location</span>
+                <InputText @bind-Value="SensorDeviceModel.Location" type="text" class="form-control" />
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Installation Date</span>
+                <InputDate @bind-Value="SensorDeviceModel.InstallationDate" type="InputDateType.Date" class="form-control" />
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Last Maintenance</span>
+                <InputDate @bind-Value="SensorDeviceModel.LastMaintenance" type="InputDateType.Date" class="form-control" />
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary" type="submit" disabled="@(!_editContext?.Validate())">Add Sensor Device</button>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <div class="input-group mb-3">
-            <span class="input-group-text">Serial No.</span>
-            <input @bind="_serialNo" type="text" class="form-control" />
-        </div>
-
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="measuredQuantitySelect">Measured Quantity</label>
-            <select id="measuredQuantitySelect" class="form-select" @bind="_measuredQuantity">
-                @foreach (var measuredQuantity in Enum.GetValues<MeasuredQuantity>())
-                {
-                    <option value="@measuredQuantity">@measuredQuantity</option>
-                }
-            </select>
-        </div>
-
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="physUnitSelect">Physical Unit</label>
-            <select id="physUnitSelect" class="form-select" @bind="_physUnit">
-                @foreach (var physUnit in Enum.GetValues<PhysicalUnit>())
-                {
-                    <option value="@physUnit">@physUnit</option>
-                }
-            </select>
-        </div>
-
-        <div class="input-group mb-3">
-            <span class="input-group-text">Name</span>
-            <input @bind="_name" type="text" class="form-control" />
-        </div>
-
-        <div class="input-group mb-3">
-            <span class="input-group-text">Description</span>
-            <input @bind="_description" type="text" class="form-control" />
-        </div>
-
-        <div class="input-group mb-3">
-            <span class="input-group-text">Location</span>
-            <input @bind="_location" type="text" class="form-control" />
-        </div>
-
-        <div class="input-group mb-3">
-            <span class="input-group-text">Installation Date</span>
-            <input @bind="_installationDate" type="date" class="form-control" />
-        </div>
-
-        <div class="input-group mb-3">
-            <span class="input-group-text">Last Maintenance</span>
-            <input @bind="_lastMaintenance" type="date" class="form-control" />
-        </div>
-
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-primary" @onclick="SubmitSensorDeviceDataAndRefreshDeviceList">Add Sensor Device</button>
-        </div>
-    </div>
-</div>
-
-@if (isDataSubmitted)
-{
-    <div class="my-3">
-    <h3>Submitted Data:</h3>
-    <ul>
-        <li>Device ID: @_serialNo</li>
-        <li>Measured Quantity: @_measuredQuantity</li>
-        
-    </ul>
-    </div>
-}
+</EditForm>
 
 <h3>Registered Sensor Devices</h3>
 @if (_sensorDevices is null)
@@ -118,8 +112,8 @@ else
                 <tr>
                     <td>@device.SerialNo</td>
                     <td>@device.Name</td>
-                    <td>@device.MeasuredQuantity.ToString()</td>
-                    <td>@device.PhysicalUnitId.ToString()</td>
+                    <td>@device.MeasuredQuantity.Name</td>
+                    <td>@device.PhysicalUnit.Symbol</td>
                     <td>@device.Description</td>
                     <td>@device.Location</td>
                     <td>@device.InstallationDate?.ToString("yyyy-MM-dd")</td>
