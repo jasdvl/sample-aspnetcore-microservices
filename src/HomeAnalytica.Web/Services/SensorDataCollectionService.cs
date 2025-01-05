@@ -1,4 +1,5 @@
 using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
 using HomeAnalytica.Common.DTOs;
 using HomeAnalytica.Grpc.Contracts.DataCollection;
 using HomeAnalytica.Web.Grpc;
@@ -42,31 +43,47 @@ public class SensorDataCollectionService : ISensorDataCollectionService
 
             return res;
         }
+        catch (RpcException rpcEx)
+        {
+            _logger.LogError(rpcEx, "gRPC error while requesting sensor data. Status: {StatusCode}, DeviceId: {DeviceId}, MeasuredQuantity: {MeasuredQuantity}",
+                rpcEx.StatusCode, deviceId, measuredQuantity);
+            throw new WebServiceException("Unable to get sensor data due to a server issue.");
+        }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error occurred while requesting sensor data.");
-
-            throw;
+            _logger.LogError(ex, "Unexpected error while requesting sensor data. DeviceId: {DeviceId}, MeasuredQuantity: {MeasuredQuantity}",
+                deviceId, measuredQuantity);
+            throw new WebServiceException("An unexpected error occurred.");
         }
     }
 
     public async Task ProcessSensorDataAsync(SensorDataDto data)
     {
-        _logger.LogInformation($"Processing sensor data: Value = {data.Value}");
+        _logger.LogInformation("Processing sensor data: DeviceId = {DeviceId}, MeasuredQuantity = {MeasuredQuantity}, Value = {Value}",
+            data.DeviceId, data.MeasuredQuantity, data.Value);
 
         try
         {
             var res = await _sensorDataClient.SendSensorDataAsync(
-                                                                data.DeviceId,
-                                                                (MeasuredQuantity) data.MeasuredQuantity,
-                                                                Timestamp.FromDateTime(data.Timestamp),
-                                                                data.Value);
+                data.DeviceId,
+                (MeasuredQuantity) data.MeasuredQuantity,
+                Timestamp.FromDateTime(data.Timestamp),
+                data.Value
+            );
+
+            _logger.LogDebug("gRPC response: {Response}", res);
+        }
+        catch (RpcException rpcEx)
+        {
+            _logger.LogError(rpcEx, "gRPC error while processing sensor data. Status: {StatusCode}, DeviceId: {DeviceId}, MeasuredQuantity: {MeasuredQuantity}, Value: {Value}",
+                rpcEx.StatusCode, data.DeviceId, data.MeasuredQuantity, data.Value);
+            throw new WebServiceException("Unable to process sensor data due to a server issue.");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error occurred while processing sensor data.");
-
-            throw;
+            _logger.LogError(ex, "Unexpected error while processing sensor data. DeviceId: {DeviceId}, MeasuredQuantity: {MeasuredQuantity}, Value: {Value}",
+                data.DeviceId, data.MeasuredQuantity, data.Value);
+            throw new WebServiceException("An unexpected error occurred.");
         }
     }
 }

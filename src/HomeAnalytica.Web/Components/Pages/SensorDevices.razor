@@ -5,6 +5,14 @@
 @rendermode InteractiveServer
 
 <PageTitle>Register Sensor Devices</PageTitle>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @ErrorMessage
+    </div>
+}
+
 <h1>Sensor Devices</h1>
 
 <div class="card my-4">
@@ -80,13 +88,6 @@
     </div>
 }
 
-@if (!string.IsNullOrEmpty(ErrorMessage))
-{
-    <div class="alert alert-danger">
-        @ErrorMessage
-    </div>
-}
-
 <h3>Registered Sensor Devices</h3>
 @if (_sensorDevices is null)
 {
@@ -118,7 +119,7 @@ else
                     <td>@device.SerialNo</td>
                     <td>@device.Name</td>
                     <td>@device.MeasuredQuantity.ToString()</td>
-                    <td>@device.PhysUnit.ToString()</td>
+                    <td>@device.PhysicalUnitId.ToString()</td>
                     <td>@device.Description</td>
                     <td>@device.Location</td>
                     <td>@device.InstallationDate?.ToString("yyyy-MM-dd")</td>
