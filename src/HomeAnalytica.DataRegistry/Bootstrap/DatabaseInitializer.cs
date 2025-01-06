@@ -46,6 +46,13 @@ namespace HomeAnalytica.DataRegistry.Bootstrap
                     },
                     new PhysicalUnit
                     {
+                        Id = (int) Common.Const.PhysicalUnit.FahrenheitDegrees,
+                        Name = "Degree Fahrenheit",
+                        Symbol = "°F",
+                        Description = "Unit of temperature measurement in the Fahrenheit scale"
+                    },
+                    new PhysicalUnit
+                    {
                         Id = (int) Common.Const.PhysicalUnit.Percent,
                         Name = "Percentage",
                         Symbol = "%",

@@ -16,13 +16,18 @@ namespace HomeAnalytica.Common.Const
         CelsiusDegrees = 1,
 
         /// <summary>
+        /// Temperature measurement in degrees Fahrenheit.
+        /// </summary>
+        FahrenheitDegrees = 2,
+
+        /// <summary>
         /// Percentage measurement, typically used for humidity or other relative values.
         /// </summary>
-        Percent = 2,
+        Percent = 3,
 
         /// <summary>
         /// Energy consumption measurement in kilowatt-hours.
         /// </summary>
-        KiloWattHours = 3
+        KiloWattHours = 4
     }
 }

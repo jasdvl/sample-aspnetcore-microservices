@@ -20,7 +20,7 @@ namespace HomeAnalytica.DataRegistry.Data.Context
         {
             modelBuilder.Entity<PhysicalUnit>(entity =>
             {
-                entity.ToTable("phys_units");
+                entity.ToTable("physical_units");
                 entity.Property(e => e.Id)
                     .HasColumnName("id");
                 entity.Property(e => e.Name)
@@ -52,7 +52,7 @@ namespace HomeAnalytica.DataRegistry.Data.Context
                 entity.Property(e => e.MeasuredQuantityId)
                     .HasColumnName("measured_quantity_id");
                 entity.Property(e => e.PhysUnitId)
-                    .HasColumnName("phys_unit_id");
+                    .HasColumnName("physical_unit_id");
                 entity.Property(e => e.LastMaintenance)
                     .HasColumnName("last_maintenance");
                 entity.Property(e => e.InstallationDate)
