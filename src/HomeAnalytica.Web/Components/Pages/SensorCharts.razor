@@ -16,7 +16,7 @@
         <option value="" disabled selected>Please select a sensor</option>
         @foreach (var sensor in _sensorDevices)
         {
-            <option value="@sensor.Id">@sensor.Name (@sensor.MeasuredQuantity)</option>
+            <option value="@sensor.Id">@sensor.Name (@sensor.MeasuredQuantity.Name)</option>
         }
     </select>
 </div>

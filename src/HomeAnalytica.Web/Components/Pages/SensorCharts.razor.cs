@@ -36,14 +36,9 @@ public partial class SensorCharts : ComponentBase
 
     private string SelectedSensorName { get; set; } = default!;
 
-    private string ErrorMessage { get; set; } = string.Empty;
+    private long? _selectedSensorDeviceId;
 
-    private Dictionary<MeasuredQuantity, string> ChartSeriesUnits = new()
-                                                                {
-                                                                    { MeasuredQuantity.Temperature, "°C" },
-                                                                    { MeasuredQuantity.Humidity, "%" },
-                                                                    { MeasuredQuantity.EnergyConsumption, "kWh" }
-                                                                };
+    private string ErrorMessage { get; set; } = string.Empty;
 
     /// <summary>
     /// Invoked when the component is initialized.  
@@ -87,15 +82,15 @@ public partial class SensorCharts : ComponentBase
     /// - For other sensor types, a line chart will be used with different styling.
     /// - The Y-axis title will be set according to the unit of measurement for the selected sensor type.
     /// </remarks>
-    private void UpdateChartDataAndOptions(MeasuredQuantity measuredQuantity, List<SensorDataDto> sensorData)
+    private void UpdateChartDataAndOptions(MeasuredQuantityDto measuredQuantity, List<SensorDataDto> sensorData)
     {
         ChartData.Clear();
         ChartData.AddRange(sensorData);
-        ChartTitle = measuredQuantity.ToString();
+        ChartTitle = measuredQuantity.Name;
 
         if (ChartOptions != null)
         {
-            if (measuredQuantity == MeasuredQuantity.EnergyConsumption)
+            if (measuredQuantity.Id == (int) MeasuredQuantity.EnergyConsumption)
             {
                 SeriesType = SeriesType.Bar;
                 SeriesStroke = new ApexCharts.SeriesStroke { Color = "#97a9cd", Width = 1 };
@@ -120,7 +115,7 @@ public partial class SensorCharts : ComponentBase
                 {
                     Title = new AxisTitle()
                     {
-                        Text = ChartSeriesUnits[measuredQuantity],
+                        Text = _sensorDevices.First(d => d.Id == _selectedSensorDeviceId).PhysicalUnit.Symbol,
                         Style = new AxisTitleStyle() {FontSize = "18", FontWeight = 600 }
                     }
                 }
@@ -191,18 +186,18 @@ public partial class SensorCharts : ComponentBase
     {
         if (long.TryParse(e.Value?.ToString(), out long deviceId))
         {
-            var selectedDeviceId = deviceId;
-            var selectedSensor = _sensorDevices.First(s => s.Id == selectedDeviceId);
+            var selectedSensor = _sensorDevices.First(s => s.Id == deviceId);
 
             if (selectedSensor != null)
             {
                 SelectedSensorName = selectedSensor.Name ?? "Unnamed Sensor";
+                _selectedSensorDeviceId = (long) deviceId;
 
                 try
                 {
-                    List<SensorDataDto> sensorData = await LoadSensorDataAsync((MeasuredQuantity) selectedSensor.MeasuredQuantityId, selectedDeviceId);
+                    List<SensorDataDto> sensorData = await LoadSensorDataAsync((MeasuredQuantity) selectedSensor.MeasuredQuantityId, (long) _selectedSensorDeviceId);
 
-                    UpdateChartDataAndOptions((MeasuredQuantity) selectedSensor.MeasuredQuantityId, sensorData);
+                    UpdateChartDataAndOptions(selectedSensor.MeasuredQuantity, sensorData);
                     StateHasChanged();
                     ChartRef?.UpdateOptionsAsync(true, true, true);
                 }
