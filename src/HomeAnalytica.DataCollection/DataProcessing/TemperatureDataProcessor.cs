@@ -1,4 +1,5 @@
 using Google.Protobuf.WellKnownTypes;
+using HomeAnalytica.Common.Const;
 using HomeAnalytica.DataCollection.Data.Entities;
 using HomeAnalytica.DataCollection.Data.Repositories;
 using HomeAnalytica.Grpc.Contracts.DataCollection;
@@ -10,7 +11,10 @@ public class TemperatureDataProcessor : SensorDataProcessor<TemperatureData>, IT
 {
     public TemperatureDataProcessor(ITemperatureDataRepository repository) : base(repository)
     {
+        MeasuredQuantity = MeasuredQuantity.Temperature;
     }
+
+    public override MeasuredQuantity MeasuredQuantity { get; }
 
     public override async Task<GetSensorDataResponse> GetSensorData(long deviceId)
     {
@@ -23,7 +27,7 @@ public class TemperatureDataProcessor : SensorDataProcessor<TemperatureData>, IT
             {
                 DeviceId = r.DeviceId,
                 Timestamp = Timestamp.FromDateTime(r.Timestamp),
-                MeasuredQuantity = MeasuredQuantity.Temperature,
+                MeasuredQuantity = (int) MeasuredQuantity.Temperature,
                 Value = r.Temperature
             })}
         };

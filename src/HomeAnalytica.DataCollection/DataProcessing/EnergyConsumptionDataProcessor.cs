@@ -1,4 +1,5 @@
 using Google.Protobuf.WellKnownTypes;
+using HomeAnalytica.Common.Const;
 using HomeAnalytica.DataCollection.Data.Entities;
 using HomeAnalytica.DataCollection.Data.Repositories;
 using HomeAnalytica.Grpc.Contracts.DataCollection;
@@ -10,7 +11,10 @@ public class EnergyConsumptionDataProcessor : SensorDataProcessor<EnergyConsumpt
 {
     public EnergyConsumptionDataProcessor(IEnergyConsumptionDataRepository repository) : base(repository)
     {
+        MeasuredQuantity = MeasuredQuantity.EnergyConsumption;
     }
+
+    public override MeasuredQuantity MeasuredQuantity { get; }
 
     public override async Task<GetSensorDataResponse> GetSensorData(long deviceId)
     {
@@ -23,7 +27,7 @@ public class EnergyConsumptionDataProcessor : SensorDataProcessor<EnergyConsumpt
             {
                 DeviceId = r.DeviceId,
                 Timestamp = Timestamp.FromDateTime(r.Timestamp),
-                MeasuredQuantity = MeasuredQuantity.EnergyConsumption,
+                MeasuredQuantity = (int) MeasuredQuantity.EnergyConsumption,
                 Value = r.TotalEnergyConsumption
             })}
         };
