@@ -1,5 +1,3 @@
-using HomeAnalytica.Common.Const;
-
 namespace HomeAnalytica.Common.DTOs
 {
     /// <summary>
@@ -16,7 +14,7 @@ namespace HomeAnalytica.Common.DTOs
         /// <summary>
         /// Gets or sets the measured quantity.
         /// </summary>
-        public MeasuredQuantity MeasuredQuantity { get; set; }
+        public int MeasuredQuantityId { get; set; }
 
         /// <summary>
         /// Gets or sets the time of measurement.
