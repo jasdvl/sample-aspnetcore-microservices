@@ -1,37 +1,39 @@
+using HomeAnalytica.Common.Const;
 using HomeAnalytica.DataCollection.DataProcessing;
-using HomeAnalytica.Grpc.Contracts.DataCollection;
 
 namespace HomeAnalytica.DataCollection.Factories;
 
 public interface ISensorDataHandlerFactory
 {
-    ISensorDataProcessor GetDataProcessor(MeasuredQuantity sensorType);
+    ISensorDataProcessor GetDataProcessor(MeasuredQuantity measuredQuantity);
 }
 
 public class SensorDataProcessorFactory : ISensorDataHandlerFactory
 {
-    private readonly Dictionary<MeasuredQuantity, ISensorDataProcessor> _sensorDataHandlers;
+    private readonly List<ISensorDataProcessor> _sensorDataHandlers;
 
     public SensorDataProcessorFactory(
                                 ITemperatureDataProcessor temperatureDataProcessor,
                                 IEnergyConsumptionDataProcessor energyConsumptionDataProcessor,
                                 IHumidityDataProcessor humidityDataProcessor)
     {
-        _sensorDataHandlers = new Dictionary<MeasuredQuantity, ISensorDataProcessor>
+        _sensorDataHandlers = new List<ISensorDataProcessor>
         {
-            { MeasuredQuantity.Temperature, temperatureDataProcessor },
-            { MeasuredQuantity.EnergyConsumption, energyConsumptionDataProcessor },
-            { MeasuredQuantity.Humidity, humidityDataProcessor }
+            { temperatureDataProcessor },
+            { energyConsumptionDataProcessor },
+            { humidityDataProcessor }
         };
     }
 
     public ISensorDataProcessor GetDataProcessor(MeasuredQuantity measuredQuantity)
     {
-        if (_sensorDataHandlers.TryGetValue(measuredQuantity, out var sensorDataHandler))
+        ISensorDataProcessor? sensorDataProcessor = _sensorDataHandlers.FirstOrDefault(p => p.MeasuredQuantity == measuredQuantity);
+
+        if (sensorDataProcessor == null)
         {
-            return sensorDataHandler;
+            throw new ArgumentException($"Unsupported sensor type: {measuredQuantity}");
         }
 
-        throw new ArgumentException($"Unsupported sensor type: {measuredQuantity}");
+        return sensorDataProcessor;
     }
 }
