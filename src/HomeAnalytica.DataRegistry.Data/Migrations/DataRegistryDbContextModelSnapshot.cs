@@ -46,7 +46,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                     b.ToTable("measured_quantities", (string)null);
                 });
 
-            modelBuilder.Entity("HomeAnalytica.DataRegistry.Data.Entities.PhysUnit", b =>
+            modelBuilder.Entity("HomeAnalytica.DataRegistry.Data.Entities.PhysicalUnit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,7 +71,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("phys_units", (string)null);
+                    b.ToTable("physical_units", (string)null);
                 });
 
             modelBuilder.Entity("HomeAnalytica.DataRegistry.Data.Entities.SensorDevice", b =>
@@ -109,7 +109,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
 
                     b.Property<int>("PhysUnitId")
                         .HasColumnType("integer")
-                        .HasColumnName("phys_unit_id");
+                        .HasColumnName("physical_unit_id");
 
                     b.Property<string>("SerialNo")
                         .IsRequired()
@@ -138,7 +138,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_SensorDevice_MeasuredQuantity");
 
-                    b.HasOne("HomeAnalytica.DataRegistry.Data.Entities.PhysUnit", "PhysUnit")
+                    b.HasOne("HomeAnalytica.DataRegistry.Data.Entities.PhysicalUnit", "PhysUnit")
                         .WithMany()
                         .HasForeignKey("PhysUnitId")
                         .OnDelete(DeleteBehavior.Restrict)

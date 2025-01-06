@@ -27,7 +27,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "phys_units",
+                name: "physical_units",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
@@ -38,7 +38,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_phys_units", x => x.id);
+                    table.PrimaryKey("PK_physical_units", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,7 +50,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                     serial_no = table.Column<string>(type: "text", nullable: false),
                     name = table.Column<string>(type: "text", nullable: true),
                     measured_quantity_id = table.Column<int>(type: "integer", nullable: false),
-                    phys_unit_id = table.Column<int>(type: "integer", nullable: false),
+                    physical_unit_id = table.Column<int>(type: "integer", nullable: false),
                     location = table.Column<string>(type: "text", nullable: true),
                     installation_date = table.Column<DateTime>(type: "date", nullable: true),
                     status = table.Column<string>(type: "text", nullable: true),
@@ -68,8 +68,8 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SensorDevice_PhysUnit",
-                        column: x => x.phys_unit_id,
-                        principalTable: "phys_units",
+                        column: x => x.physical_unit_id,
+                        principalTable: "physical_units",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -80,9 +80,9 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                 column: "measured_quantity_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_sensor_devices_phys_unit_id",
+                name: "IX_sensor_devices_physical_unit_id",
                 table: "sensor_devices",
-                column: "phys_unit_id");
+                column: "physical_unit_id");
         }
 
         /// <inheritdoc />
@@ -95,7 +95,7 @@ namespace HomeAnalytica.DataRegistry.Data.Migrations
                 name: "measured_quantities");
 
             migrationBuilder.DropTable(
-                name: "phys_units");
+                name: "physical_units");
         }
     }
 }
