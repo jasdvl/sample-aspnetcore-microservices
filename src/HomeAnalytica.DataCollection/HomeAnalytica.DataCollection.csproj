@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HomeAnalytica.Common\HomeAnalytica.Common.csproj" />
     <ProjectReference Include="..\HomeAnalytica.DataCollection.Data\HomeAnalytica.DataCollection.Data.csproj" />
     <ProjectReference Include="..\HomeAnalytica.Grpc.Contracts\HomeAnalytica.Grpc.Contracts.csproj" />
   </ItemGroup>
