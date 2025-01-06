@@ -65,9 +65,9 @@ public partial class SensorCharts : ComponentBase
         _sensorDevices = await SensorDeviceService.GetSensorDevicesAsync();
     }
 
-    private async Task<List<SensorDataDto>> LoadSensorDataAsync(MeasuredQuantity measuredQuantity, long deviceId)
+    private async Task<List<SensorDataDto>> LoadSensorDataAsync(int measuredQuantityId, long deviceId)
     {
-        var sensorData = await SensorDataService.GetSensorDataAsync(measuredQuantity, deviceId);
+        var sensorData = await SensorDataService.GetSensorDataAsync(measuredQuantityId, deviceId);
         return sensorData;
     }
 
@@ -195,7 +195,7 @@ public partial class SensorCharts : ComponentBase
 
                 try
                 {
-                    List<SensorDataDto> sensorData = await LoadSensorDataAsync((MeasuredQuantity) selectedSensor.MeasuredQuantityId, (long) _selectedSensorDeviceId);
+                    List<SensorDataDto> sensorData = await LoadSensorDataAsync(selectedSensor.MeasuredQuantityId, (long) _selectedSensorDeviceId);
 
                     UpdateChartDataAndOptions(selectedSensor.MeasuredQuantity, sensorData);
                     StateHasChanged();
