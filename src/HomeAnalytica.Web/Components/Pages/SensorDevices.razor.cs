@@ -15,8 +15,11 @@ public partial class SensorDevices : ComponentBase
     [Inject]
     private IReferenceDataService ReferenceDataService { get; set; } = default!;
 
+    /// <summary>
+    /// Gets or sets the sensor device model. 
+    /// </summary>
     [SupplyParameterFromForm]
-    private SensorDeviceModel? SensorDeviceModel { get; set; }
+    private SensorDeviceModel SensorDeviceModel { get; set; } = default!;
 
     private EditContext? _editContext;
 
