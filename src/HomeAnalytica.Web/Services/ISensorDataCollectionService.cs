@@ -1,4 +1,3 @@
-using HomeAnalytica.Common.Const;
 using HomeAnalytica.Common.DTOs;
 
 namespace HomeAnalytica.Web.Services;
@@ -15,7 +14,7 @@ public interface ISensorDataCollectionService
     /// <param name="deviceId">The ID of the device to retrieve data from.</param>
     /// <returns>A task that represents the asynchronous operation, containing a list of <see cref="SensorDataDto"/>.</returns>
     /// <exception cref="Exception">Thrown when an error occurs during the retrieval of sensor data.</exception>
-    Task<List<SensorDataDto>> GetSensorDataAsync(MeasuredQuantity measuredQuantity, long deviceId);
+    Task<List<SensorDataDto>> GetSensorDataAsync(int measuredQuantity, long deviceId);
 
     /// <summary>
     /// Asynchronously processes and sends sensor data to the sensor data service.

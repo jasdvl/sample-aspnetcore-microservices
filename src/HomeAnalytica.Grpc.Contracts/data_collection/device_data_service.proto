@@ -6,13 +6,6 @@ package data_collection;
 
 import "google/protobuf/timestamp.proto";
 
-enum MeasuredQuantity {
-    MEASURED_QUANTITY_UNSPECIFIED = 0;
-    TEMPERATURE = 1;
-    HUMIDITY = 2;
-    ENERGY_CONSUMPTION = 3;
-}
-
 service DeviceDataService {
     // Sends sensor data
     rpc SubmitData (SubmitSensorDataRequest) returns (SubmitSensorDataResponse);
@@ -23,7 +16,7 @@ service DeviceDataService {
 
 // The request message for retrieving sensor data by measured quantity
 message GetSensorDataRequest {
-    MeasuredQuantity measured_quantity = 1;
+    int32 measured_quantity = 1;
     int64 device_id = 2;
 }
 
@@ -36,7 +29,7 @@ message GetSensorDataResponse {
 message SensorDataRecord {
     int64 device_id = 1;
     google.protobuf.Timestamp timestamp = 2;
-    MeasuredQuantity measured_quantity = 3;
+    int32 measured_quantity = 3;
     double value = 4;
 }
 
@@ -44,7 +37,7 @@ message SensorDataRecord {
 message SubmitSensorDataRequest {
     int64 device_id = 1;
     google.protobuf.Timestamp timestamp = 2;
-    MeasuredQuantity measured_quantity = 3;
+    int32 measured_quantity = 3;
     double value = 4;
 }
 
