@@ -17,23 +17,23 @@ public class SensorDataClient
         _client = client;
     }
 
-    public async Task<GetSensorDataResponse> GetDataByQuantityAsync(MeasuredQuantity measuredQuantity, long deviceId)
+    public async Task<GetSensorDataResponse> GetDataByQuantityAsync(int measuredQuantityId, long deviceId)
     {
         var res = await _client.GetDataByQuantityAsync(
                         new GetSensorDataRequest()
                         {
-                            MeasuredQuantity = measuredQuantity,
+                            MeasuredQuantity = measuredQuantityId,
                             DeviceId = deviceId
                         });
         return res;
     }
 
-    public async Task<SubmitSensorDataResponse> SendSensorDataAsync(long deviceId, MeasuredQuantity measuredQuantity, Timestamp timestamp, double value)
+    public async Task<SubmitSensorDataResponse> SendSensorDataAsync(long deviceId, int measuredQuantityId, Timestamp timestamp, double value)
     {
         var request = new SubmitSensorDataRequest
         {
             DeviceId = deviceId,
-            MeasuredQuantity = measuredQuantity,
+            MeasuredQuantity = measuredQuantityId,
             Timestamp = timestamp,
             Value = value
         };
