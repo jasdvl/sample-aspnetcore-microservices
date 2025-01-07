@@ -116,7 +116,8 @@ public partial class SensorCharts : ComponentBase
                     Title = new AxisTitle()
                     {
                         Text = _sensorDevices.First(d => d.Id == _selectedSensorDeviceId).PhysicalUnit.Symbol,
-                        Style = new AxisTitleStyle() {FontSize = "18", FontWeight = 600 }
+                        Style = new AxisTitleStyle() {FontSize = "18", FontWeight = 600 },
+                        OffsetX = -8
                     }
                 }
             };
@@ -158,11 +159,15 @@ public partial class SensorCharts : ComponentBase
             Xaxis = new XAxis
             {
                 Type = XAxisType.Datetime,
-
+                Title = new AxisTitle()
+                {
+                    Text = "Time (UTC)",
+                    Style = new AxisTitleStyle() { FontSize = "18", FontWeight = 600 },
+                    OffsetY = 10
+                },
                 Labels = new XAxisLabels
                 {
-                    Format = "hh:mm tt",
-                    Rotate = -45
+                    Format = "hh:mm tt"
                 }
             },
             Markers = new Markers { Shape = ShapeEnum.Circle, Size = 6, Colors = "#2e3f78", FillOpacity = new Opacity(0.8d) },
