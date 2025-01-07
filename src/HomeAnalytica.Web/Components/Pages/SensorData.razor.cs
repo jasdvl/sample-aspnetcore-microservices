@@ -1,7 +1,10 @@
 using HomeAnalytica.Common.Const;
 using HomeAnalytica.Common.DTOs;
+using HomeAnalytica.Web.Components.Models;
+using HomeAnalytica.Web.Components.Validation;
 using HomeAnalytica.Web.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace HomeAnalytica.Web.Components.Pages;
 
@@ -13,19 +16,16 @@ public partial class SensorData : ComponentBase
     [Inject]
     private ISensorDataCollectionService SensorDataService { get; set; } = default!;
 
-    private double? _temperature;
+    [SupplyParameterFromForm]
+    private SensorDataModel TemperatureSensorDataModel { get; set; } = default!;
 
-    private double? _humidity;
+    [SupplyParameterFromForm]
+    private SensorDataModel HumiditySensorDataModel { get; set; } = default!;
 
-    private double? _energyConsumption;
+    [SupplyParameterFromForm]
+    private SensorDataModel EnergyConsumptionSensorDataModel { get; set; } = default!;
 
-    private bool isDataSubmitted = false;
-
-    private long? _selectedTemperatureSensorDeviceId;
-
-    private long? _selectedHumiditySensorDeviceId;
-
-    private long? _selectedEnergyConsumptionSensorDeviceId;
+    private EditContext? _editContext;
 
     private List<SensorDeviceDto> _temperatureSensorDevices { get; set; } = new();
 
@@ -37,6 +37,14 @@ public partial class SensorData : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
+        ErrorMessage = string.Empty;
+
+        InitModels();
+        _editContext = new EditContext(TemperatureSensorDataModel);
+
+        // Disable validation-related CSS styles by using a custom FieldCssClassProvider.
+        _editContext.SetFieldCssClassProvider(new NoValidationStyleFieldCssProvider());
+
         try
         {
             await LoadSensorDevicesAsync();
@@ -51,34 +59,36 @@ public partial class SensorData : ComponentBase
     {
         try
         {
-            await SubmitSensorData(MeasuredQuantity.Temperature, _selectedTemperatureSensorDeviceId, _temperature);
-            await SubmitSensorData(MeasuredQuantity.Humidity, _selectedHumiditySensorDeviceId, _humidity);
-            await SubmitSensorData(MeasuredQuantity.EnergyConsumption, _selectedEnergyConsumptionSensorDeviceId, _energyConsumption);
+            await SubmitSensorData(TemperatureSensorDataModel);
+            await SubmitSensorData(HumiditySensorDataModel);
+            await SubmitSensorData(EnergyConsumptionSensorDataModel);
         }
         catch (Exception ex)
         {
             ErrorMessage = ex.Message;
         }
 
-        _selectedTemperatureSensorDeviceId = null;
-        _selectedHumiditySensorDeviceId = null;
-        _selectedEnergyConsumptionSensorDeviceId = null;
-
-        _temperature = null;
-        _humidity = null;
-        _energyConsumption = null;
+        // Reset models.
+        InitModels();
     }
 
-    private async Task SubmitSensorData(MeasuredQuantity measuredQuantity, long? deviceId, double? value)
+    private void InitModels()
     {
-        if (deviceId != null && value != null)
+        TemperatureSensorDataModel = new SensorDataModel { MeasuredQuantityId = (int) MeasuredQuantity.Temperature, Timestamp = DateTime.Now };
+        HumiditySensorDataModel = new SensorDataModel { MeasuredQuantityId = (int) MeasuredQuantity.Humidity, Timestamp = DateTime.Now };
+        EnergyConsumptionSensorDataModel = new SensorDataModel { MeasuredQuantityId = (int) MeasuredQuantity.EnergyConsumption, Timestamp = DateTime.Now };
+    }
+
+    private async Task SubmitSensorData(SensorDataModel sensorDataModel)
+    {
+        if (sensorDataModel.DeviceId != null && sensorDataModel.Value != null)
         {
             var data = new SensorDataDto
             {
-                DeviceId = (long) deviceId,
-                MeasuredQuantity = measuredQuantity,
-                Timestamp = DateTime.UtcNow,
-                Value = (double) value
+                DeviceId = (long) sensorDataModel.DeviceId,
+                MeasuredQuantityId = sensorDataModel.MeasuredQuantityId,
+                Timestamp = sensorDataModel.Timestamp.ToUniversalTime(),
+                Value = (double) sensorDataModel.Value
             };
 
             await SensorDataService.ProcessSensorDataAsync(data);
