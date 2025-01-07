@@ -10,86 +10,90 @@
 
 <p role="status">Please enter your data:</p>
 
-<div class="card mt-2 mb-5">
-    <div class="card-header bg-card-header">
-        <h5>Temperature Sensors</h5>
-    </div>
-    <div class="card-body">
-        <div class="input-group mb-2">
-            <label class="input-group-text" for="temperatureSensorSelect">Select Sensor</label>
-            <select id="temperatureSensorSelect" class="form-select" @bind="_selectedTemperatureSensorDeviceId">
-                <option value="" disabled selected>Please select a sensor</option>
-                @foreach (var sensor in _temperatureSensorDevices)
-                {
-                    <option value="@sensor.Id">@sensor.Name (@sensor.Id)</option>
-                }
-            </select>
+<EditForm EditContext="_editContext">
+    <DataAnnotationsValidator />
+    <div class="card mt-2 mb-5">
+        <div class="card-header bg-card-header">
+            <h5>Temperature Sensors</h5>
         </div>
-        <div class="input-group mb-2">
-            <span class="input-group-text">Temperature (°C)</span>
-            <input @bind="_temperature" type="number" class="form-control" step="0.1" placeholder="Enter the Current Temperature (°C)" />
+        <div class="card-body">
+            <div class="input-group mb-2">
+                <label class="input-group-text" for="temperatureSensorSelect">Select Sensor</label>
+                <InputSelect id="temperatureSensorSelect" class="form-select" @bind-Value="TemperatureSensorDataModel.DeviceId">
+                    <option value="" disabled selected>Please select a sensor</option>
+                    @foreach (var sensor in _temperatureSensorDevices)
+                    {
+                        <option value="@sensor.Id">@sensor.Name (@sensor.Id)</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">Temperature (°C)</span>
+                <InputNumber @bind-Value="TemperatureSensorDataModel.Value" type="number" class="form-control" step="0.1" placeholder="Enter the Current Temperature (°C)" />
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">Timestamp</span>
+                <InputDate @bind-Value="TemperatureSensorDataModel.Timestamp" type="InputDateType.DateTimeLocal" class="form-control" />
+            </div>
         </div>
     </div>
-</div>
 
-
-<div class="card my-5">
-    <div class="card-header bg-card-header">
-        <h5>Humidity Sensors</h5>
-    </div>
-    <div class="card-body">
-        <div class="input-group mb-2">
-            <label class="input-group-text" for="humiditySensorSelect">Select Sensor</label>
-            <select id="humiditySensorSelect" class="form-select" @bind="_selectedHumiditySensorDeviceId">
-                <option value="" disabled selected>Please select a sensor</option>
-                @foreach (var sensor in _humiditySensorDevices)
-                {
-                    <option value="@sensor.Id">@sensor.Name (@sensor.Id)</option>
-                }
-            </select>
+    <div class="card my-5">
+        <div class="card-header bg-card-header">
+            <h5>Humidity Sensors</h5>
         </div>
-        <div class="input-group mb-2">
-            <span class="input-group-text">Humidity (%)</span>
-            <input @bind="_humidity" type="number" class="form-control" step="1" placeholder="Enter the Current Humidity (%)" />
-        </div>
-    </div>
-</div>
-
-<div class="card my-5">
-    <div class="card-header bg-card-header">
-        <h5>Energy Monitoring Sensors</h5>
-    </div>
-    <div class="card-body">
-        <div class="input-group mb-2">
-            <label class="input-group-text" for="energySensorSelect">Select Sensor</label>
-            <select id="energySensorSelect" class="form-select" @bind="_selectedEnergyConsumptionSensorDeviceId">
-                <option value="" disabled selected>Please select a sensor</option>
-                @foreach (var sensor in _energyConsumptionSensorDevices)
-                {
-                    <option value="@sensor.Id">@sensor.Name (@sensor.Id)</option>
-                }
-            </select>
-        </div>
-        <div class="input-group mb-2">
-            <span class="input-group-text">Energy Consumption (kWh)</span>
-            <input @bind="_energyConsumption" type="number" class="form-control" step="0.1" placeholder="Enter the Current Total Energy Consumption (kWh)" />
+        <div class="card-body">
+            <div class="input-group mb-2">
+                <label class="input-group-text" for="humiditySensorSelect">Select Sensor</label>
+                <InputSelect id="humiditySensorSelect" class="form-select" @bind-Value="HumiditySensorDataModel.DeviceId">
+                    <option value="" disabled selected>Please select a sensor</option>
+                    @foreach (var sensor in _humiditySensorDevices)
+                    {
+                        <option value="@sensor.Id">@sensor.Name (@sensor.Id)</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">Humidity (%)</span>
+                <InputNumber @bind-Value="HumiditySensorDataModel.Value" type="number" class="form-control" step="1" placeholder="Enter the Current Humidity (%)" />
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">Timestamp</span>
+                <InputDate @bind-Value="HumiditySensorDataModel.Timestamp" type="InputDateType.DateTimeLocal" class="form-control" />
+            </div>
         </div>
     </div>
-</div>
 
-<div class="d-flex justify-content-end my-4">
-    <button class="btn btn-primary" @onclick="SubmitAllSensorData">Submit Data</button>
-</div>
+    <div class="card my-5">
+        <div class="card-header bg-card-header">
+            <h5>Energy Monitoring Sensors</h5>
+        </div>
+        <div class="card-body">
+            <div class="input-group mb-2">
+                <label class="input-group-text" for="energySensorSelect">Select Sensor</label>
+                <InputSelect id="energySensorSelect" class="form-select" @bind-Value="EnergyConsumptionSensorDataModel.DeviceId">
+                    <option value="" disabled selected>Please select a sensor</option>
+                    @foreach (var sensor in _energyConsumptionSensorDevices)
+                    {
+                        <option value="@sensor.Id">@sensor.Name (@sensor.Id)</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">Energy Consumption (kWh)</span>
+                <InputNumber @bind-Value="EnergyConsumptionSensorDataModel.Value" type="number" class="form-control" step="0.1" placeholder="Enter the Current Total Energy Consumption (kWh)" />
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">Timestamp</span>
+                <InputDate @bind-Value="EnergyConsumptionSensorDataModel.Timestamp" type="InputDateType.DateTimeLocal" class="form-control" />
+            </div>
+        </div>
+    </div>
 
-@if (isDataSubmitted)
-{
-    <h3>Submitted Data:</h3>
-    <ul>
-        <li>Temperature: @_temperature °C</li>
-        <li>Humidity: @_humidity %</li>
-        <li>Energy Consumption: @_energyConsumption kWh</li>
-    </ul>
-}
+    <div class="d-flex justify-content-end my-4">
+        <button class="btn btn-primary" type="submit" @onclick="SubmitAllSensorData">Submit Data</button>
+    </div>
+</EditForm>
 
 @if (!string.IsNullOrEmpty(ErrorMessage))
 {
