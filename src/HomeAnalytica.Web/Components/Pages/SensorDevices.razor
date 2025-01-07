@@ -15,7 +15,7 @@
 
 <h1>Sensor Devices</h1>
 
-<EditForm EditContext="_editContext" OnValidSubmit="SubmitSensorDeviceDataAndRefreshDeviceList">
+<EditForm EditContext="_editContext">
     <DataAnnotationsValidator />
     
     <div class="card my-4">
@@ -76,7 +76,10 @@
             </div>
 
             <div class="d-flex justify-content-end">
-                <button class="btn btn-primary" type="submit" disabled="@(!_editContext?.Validate())">Add Sensor Device</button>
+                <button class="btn btn-primary" type="submit" disabled="@(!_editContext?.Validate())"
+                        @onclick="SubmitSensorDeviceDataAndRefreshDeviceList">
+                    Add Sensor Device
+                </button>
             </div>
         </div>
     </div>
