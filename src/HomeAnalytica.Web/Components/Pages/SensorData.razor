@@ -28,8 +28,17 @@
                 </InputSelect>
             </div>
             <div class="input-group mb-2">
-                <span class="input-group-text">Temperature (°C)</span>
-                <InputNumber @bind-Value="TemperatureSensorDataModel.Value" type="number" class="form-control" step="0.1" placeholder="Enter the Current Temperature (°C)" />
+                @if (TemperatureSensorDataModel.DeviceId != null)
+                {
+                    var selectedDeviceId = (int) TemperatureSensorDataModel.DeviceId;
+                    var unitSymbol = _temperatureSensorDevices.First(d => d.Id == selectedDeviceId).PhysicalUnit.Symbol;
+                    <span class="input-group-text">Temperature (@unitSymbol)</span>
+                }
+                else
+                {
+                    <span class="input-group-text">Temperature</span>
+                }
+                <InputNumber @bind-Value="TemperatureSensorDataModel.Value" type="number" class="form-control" step="0.1" placeholder="Enter the Current Temperature" />
             </div>
             <div class="input-group mb-2">
                 <span class="input-group-text">Timestamp</span>
@@ -54,8 +63,17 @@
                 </InputSelect>
             </div>
             <div class="input-group mb-2">
-                <span class="input-group-text">Humidity (%)</span>
-                <InputNumber @bind-Value="HumiditySensorDataModel.Value" type="number" class="form-control" step="1" placeholder="Enter the Current Humidity (%)" />
+                @if (HumiditySensorDataModel.DeviceId != null)
+                {
+                    var selectedDeviceId = (int)HumiditySensorDataModel.DeviceId;
+                    var unitSymbol = _humiditySensorDevices.First(d => d.Id == selectedDeviceId).PhysicalUnit.Symbol;
+                    <span class="input-group-text">Humidity (@unitSymbol)</span>
+                }
+                else
+                {
+                    <span class="input-group-text">Humidity</span>
+                }
+                <InputNumber @bind-Value="HumiditySensorDataModel.Value" type="number" class="form-control" step="0.1" placeholder="Enter the Current Humidity" />
             </div>
             <div class="input-group mb-2">
                 <span class="input-group-text">Timestamp</span>
@@ -80,8 +98,17 @@
                 </InputSelect>
             </div>
             <div class="input-group mb-2">
-                <span class="input-group-text">Energy Consumption (kWh)</span>
-                <InputNumber @bind-Value="EnergyConsumptionSensorDataModel.Value" type="number" class="form-control" step="0.1" placeholder="Enter the Current Total Energy Consumption (kWh)" />
+                @if (EnergyConsumptionSensorDataModel.DeviceId != null)
+                {
+                    var selectedDeviceId = (int)EnergyConsumptionSensorDataModel.DeviceId;
+                    var unitSymbol = _energyConsumptionSensorDevices.First(d => d.Id == selectedDeviceId).PhysicalUnit.Symbol;
+                    <span class="input-group-text">Energy Consumption (@unitSymbol)</span>
+                }
+                else
+                {
+                    <span class="input-group-text">Energy Consumption</span>
+                }
+                <InputNumber @bind-Value="EnergyConsumptionSensorDataModel.Value" type="number" class="form-control" step="0.1" placeholder="Enter the Current Total Energy Consumption" />
             </div>
             <div class="input-group mb-2">
                 <span class="input-group-text">Timestamp</span>
