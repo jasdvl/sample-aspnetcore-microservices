@@ -1,0 +1,85 @@
+@using HomeAnalytica.Web.Services;
+@rendermode InteractiveServer
+
+@namespace HomeAnalytica.Web.Components.Common
+
+<div class="toast-notification-container">
+    @if (isVisible || isFadingOut)
+    {
+        <div class="toast-notification @(isFadingOut ? "hide" : "show") @cssClass">
+            <div class="toast-notification-header">
+                <strong class="me-auto">@title</strong>
+                <button type="button" class="btn-close" @onclick="Close"></button>
+            </div>
+            <div class="toast-notification-body">
+                @((MarkupString)FormatMessage(message))
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Inject]
+    public ToastNotificationService ToastService { get; set; } = default!;
+
+    private string message = string.Empty;
+    private string title = string.Empty;
+    private string cssClass = string.Empty;
+    private bool isVisible;
+    private bool isFadingOut;
+
+    protected override void OnInitialized()
+    {
+        ToastService.OnShow += ShowToast;
+        ToastService.OnHide += HideToast;
+    }
+
+    private async void ShowToast(string message, string title, ToastNotificationType type)
+    {
+        this.message = message;
+        this.title = title;
+        this.cssClass = GetCssClass(type);
+        isFadingOut = false;
+        isVisible = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async void HideToast()
+    {
+        // Start fading out
+        isFadingOut = true;
+        await InvokeAsync(StateHasChanged);
+
+        // Wait for the animation to complete
+        await Task.Delay(500);
+
+        isFadingOut = false;
+        isVisible = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void Close()
+    {
+        HideToast();
+    }
+
+    private string FormatMessage(string message)
+    {
+        return message.Replace("\r\n", "<br />").Replace("\n", "<br />");
+    }
+
+    private string GetCssClass(ToastNotificationType type) => type switch
+    {
+        ToastNotificationType.Success => "toast-notification-success",
+        ToastNotificationType.Info => "toast-notification-info",
+        ToastNotificationType.Warning => "toast-notification-warning",
+        ToastNotificationType.Error => "toast-notification-error",
+        _ => string.Empty
+    };
+
+    public void Dispose()
+    {
+        ToastService.OnShow -= ShowToast;
+        ToastService.OnHide -= HideToast;
+    }
+}

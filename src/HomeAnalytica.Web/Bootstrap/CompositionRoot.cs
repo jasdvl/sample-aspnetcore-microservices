@@ -130,6 +130,8 @@ namespace HomeAnalytica.Web.Bootstrap
             // ISensorDeviceService is already registered using: services.AddHttpClient<ISensorDeviceService, SensorDeviceService>
 
             services.AddTransient<SensorDataClient>();
+
+            services.AddScoped<ToastNotificationService>();
         }
     }
 }
