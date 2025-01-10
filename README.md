@@ -9,13 +9,12 @@ Check out the [screenshots](./screenshots.md) for a visual overview.
 
 ## Project Overview
 
-**HomeAnalytica** is a sample application developed to demonstrate the integration of ASP.NET Core technologies in a microservices-based architecture. This project primarily showcases the technical interplay between Blazor, YARP (Yet Another Reverse Proxy), and microservices via REST/HTTP and gRPC.
+**HomeAnalytica** is a sample application developed to demonstrate the integration of ASP.NET Core technologies in a microservices-based architecture. 
+The project highlights the technical interplay between Blazor, YARP (Yet Another Reverse Proxy), and microservices using REST/HTTP and gRPC.  
+This application serves as a technical showcase, focusing primarily on the backend architecture and communication between the Blazor server and the microservices, rather than on extensive frontend design.  
+In the UI, users can create sensor devices, which are stored in a PostgreSQL database via REST/HTTP. Additionally, sample data (e.g., temperature, humidity, and energy usage) can be submitted via gRPC to a MongoDB database. These data points can be visualized through line and bar charts.  
 
-The project highlights the technical interplay between Blazor, YARP (Yet Another Reverse Proxy), and microservices using REST/HTTP and gRPC.
-This application serves as a technical showcase, with a primary focus on backend architecture and inter-service communication, rather than comprehensive frontend design.
-In the UI, users can create sensor devices, which are stored in a PostgreSQL database via REST/HTTP. Additionally, sample data (e.g., temperature, humidity, and energy usage) can be submitted via gRPC to a MongoDB database. These data points can be visualized through line and bar charts.
-
-Future updates will primarily focus on refactoring efforts, such as addressing compiler warnings and improving code comments.
+Future updates will primarily focus on refactoring efforts, such as addressing compiler warnings and improving code comments.  
 See the [TODO List](#todo-list) for planned updates and improvements.
 
 **Note:**
@@ -34,12 +33,12 @@ The solution is divided into multiple projects to simulate key functionalities w
    - Acts as a reverse proxy to route requests between the Blazor frontend and backend microservices, enabling efficient load distribution and separation of concerns.
 
 3. **HomeAnalytica.Grpc.Contracts (Protobuf Definitions)**
-   - A gRPC service to facilitate efficient communication between microservices, allowing seamless data exchange and integration of insights from various components.
+   - A library containing Protobuf definitions for gRPC communication between the Blazor Web App and the Data Collection microservice.
 
-4. **HomeAnalytica.DataRegistry (DataRegistry Service)**
+4. **HomeAnalytica.DataRegistry (Data Registry Microservice)**
    - Storage of sensor devices and related. 
 
-5. **HomeAnalytica.DataCollection (Data Collection Service)**
+5. **HomeAnalytica.DataCollection (Data Collection Microservice)**
    - Simulates the collection and storage of sample data, such as temperature, humidity, and energy consumption. Users manually input sample data through the frontend.
 
 
@@ -49,7 +48,7 @@ This sample project provides a practical example of integrating ASP.NET Core wit
 
 ## Prerequisites
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) or [Visual Studio Code](https://code.visualstudio.com/)
 - [Docker](https://www.docker.com/) (optional, for containerization)
 
@@ -118,18 +117,6 @@ docker-compose up --build -d
 ```
 
 This will build and start all services defined in the docker-compose.yml file, including the database and all microservices.
-
-## Project Structure
-
-- `HomeAnalytica.Web`: Blazor Web App
-
-- `HomeAnalytica.Gateway.Yarp`: Reverse Proxy
-
-- `HomeAnalytica.Grpc.Contracts`: gRPC Service
-
-- `HomeAnalytica.DataRegistry`: Data Registry Microservice
-
-- `HomeAnalytica.DataCollection`: Data Collection Microservice
 
 ## TODO List
 
