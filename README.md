@@ -1,43 +1,51 @@
+
 # ASP.NET Core Microservices Integration Sample
 
 ![microservices](./assets/architecture-overview.png)
 
+## Screenshots
+
+Check out the [screenshots](./screenshots.md) for a visual overview.
+
 ## Project Overview
 
-**HomeAnalytica** is a sample application developed to demonstrate the integration of ASP.NET Core technologies in a microservices-based architecture. This project primarily showcases the technical interplay between microservices, gRPC, YARP (Yet Another Reverse Proxy), and Blazor.
+**HomeAnalytica** is a sample application developed to demonstrate the integration of ASP.NET Core technologies in a microservices-based architecture. This project primarily showcases the technical interplay between Blazor, YARP (Yet Another Reverse Proxy), and microservices via REST/HTTP and gRPC.
 
-The project serves as a technical sample and focuses on backend architecture and inter-service communication rather than extensive frontend design. The UI is minimal, with simple input fields to manually send sample data (temperature, humidity, energy usage) to the data collector service. The analytics service then returns statistical data, such as total consumption or average temperature, with potential for basic visualizations (e.g., bar charts) to illustrate core analytics features without elaborate UI design.
+The project highlights the technical interplay between Blazor, YARP (Yet Another Reverse Proxy), and microservices using REST/HTTP and gRPC.
+This application serves as a technical showcase, with a primary focus on backend architecture and inter-service communication, rather than comprehensive frontend design.
+In the UI, users can create sensor devices, which are stored in a PostgreSQL database via REST/HTTP. Additionally, sample data (e.g., temperature, humidity, and energy usage) can be submitted via gRPC to a MongoDB database. These data points can be visualized through line and bar charts.
 
-Future updates may include additional examples or technical refinements, but the focus will remain on demonstrating gRPC, microservices architecture, YARP routing, and Blazor integration.  
+Future updates will primarily focus on refactoring efforts, such as addressing compiler warnings and improving code comments.
 See the [TODO List](#todo-list) for planned updates and improvements.
 
 **Note:**
-Not for production. Store Secrets in Key Store etc.
+This code is intended for demonstration purposes only and is not suitable for production use. Sensitive information, such as secrets and credentials, should be stored securely using a dedicated key management solution or secret store.
 
 The solution is divided into multiple projects to simulate key functionalities within an IoT data analytics platform:
 
 ### Key Components
 
-1. **HomeAnalytica.Web (Blazor Web App)**
-   - A Blazor Web App that provides a straightforward interface for users to input and view sample analytics data. The UI prioritizes simplicity to keep the focus on backend and architectural functionality.  
-     Apex Charts was integrated for creating interactive charts.  
-     See also https://apexcharts.github.io/Blazor-ApexCharts/
+1. **HomeAnalytica.Web (Blazor Web App)**  
+    A Blazor Web App that provides a user-friendly interface for managing sensor devices and viewing sample sensor data. The UI is designed with simplicity in mind, allowing the focus to remain on backend and architectural functionality.  
+    Apex Charts was integrated for creating interactive charts.  
+    See also https://apexcharts.github.io/Blazor-ApexCharts/
 
-2. **HomeAnalytica.Grpc.Contracts (gRPC Service)**
+2. **HomeAnalytica.Gateway.Yarp (Reverse Proxy)**
+   - Acts as a reverse proxy to route requests between the Blazor frontend and backend microservices, enabling efficient load distribution and separation of concerns.
+
+3. **HomeAnalytica.Grpc.Contracts (Protobuf Definitions)**
    - A gRPC service to facilitate efficient communication between microservices, allowing seamless data exchange and integration of insights from various components.
 
-3. **HomeAnalytica.DataCollection (Data Collection Service)**
+4. **HomeAnalytica.DataRegistry (DataRegistry Service)**
+   - Storage of sensor devices and related. 
+
+5. **HomeAnalytica.DataCollection (Data Collection Service)**
    - Simulates the collection and storage of sample data, such as temperature, humidity, and energy consumption. Users manually input sample data through the frontend.
 
-4. **HomeAnalytica.Analytics (Analytics Service)**
-   - Processes collected data to generate insights and return statistical recommendations based on sample usage patterns. 
-
-5. **HomeAnalytica.Gateway.Yarp (Reverse Proxy)**
-   - Acts as a reverse proxy to route requests between the Blazor frontend and backend microservices, enabling efficient load distribution and separation of concerns.
 
 ---
 
-This sample project provides a practical example of integrating ASP.NET Core with microservices, gRPC, YARP, and Blazor, making it an ideal reference for understanding these technologies in action.
+This sample project provides a practical example of integrating ASP.NET Core with microservices, gRPC, YARP, and Blazor.
 
 ## Prerequisites
 
@@ -47,7 +55,7 @@ This sample project provides a practical example of integrating ASP.NET Core wit
 
 ## Setting up the HTTPS Certificates (Windows)
 
-To run the Docker container with HTTPS support for `homeanalytica.web` (the Blazor Web App), please create the following SSL certificates and trust them by following these steps:
+To run the Docker container with HTTPS support for `HomeAnalytica.web` (the Blazor Web App), please create the following SSL certificates and trust them by following these steps:
 
 ```bash
 dotnet dev-certs https
@@ -115,21 +123,18 @@ This will build and start all services defined in the docker-compose.yml file, i
 
 - `HomeAnalytica.Web`: Blazor Web App
 
+- `HomeAnalytica.Gateway.Yarp`: Reverse Proxy
+
 - `HomeAnalytica.Grpc.Contracts`: gRPC Service
+
+- `HomeAnalytica.DataRegistry`: Data Registry Microservice
 
 - `HomeAnalytica.DataCollection`: Data Collection Microservice
 
-- `HomeAnalytica.Analytics`: Analytics Microservice
-
-- `HomeAnalytica.Gateway.Yarp`: Reverse Proxy
-
 ## TODO List
 
-### Priority 1
-
-### Priority 2
-
-### Priority 3
+- Fix compiler warnings
+- Add comments where they are still missing
 
 ## Branching Strategy
 
