@@ -9,14 +9,15 @@ Check out the [screenshots](./screenshots.md) for a visual overview.
 
 ## Project Overview
 
-**HomeAnalytica** is a sample application developed to demonstrate the integration of ASP.NET Core technologies in a microservices-based architecture. 
-The project highlights the technical interplay between Blazor, YARP (Yet Another Reverse Proxy), and microservices using REST/HTTP and gRPC.  
-This application is a demonstration project, primarily highlighting the backend architecture and the communication between the Blazor server and the microservices.  
+**HomeAnalytica** is a sample application designed to demonstrate the integration of ASP.NET Core technologies within a microservices-based architecture.  
+The project showcases the interaction between Blazor, YARP (Yet Another Reverse Proxy), and microservices, leveraging both REST/HTTP and gRPC for communication.
 
-In the UI, users can create sensor devices, which are sent to a PostgreSQL database via REST/HTTP. Additionally, sample data (e.g., temperature, humidity, and energy usage) can be submitted via gRPC to a MongoDB database. These data points are visualized through line and bar charts.
+In this application, users can create and manage sensor devices, with device data being sent to a PostgreSQL database via REST/HTTP.  
+Additionally, sensor readings, such as temperature, humidity, and energy consumption, are submitted via gRPC to a MongoDB database.
+These data points are then visualized through dynamic line and bar charts, providing users with a clear overview of sensor data trends.
 
 **Note:**
-Future updates will primarily focus on refactoring efforts, such as addressing compiler warnings and improving code comments. See the [TODO List](#todo-list) for planned updates and improvements.  
+Future updates will primarily focus on refactoring efforts, such as addressing compiler warnings and improving code comments. See the [TODO List](#todo-list) for planned improvements.  
 This code is intended for demonstration purposes only and is not suitable for production use. Sensitive information, such as secrets and credentials, should be stored securely using a dedicated key management solution or secret store.
 
 The solution is divided into multiple projects to simulate key functionalities within an IoT data analytics platform:
