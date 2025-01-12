@@ -10,24 +10,16 @@ public interface ISensorDataHandlerFactory
 
 public class SensorDataProcessorFactory : ISensorDataHandlerFactory
 {
-    private readonly List<ISensorDataProcessor> _sensorDataHandlers;
+    private readonly List<ISensorDataProcessor> _sensorDataProcessors;
 
-    public SensorDataProcessorFactory(
-                                ITemperatureDataProcessor temperatureDataProcessor,
-                                IEnergyConsumptionDataProcessor energyConsumptionDataProcessor,
-                                IHumidityDataProcessor humidityDataProcessor)
+    public SensorDataProcessorFactory(IEnumerable<ISensorDataProcessor> sensorDataProcessors)
     {
-        _sensorDataHandlers = new List<ISensorDataProcessor>
-        {
-            { temperatureDataProcessor },
-            { energyConsumptionDataProcessor },
-            { humidityDataProcessor }
-        };
+        _sensorDataProcessors = new List<ISensorDataProcessor>(sensorDataProcessors);
     }
 
     public ISensorDataProcessor GetDataProcessor(MeasuredQuantity measuredQuantity)
     {
-        ISensorDataProcessor? sensorDataProcessor = _sensorDataHandlers.FirstOrDefault(p => p.MeasuredQuantity == measuredQuantity);
+        ISensorDataProcessor? sensorDataProcessor = _sensorDataProcessors.FirstOrDefault(p => p.MeasuredQuantity == measuredQuantity);
 
         if (sensorDataProcessor == null)
         {

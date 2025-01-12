@@ -83,6 +83,11 @@ namespace HomeAnalytica.DataCollection.Bootstrap
             services.AddScoped<ITemperatureDataProcessor, TemperatureDataProcessor>();
             services.AddScoped<IEnergyConsumptionDataProcessor, EnergyConsumptionDataProcessor>();
             services.AddScoped<IHumidityDataProcessor, HumidityDataProcessor>();
+
+            services.AddScoped<ISensorDataProcessor, TemperatureDataProcessor>();
+            services.AddScoped<ISensorDataProcessor, EnergyConsumptionDataProcessor>();
+            services.AddScoped<ISensorDataProcessor, HumidityDataProcessor>();
+
         }
     }
 }
