@@ -25,14 +25,15 @@ The solution is divided into multiple projects to simulate key functionalities w
 ### Key Components
 
 1. **HomeAnalytica.Web (Blazor Web App)**  
-    A Blazor Web App that provides a user-friendly interface for managing sensor devices and viewing sample sensor data. The UI is designed with simplicity in mind, allowing the focus to remain on backend and architectural functionality.  
-    Apex Charts was integrated for creating interactive charts. See also https://apexcharts.github.io/Blazor-ApexCharts/
+   A Blazor Web App that provides a user-friendly interface for managing sensor devices and viewing sample sensor data.
+   The UI is designed with simplicity in mind, allowing the focus to remain on backend and architectural functionality.  
+   Apex Charts was integrated for creating interactive charts. See also https://apexcharts.github.io/Blazor-ApexCharts/
 
-2. **HomeAnalytica.Gateway.Yarp (Reverse Proxy)**
-   - Acts as a reverse proxy to route requests between the Blazor frontend and backend microservices, enabling efficient load distribution and separation of concerns.
+2. **HomeAnalytica.Gateway.Yarp (Reverse Proxy)**  
+   Acts as a reverse proxy to route requests between the Blazor frontend and backend microservices, enabling efficient load distribution and separation of concerns.
 
-3. **HomeAnalytica.Grpc.Contracts (Protobuf Definitions)**
-   - A library containing Protobuf definitions for gRPC communication between the Blazor Web App and the Data Collection microservice.
+3. **HomeAnalytica.Grpc.Contracts (Protobuf Definitions)**  
+   A library containing Protobuf definitions for gRPC communication between the Blazor Web App and the Data Collection microservice.
 
 4. **HomeAnalytica.DataRegistry (Data Registry Microservice)**
    - Provides services to facilitate access to PostgreSQL tables, which store data about sensor devices and physical units/measurements. These include sensor data and measurement units such as temperature, energy consumption, and humidity.
@@ -48,7 +49,7 @@ The solution is divided into multiple projects to simulate key functionalities w
    This layer handles the connection to the PostgreSQL database and enables efficient querying, insertion, and management of data.
    - Utilizes the Unit of Work and Repository pattern to ensure maintainable, testable, and efficient data access operations. These patterns help decouple business logic from data access logic, making the system more modular and easier to maintain.
 
-1. **HomeAnalytica.DataCollection.Data (Data Access - MongoDB)**
+7. **HomeAnalytica.DataCollection.Data (Data Access - MongoDB)**
    - Provides the data access layer for interacting with MongoDB collections, leveraging the MongoDB driver for .NET. This layer facilitates operations like inserting and retrieving sensor data from MongoDB.
    - Includes services such as the `DatabaseInitializationService`, which ensures the proper initialization of the database, including the creation of necessary indexes for collections to optimize query performance.
    - Also implements the repository pattern, with a base class for sensor data repositories (`SensorDataRepository<T>`), which handles CRUD operations and allows for easy interaction with the MongoDB collections for different types of sensor data (e.g., temperature, humidity, energy consumption).
