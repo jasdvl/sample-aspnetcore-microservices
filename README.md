@@ -58,7 +58,12 @@ The solution is divided into multiple projects to simulate key functionalities w
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) or [Visual Studio Code](https://code.visualstudio.com/)
-- [Docker](https://www.docker.com/) (optional, for containerization)
+
+Optional:
+
+- [Docker](https://www.docker.com/) (for containerization)
+- [Compass](https://www.mongodb.com/products/tools/compass) (GUI for MongoDB)
+- [pgAdmin](https://www.pgadmin.org/) (administration and development platform for PostgreSQL)
 
 ## Setting up the HTTPS Certificates (Windows)
 
