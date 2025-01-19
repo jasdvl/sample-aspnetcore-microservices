@@ -11,7 +11,6 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["HomeAnalytica.DataRegistry/HomeAnalytica.DataRegistry.csproj", "HomeAnalytica.DataRegistry/"]
 COPY ["HomeAnalytica.DataRegistry.Data/HomeAnalytica.DataRegistry.Data.csproj", "HomeAnalytica.DataRegistry.Data/"]
-COPY ["HomeAnalytica.Grpc.Contracts/HomeAnalytica.Grpc.Contracts.csproj", "HomeAnalytica.Services.Communication/"]
 RUN dotnet restore "./HomeAnalytica.DataRegistry/HomeAnalytica.DataRegistry.csproj"
 COPY . .
 WORKDIR "/src/HomeAnalytica.DataRegistry"

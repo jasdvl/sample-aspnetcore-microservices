@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.Net.Client" Version="2.66.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -23,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\HomeAnalytica.Common\HomeAnalytica.Common.csproj" />
     <ProjectReference Include="..\HomeAnalytica.DataRegistry.Data\HomeAnalytica.DataRegistry.Data.csproj" />
-    <ProjectReference Include="..\HomeAnalytica.Grpc.Contracts\HomeAnalytica.Grpc.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

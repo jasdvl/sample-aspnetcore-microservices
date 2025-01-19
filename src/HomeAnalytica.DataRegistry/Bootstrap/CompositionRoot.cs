@@ -1,8 +1,6 @@
-using Grpc.Core;
 using HomeAnalytica.DataRegistry.Data.Context;
 using HomeAnalytica.DataRegistry.Data.Infrastructure;
 using HomeAnalytica.DataRegistry.Services;
-using HomeAnalytica.Grpc.Contracts.DataCollection;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeAnalytica.DataRegistry.Bootstrap
@@ -58,18 +56,6 @@ namespace HomeAnalytica.DataRegistry.Bootstrap
             // About configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            services.AddGrpc();
-
-            var dataRegistryUrl = configuration["ServiceUrls:DataRegistry"];
-
-            services.AddGrpcClient<DeviceDataService.DeviceDataServiceClient>(o =>
-            {
-                o.Address = new Uri(dataRegistryUrl);
-            })
-            .ConfigureChannel(options =>
-            {
-                options.Credentials = ChannelCredentials.Insecure;
-            });
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             //services.AddPooledDbContextFactory<HomeAnalyticaDbContext>(options => options.UseNpgsql(connectionString));
