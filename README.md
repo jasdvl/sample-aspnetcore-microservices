@@ -17,8 +17,10 @@ Additionally, sensor readings, such as temperature, humidity, and energy consump
 These data points are then visualized through dynamic line and bar charts, providing users with a clear overview of sensor data trends.
 
 **Note:**
-Future updates will primarily focus on refactoring efforts, such as addressing compiler warnings and improving code comments. See the [TODO List](#todo-list) for planned improvements.  
-This code is intended for demonstration purposes only and is not suitable for production use. Sensitive information, such as secrets and credentials, should be stored securely using a dedicated key management solution or secret store.
+
+> This code is intended for demonstration purposes only and is not suitable for production use. Sensitive information, such as secrets and credentials, should be stored securely using a dedicated key management
+> solution or secret store.  
+> Future updates will primarily focus on refactoring efforts, such as addressing compiler warnings and improving code comments. See the [TODO List](#todo-list) for planned improvements.  
 
 The solution is divided into multiple projects to simulate key functionalities within an IoT data analytics platform:
 
@@ -27,7 +29,8 @@ The solution is divided into multiple projects to simulate key functionalities w
 1. **HomeAnalytica.Web (Blazor Web App)**  
    A Blazor Web App that provides a user-friendly interface for managing sensor devices and viewing sample sensor data.
    The UI is designed with simplicity in mind, allowing the focus to remain on backend and architectural functionality.  
-   Apex Charts was integrated for creating interactive charts. See also https://apexcharts.github.io/Blazor-ApexCharts/
+   Apex Charts was integrated for creating interactive charts. See also https://apexcharts.github.io/Blazor-ApexCharts.  
+   All components leverage Interactive SSR (Server-Side Rendering) for improved performance and responsiveness.
 
 2. **HomeAnalytica.Gateway.Yarp (Reverse Proxy)**  
    Acts as a reverse proxy to route requests between the Blazor frontend and backend microservices, enabling efficient load distribution and separation of concerns.
@@ -97,31 +100,21 @@ dotnet dev-certs https --trust
     git clone https://github.com/jasdvl/sample-aspnetcore-microservices.git
     ```
 
-2. Navigate to the project directory:
+2. Navigate to the project directory, restore dependencies, and build the solution:
 
     ```bash
     cd sample-aspnetcore-microservices\src
-    ```
-
-3. Restore dependencies:
-
-    ```bash
     dotnet restore HomeAnalytica.sln
-    ```
-
-4. Build
-
-    ```bash
     dotnet build HomeAnalytica.sln
     ```
 
-5. Start the database services:
+3. Start the database services:
 
     ```
     docker-compose up -d homeanalytica.dataregistry.db homeanalytica.datacollection.db
     ```
 
-6. Run the applications:
+4. Run the applications:
 
     ```bat
     start dotnet run --project HomeAnalytica.Gateway.Yarp/HomeAnalytica.Gateway.Yarp.csproj
@@ -130,7 +123,7 @@ dotnet dev-certs https --trust
     start dotnet run --project HomeAnalytica.Web/HomeAnalytica.Web.csproj
     ```
 
-7. Access the Application:
+5. Access the Application:
 
    After starting the application, you can access it in your browser at the following URLs:
 
