@@ -86,7 +86,7 @@ To run the Docker container with HTTPS support for `HomeAnalytica.Web` (the Blaz
 
 ```bash
 dotnet dev-certs https
-dotnet dev-certs https -ep %APPDATA%\ASP.NET\Https\HomeAnalytica.Web.pfx -p 8517c5bc-614d-49b7-8990-ff40578db4a5
+dotnet dev-certs https -ep %APPDATA%\ASP.NET\Https\HomeAnalytica.Gateway.pfx -p 8517c5bc-614d-49b7-8990-ff40578db4a5
 dotnet dev-certs https --trust
 ```
 
@@ -156,8 +156,8 @@ dotnet dev-certs https --trust
 
 4. After starting the application, you can access it in your browser at the following URLs:
 
-   - HTTP: [http://localhost:5200](http://localhost:5200)
-   - HTTPS: [https://localhost:6200](https://localhost:6200)
+   - HTTP: [http://localhost:8600](http://localhost:8600)
+   - HTTPS: [https://localhost:9600](https://localhost:9600)
 
     You can choose either URL depending on your preferred connection type (HTTP or HTTPS).
 
