@@ -51,7 +51,11 @@ services:
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - TARGET_ENVIRONMENT=Docker
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/HomeAnalytica.Gateway.pfx
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=8517c5bc-614d-49b7-8990-ff40578db4a5
         ports:
+            - "8600:8090"
+            - "9600:9000"
             - "5610:8080"
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
@@ -63,13 +67,8 @@ services:
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - TARGET_ENVIRONMENT=Docker
-            - ASPNETCORE_HTTP_PORTS=8080
-            - ASPNETCORE_HTTPS_PORTS=8081
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/HomeAnalytica.Web.pfx
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=8517c5bc-614d-49b7-8990-ff40578db4a5
         ports:
             - "5600:8080"
-            - "6600:8081"
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
